@@ -79,6 +79,7 @@ long double calcLuminosity(planet *);
 long double calcRadius(planet *);
 long double planet_radius_helper(long double, long double, long double, long double, long double, long double, long double);
 long double planet_radius_helper2(long double, long double, long double, long double, long double);
+long double planet_radius_helper3(long double, long double, long double, long double, long double);
 long double convert_su_to_eu(long double);
 long double convert_au_to_km(long double);
 

@@ -373,3 +373,14 @@ long double rangeAdjust(long double x, long double y1, long double y2, long doub
   long double result = (lower_fraction * y1) + (upper_fraction * y2);
   return result;
 }
+
+void e_fix(long double x, long double y, long double w, long double z, long double &a, long double &b)
+{
+  a = ((exp(x) * z) - (exp(w) * y)) / (exp(x) - exp(w));
+  b = (y - z) / (exp(x) - exp(w));
+}
+
+long double e_trend(long double a, long double b, long double x)
+{
+  return a + (b * exp(x));
+}

@@ -1855,7 +1855,7 @@ long double getSpinResonanceFactor(long double eccentricity)
   }
 }
 
-long double radius_improved(long double mass, long double imf, long double rmf, long double cmf, bool giant, int zone)
+long double radius_improved(long double mass, long double imf, long double rmf, long double cmf, bool giant, int zone, planet *the_planet)
 {
   long double range;
   long double upper_fraction;
@@ -1899,7 +1899,7 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
     range = 1.0 - 0.75;
     upper_fraction = (imf - 0.75) / range;
     lower_fraction = 1.0 - upper_fraction;
-    ice_radius = (upper_fraction * water_radius(mass)) + (lower_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf));
+    ice_radius = (upper_fraction * water_radius(mass, the_planet)) + (lower_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf));
   }
   radius = (ice_radius * imf) + (non_ice_radius * (1.0 - imf));
   radius *= KM_EARTH_RADIUS;
@@ -2972,6 +2972,19 @@ long double planet_radius_helper2(long double planet_mass, long double mass1, lo
   long double b = 0.0;
   logfix(mass1, radius1, mass2, radius2, a, b);
   radius = ln_trend(a, b, planet_mass);
+  return radius;
+}
+
+long double planet_radius_helper3(long double temperature, long double temperature1, long double radius1, long double temperature2, long double radius2)
+{
+  long double a = 0.0;
+  long double b = 0.0;
+  long double radius = 0.0;
+  long double adjusted_temperature = temperature / 1000.0;
+  long double adjusted_temperature1 = temperature1 / 1000.0;
+  long double adjusted_temperature2 = temperature2 / 1000.0;
+  e_fix(adjusted_temperature1, radius1, adjusted_temperature2, radius2, a, b);
+  radius = e_trend(a, b, temperature);
   return radius;
 }
 

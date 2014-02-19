@@ -118,7 +118,7 @@ long double gas_radius_300Myr_1960K_10core_mass(long double total_earth_masses, 
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(10.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(10.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 1.102;
   mass_radii[28] = 1.388;
   mass_radii[46] = 1.465;
@@ -133,7 +133,7 @@ long double gas_radius_300Myr_1960K_10core_mass(long double total_earth_masses, 
   mass_radii[3594] = 1.281;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -239,7 +239,7 @@ long double gas_radius_300Myr_1960K_25core_mass(long double total_earth_masses, 
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(25.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(25.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.493;
   mass_radii[46] = 0.945;
   mass_radii[77] = 1.133;
@@ -253,7 +253,7 @@ long double gas_radius_300Myr_1960K_25core_mass(long double total_earth_masses, 
   mass_radii[3594] = 1.277;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -352,7 +352,7 @@ long double gas_radius_300Myr_1960K_50core_mass(long double total_earth_masses, 
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map <int, long double> mass_radii;
-  mass_radii[50] = radius_improved(50.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(50.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.801;
   mass_radii[129] = 1.03;
   mass_radii[215] = 1.144;
@@ -364,7 +364,7 @@ long double gas_radius_300Myr_1960K_50core_mass(long double total_earth_masses, 
   mass_radii[3594] = 1.27;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -449,7 +449,7 @@ long double gas_radius_300Myr_1960K_100core_mass(long double total_earth_masses,
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(100.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(100.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.669;
   mass_radii[215] = 0.939;
   mass_radii[318] = 1.055;
@@ -460,7 +460,7 @@ long double gas_radius_300Myr_1960K_100core_mass(long double total_earth_masses,
   mass_radii[3594] = 1.256;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -537,37 +537,55 @@ long double gas_radius_300Myr_1960K(long double core_earth_masses, long double t
   long double jupiter_radii = 0.0;
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
+  map<int, long double> core_mass_radii;
+  core_mass_radii[0] = gas_radius_300Myr_1960K_0core_mass(total_earth_masses, the_planet);
+  core_mass_radii[10] = gas_radius_300Myr_1960K_10core_mass(total_earth_masses, the_planet);
+  core_mass_radii[25] = gas_radius_300Myr_1960K_25core_mass(total_earth_masses, the_planet);
+  core_mass_radii[50] = gas_radius_300Myr_1960K_50core_mass(total_earth_masses, the_planet);
+  core_mass_radii[100] = gas_radius_300Myr_1960K_100core_mass(total_earth_masses, the_planet);
   if (core_earth_masses <= 10.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_1960K_0core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_1960K_0core_mass(total_earth_masses, the_planet);
     jupiter_radii2 = gas_radius_300Myr_1960K_10core_mass(total_earth_masses, the_planet);
-    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 0.0, 10.0);
+    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 0.0, 10.0);*/
+    jupiter_radii = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
   }
   else if (core_earth_masses <= 25.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_1960K_10core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_1960K_25core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_1960K_10core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_1960K_25core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 10.0, 25.0);
   }
   else if (core_earth_masses <= 50.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_1960K_25core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_1960K_50core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_1960K_25core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_1960K_50core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 25.0, 50.0);
   }
   else if (core_earth_masses <= 100.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_1960K_50core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_1960K_100core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_1960K_50core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_1960K_100core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+    jupiter_radii2 = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 50.0, 100.0);
   }
   else
   {
     /*upper_fraction = core_earth_masses / 100.0;
     jupiter_radii = gas_radius_300Myr_1960K_100core_mass(total_earth_masses, the_planet) * pow1_4(upper_fraction);*/
-    jupiter_radii1 = gas_radius_300Myr_1960K_50core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_1960K_50core_mass(total_earth_masses, the_planet);
     jupiter_radii2 = gas_radius_300Myr_1960K_100core_mass(total_earth_masses, the_planet);
-    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, jupiter_radii1, 100.0, jupiter_radii2);
+    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, jupiter_radii1, 100.0, jupiter_radii2);*/
+    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+  }
+  if (flag_verbose & 0x80000)
+  {
+    radiusDebug("300 million year old 1960k Gas Giants", the_planet, jupiter_radii, core_mass_radii);
   }
   return jupiter_radii;
 }
@@ -690,7 +708,7 @@ long double gas_radius_300Myr_1300K_10core_mass(long double total_earth_masses, 
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(10.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(10.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.801;
   mass_radii[28] = 1.012;
   mass_radii[46] = 1.091;
@@ -705,7 +723,7 @@ long double gas_radius_300Myr_1300K_10core_mass(long double total_earth_masses, 
   mass_radii[3594] = 1.168;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -811,7 +829,7 @@ long double gas_radius_300Myr_1300K_25core_mass(long double total_earth_masses, 
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(25.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(25.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.447;
   mass_radii[46] = 0.793;
   mass_radii[77] = 0.968;
@@ -825,7 +843,7 @@ long double gas_radius_300Myr_1300K_25core_mass(long double total_earth_masses, 
   mass_radii[3594] = 1.164;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -924,7 +942,7 @@ long double gas_radius_300Myr_1300K_50core_mass(long double total_earth_masses, 
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(50.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(50.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.719;
   mass_radii[129] = 0.921;
   mass_radii[215] = 1.033;
@@ -936,7 +954,7 @@ long double gas_radius_300Myr_1300K_50core_mass(long double total_earth_masses, 
   mass_radii[3594] = 1.157;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -1021,7 +1039,7 @@ long double gas_radius_300Myr_1300K_100core_mass(long double total_earth_masses,
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(100.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(100.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.627;
   mass_radii[215] = 0.863;
   mass_radii[318] = 0.968;
@@ -1032,7 +1050,7 @@ long double gas_radius_300Myr_1300K_100core_mass(long double total_earth_masses,
   mass_radii[3594] = 1.146;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -1109,33 +1127,51 @@ long double gas_radius_300Myr_1300K(long double core_earth_masses, long double t
   long double jupiter_radii = 0.0;
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
+  map<int, long double> core_mass_radii;
+  core_mass_radii[0] = gas_radius_300Myr_1300K_0core_mass(total_earth_masses, the_planet);
+  core_mass_radii[10] = gas_radius_300Myr_1300K_10core_mass(total_earth_masses, the_planet);
+  core_mass_radii[25] = gas_radius_300Myr_1300K_25core_mass(total_earth_masses, the_planet);
+  core_mass_radii[50] = gas_radius_300Myr_1300K_50core_mass(total_earth_masses, the_planet);
+  core_mass_radii[100] = gas_radius_300Myr_1300K_100core_mass(total_earth_masses, the_planet);
   if (core_earth_masses <= 10.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_1300K_0core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_1300K_0core_mass(total_earth_masses, the_planet);
     jupiter_radii2 = gas_radius_300Myr_1300K_10core_mass(total_earth_masses, the_planet);
-    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 0.0, 10.0);
+    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 0.0, 10.0);*/
+    jupiter_radii = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
   }
   else if (core_earth_masses <= 25.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_1300K_10core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_1300K_25core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_1300K_10core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_1300K_25core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 10.0, 25.0);
   }
   else if (core_earth_masses <= 50.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_1300K_25core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_1300K_50core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_1300K_25core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_1300K_50core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 25.0, 50.0);
   }
   else if (core_earth_masses <= 100.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_1300K_50core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_1300K_100core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_1300K_50core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_1300K_100core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+    jupiter_radii2 = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 50.0, 100.0);
   }
   else
   {
-    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, jupiter_radii1, 100.0, jupiter_radii2);
+    //jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, jupiter_radii1, 100.0, jupiter_radii2);
+    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+  }
+  if (flag_verbose & 0x80000)
+  {
+    radiusDebug("300 million year old 1300k Gas Giants", the_planet, jupiter_radii, core_mass_radii);
   }
   return jupiter_radii;
 }
@@ -1258,7 +1294,7 @@ long double gas_radius_300Myr_875K_10core_mass(long double total_earth_masses, p
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(10.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(10.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.755;
   mass_radii[28] = 0.956;
   mass_radii[46] = 1.035;
@@ -1273,7 +1309,7 @@ long double gas_radius_300Myr_875K_10core_mass(long double total_earth_masses, p
   mass_radii[3594] = 1.142;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -1379,7 +1415,7 @@ long double gas_radius_300Myr_875K_25core_mass(long double total_earth_masses, p
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(25.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(25.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.438;
   mass_radii[46] = 0.767;
   mass_radii[77] = 0.938;
@@ -1393,7 +1429,7 @@ long double gas_radius_300Myr_875K_25core_mass(long double total_earth_masses, p
   mass_radii[3594] = 1.138;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -1492,7 +1528,7 @@ long double gas_radius_300Myr_875K_50core_mass(long double total_earth_masses, p
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(50.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(50.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.702;
   mass_radii[129] = 0.899;
   mass_radii[215] = 1.011;
@@ -1504,7 +1540,7 @@ long double gas_radius_300Myr_875K_50core_mass(long double total_earth_masses, p
   mass_radii[3594] = 1.132;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -1588,7 +1624,7 @@ long double gas_radius_300Myr_875K_100core_mass(long double total_earth_masses, 
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(100.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(100.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.618;
   mass_radii[215] = 0.847;
   mass_radii[318] = 0.95;
@@ -1599,7 +1635,7 @@ long double gas_radius_300Myr_875K_100core_mass(long double total_earth_masses, 
   mass_radii[3594] = 1.121;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -1675,37 +1711,55 @@ long double gas_radius_300Myr_875K(long double core_earth_masses, long double to
   long double jupiter_radii = 0.0;
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
+  map<int, long double> core_mass_radii;
+  core_mass_radii[0] = gas_radius_300Myr_875K_0core_mass(total_earth_masses, the_planet);
+  core_mass_radii[10] = gas_radius_300Myr_875K_10core_mass(total_earth_masses, the_planet);
+  core_mass_radii[25] = gas_radius_300Myr_875K_25core_mass(total_earth_masses, the_planet);
+  core_mass_radii[50] = gas_radius_300Myr_875K_50core_mass(total_earth_masses, the_planet);
+  core_mass_radii[100] = gas_radius_300Myr_875K_100core_mass(total_earth_masses, the_planet);
   if (core_earth_masses <= 10.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_875K_0core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_875K_0core_mass(total_earth_masses, the_planet);
     jupiter_radii2 = gas_radius_300Myr_875K_10core_mass(total_earth_masses, the_planet);
-    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 0.0, 10.0);
+    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 0.0, 10.0);*/
+    jupiter_radii = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
   }
   else if (core_earth_masses <= 25.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_875K_10core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_875K_25core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_875K_10core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_875K_25core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 10.0, 25.0);
   }
   else if (core_earth_masses <= 50.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_875K_25core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_875K_50core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_875K_25core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_875K_50core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 25.0, 50.0);
   }
   else if (core_earth_masses <= 100.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_875K_50core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_875K_100core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_875K_50core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_875K_100core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+    jupiter_radii2 = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 50.0, 100.0);
   }
   else
   {
     /*upper_fraction = core_earth_masses / 100.0;
     jupiter_radii = gas_radius_300Myr_875K_100core_mass(total_earth_masses, the_planet) * pow1_4(upper_fraction);*/
-    jupiter_radii1 = gas_radius_300Myr_875K_50core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_875K_50core_mass(total_earth_masses, the_planet);
     jupiter_radii2 = gas_radius_300Myr_875K_100core_mass(total_earth_masses, the_planet);
-    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, jupiter_radii1, 100.0, jupiter_radii2);
+    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, jupiter_radii1, 100.0, jupiter_radii2);*/
+    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+  }
+  if (flag_verbose & 0x80000)
+  {
+    radiusDebug("300 million year old 875k Gas Giants", the_planet, jupiter_radii, core_mass_radii);
   }
   return jupiter_radii;
 }
@@ -1828,7 +1882,7 @@ long double gas_radius_300Myr_260K_10core_mass(long double total_earth_masses, p
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(10.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(10.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.727;
   mass_radii[28] = 0.921;
   mass_radii[46] = 1.004;
@@ -1843,7 +1897,7 @@ long double gas_radius_300Myr_260K_10core_mass(long double total_earth_masses, p
   mass_radii[3594] = 1.134;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -1949,7 +2003,7 @@ long double gas_radius_300Myr_260K_25core_mass(long double total_earth_masses, p
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(25.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(25.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.433;
   mass_radii[46] = 0.754;
   mass_radii[77] = 0.923;
@@ -1963,7 +2017,7 @@ long double gas_radius_300Myr_260K_25core_mass(long double total_earth_masses, p
   mass_radii[3594] = 1.13;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -2062,7 +2116,7 @@ long double gas_radius_300Myr_260K_50core_mass(long double total_earth_masses, p
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(50.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(50.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.693;
   mass_radii[129] = 0.888;
   mass_radii[215] = 0.999;
@@ -2074,7 +2128,7 @@ long double gas_radius_300Myr_260K_50core_mass(long double total_earth_masses, p
   mass_radii[3594] = 1.124;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -2159,7 +2213,7 @@ long double gas_radius_300Myr_260K_100core_mass(long double total_earth_masses, 
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(100.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(100.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.613;
   mass_radii[215] = 0.839;
   mass_radii[318] = 0.941;
@@ -2170,7 +2224,7 @@ long double gas_radius_300Myr_260K_100core_mass(long double total_earth_masses, 
   mass_radii[3594] = 1.113;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -2247,37 +2301,55 @@ long double gas_radius_300Myr_260K(long double core_earth_masses, long double to
   long double jupiter_radii = 0.0;
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
+  map<int, long double> core_mass_radii;
+  core_mass_radii[0] = gas_radius_300Myr_260K_0core_mass(total_earth_masses, the_planet);
+  core_mass_radii[10] = gas_radius_300Myr_260K_10core_mass(total_earth_masses, the_planet);
+  core_mass_radii[25] = gas_radius_300Myr_260K_25core_mass(total_earth_masses, the_planet);
+  core_mass_radii[50] = gas_radius_300Myr_260K_50core_mass(total_earth_masses, the_planet);
+  core_mass_radii[100] = gas_radius_300Myr_260K_100core_mass(total_earth_masses, the_planet);
   if (core_earth_masses <= 10.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_260K_0core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_260K_0core_mass(total_earth_masses, the_planet);
     jupiter_radii2 = gas_radius_300Myr_260K_10core_mass(total_earth_masses, the_planet);
-    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 0.0, 10.0);
+    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 0.0, 10.0);*/
+    jupiter_radii = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
   }
   else if (core_earth_masses <= 25.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_260K_10core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_260K_25core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_260K_10core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_260K_25core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 10.0, 25.0);
   }
   else if (core_earth_masses <= 50.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_260K_25core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_260K_50core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_260K_25core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_260K_50core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 25.0, 50.0);
   }
   else if (core_earth_masses <= 100.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_260K_50core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_260K_100core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_260K_50core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_260K_100core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+    jupiter_radii2 = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 50.0, 100.0);
   }
   else
   {
     /*upper_fraction = core_earth_masses / 100.0;
     jupiter_radii = gas_radius_300Myr_260K_100core_mass(total_earth_masses, the_planet) * pow1_4(upper_fraction);*/
-    jupiter_radii1 = gas_radius_300Myr_260K_50core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_260K_50core_mass(total_earth_masses, the_planet);
     jupiter_radii2 = gas_radius_300Myr_260K_100core_mass(total_earth_masses, the_planet);
-    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, jupiter_radii1, 100.0, jupiter_radii2);
+    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, jupiter_radii1, 100.0, jupiter_radii2);*/
+    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+  }
+  if (flag_verbose & 0x80000)
+  {
+    radiusDebug("300 million year old 260k Gas Giants", the_planet, jupiter_radii, core_mass_radii);
   }
   return jupiter_radii;
 }
@@ -2400,7 +2472,7 @@ long double gas_radius_300Myr_78K_10core_mass(long double total_earth_masses, pl
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(10.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(10.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.565;
   mass_radii[28] = 0.733;
   mass_radii[46] = 0.847;
@@ -2415,7 +2487,7 @@ long double gas_radius_300Myr_78K_10core_mass(long double total_earth_masses, pl
   mass_radii[3594] = 1.127;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -2521,7 +2593,7 @@ long double gas_radius_300Myr_78K_25core_mass(long double total_earth_masses, pl
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(25.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(25.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.394;
   mass_radii[46] = 0.664;
   mass_radii[77] = 0.826;
@@ -2535,7 +2607,7 @@ long double gas_radius_300Myr_78K_25core_mass(long double total_earth_masses, pl
   mass_radii[3594] = 1.124;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -2634,7 +2706,7 @@ long double gas_radius_300Myr_78K_50core_mass(long double total_earth_masses, pl
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(50.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(50.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.635;
   mass_radii[129] = 0.823;
   mass_radii[215] = 0.951;
@@ -2646,7 +2718,7 @@ long double gas_radius_300Myr_78K_50core_mass(long double total_earth_masses, pl
   mass_radii[3594] = 1.118;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -2731,7 +2803,7 @@ long double gas_radius_300Myr_78K_100core_mass(long double total_earth_masses, p
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(100.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(100.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.587;
   mass_radii[215] = 0.81;
   mass_radii[318] = 0.92;
@@ -2742,7 +2814,7 @@ long double gas_radius_300Myr_78K_100core_mass(long double total_earth_masses, p
   mass_radii[3594] = 1.107;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -2820,51 +2892,76 @@ long double gas_radius_300Myr_78K(long double core_earth_masses, long double tot
   long double jupiter_radii = 0.0;
   long double jupiter_radii1 = 0.0;
   long double jupiter_radii2 = 0.0;
+  map<int, long double> core_mass_radii;
+  core_mass_radii[0] = gas_radius_300Myr_78K_0core_mass(total_earth_masses, the_planet);
+  core_mass_radii[10] = gas_radius_300Myr_78K_10core_mass(total_earth_masses, the_planet);
+  core_mass_radii[25] = gas_radius_300Myr_78K_25core_mass(total_earth_masses, the_planet);
+  core_mass_radii[50] = gas_radius_300Myr_78K_50core_mass(total_earth_masses, the_planet);
+  core_mass_radii[100] = gas_radius_300Myr_78K_100core_mass(total_earth_masses, the_planet);
   if (core_earth_masses <= 10.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_78K_0core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_78K_0core_mass(total_earth_masses, the_planet);
     jupiter_radii2 = gas_radius_300Myr_78K_10core_mass(total_earth_masses, the_planet);
-    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 0.0, 10.0);
+    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 0.0, 10.0);*/
+    jupiter_radii = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
   }
   else if (core_earth_masses <= 25.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_78K_10core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_78K_25core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_78K_10core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_78K_25core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 10.0, 25.0);
   }
   else if (core_earth_masses <= 50.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_78K_25core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_78K_50core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_78K_25core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_78K_50core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 25.0, 50.0);
   }
   else if (core_earth_masses <= 100.0)
   {
-    jupiter_radii1 = gas_radius_300Myr_78K_50core_mass(total_earth_masses, the_planet);
-    jupiter_radii2 = gas_radius_300Myr_78K_100core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_78K_50core_mass(total_earth_masses, the_planet);
+    jupiter_radii2 = gas_radius_300Myr_78K_100core_mass(total_earth_masses, the_planet);*/
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+    jupiter_radii2 = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
     jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 50.0, 100.0);
   }
   else
   {
     /*upper_fraction = core_earth_masses / 100.0;
     jupiter_radii = gas_radius_300Myr_78K_100core_mass(total_earth_masses, the_planet) * pow1_4(upper_fraction);*/
-    jupiter_radii1 = gas_radius_300Myr_78K_50core_mass(total_earth_masses, the_planet);
+    /*jupiter_radii1 = gas_radius_300Myr_78K_50core_mass(total_earth_masses, the_planet);
     jupiter_radii2 = gas_radius_300Myr_78K_100core_mass(total_earth_masses, the_planet);
-    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, jupiter_radii1, 100.0, jupiter_radii2);
+    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, jupiter_radii1, 100.0, jupiter_radii2);*/
+    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+  }
+  if (flag_verbose & 0x80000)
+  {
+    radiusDebug("300 million year old 78k Gas Giants", the_planet, jupiter_radii, core_mass_radii);
   }
   return jupiter_radii;
 }
 
 long double gas_radius_300Myr(long double temperature, long double core_earth_masses, long double total_earth_masses, planet *the_planet)
 {
-  long double lower_fraction = 0.0;
-  long double upper_fraction = 0.0;
-  long double range = 0.0;
   long double jupiter_radii = 0.0;
-  if (temperature > 1960.0)
+  long double jupiter_radii1 = 0.0;
+  long double jupiter_radii2 = 0.0;
+  map<int, long double> temperature_radii;
+  temperature_radii[1960] = gas_radius_300Myr_1960K(core_earth_masses, total_earth_masses, the_planet);
+  temperature_radii[1300] = gas_radius_300Myr_1300K(core_earth_masses, total_earth_masses, the_planet);
+  temperature_radii[875] = gas_radius_300Myr_875K(core_earth_masses, total_earth_masses, the_planet);
+  temperature_radii[260] = gas_radius_300Myr_260K(core_earth_masses, total_earth_masses, the_planet);
+  temperature_radii[78] = gas_radius_300Myr_78K(core_earth_masses, total_earth_masses, the_planet);
+  temperature_radii[0] = 0.0;
+  /*if (temperature > 1960.0)
   {
     upper_fraction = temperature / 1960.0;
     jupiter_radii = gas_radius_300Myr_1960K(core_earth_masses, total_earth_masses, the_planet) * pow1_4(upper_fraction);
+    
   }
   else if (temperature > 1300.0)
   {
@@ -2893,16 +2990,48 @@ long double gas_radius_300Myr(long double temperature, long double core_earth_ma
     upper_fraction = (temperature - 78.0) / (long double)range;
     lower_fraction = 1.0 - upper_fraction;
     jupiter_radii = (upper_fraction * gas_radius_300Myr_260K(core_earth_masses, total_earth_masses, the_planet)) + (lower_fraction * gas_radius_300Myr_78K(core_earth_masses, total_earth_masses, the_planet));
-    /*if (planet->planet_no == 6)
-    {
-      fprintf (stderr, "Lower: %0.4Lf Upper: %0.4Lf Lower radius: %8.4Lf Upper radius: %8.4Lf\n", lower_fraction, upper_fraction, gas_radius_300Myr_260K(core_earth_masses, total_earth_masses), gas_radius_300Myr_78K(core_earth_masses, total_earth_masses, planet));
-    }*/
   }
   else
   {
     lower_fraction = temperature / 78.0;
     jupiter_radii = gas_radius_300Myr_78K(core_earth_masses, total_earth_masses, the_planet) * pow1_4(lower_fraction);
     //jupiter_radii = gas_radius_300Myr_78K(core_earth_masses, total_earth_masses);
+  }*/
+  if (temperature <= 78.0)
+  {
+    jupiter_radii = planet_radius_helper(temperature, 0.0, temperature_radii[0], 78.0, temperature_radii[78], 260.0, temperature_radii[260]);
+  }
+  else if (temperature <= 260.0)
+  {
+    jupiter_radii1 = planet_radius_helper(temperature, 0.0, temperature_radii[0], 78.0, temperature_radii[78], 260.0, temperature_radii[260]);
+    jupiter_radii2 = planet_radius_helper(temperature, 78.0, temperature_radii[78], 260.0, temperature_radii[260], 875.0, temperature_radii[875]);
+    jupiter_radii = rangeAdjust(temperature, jupiter_radii1, jupiter_radii2, 78.0, 260.0);
+  }
+  else if (temperature <= 875.0)
+  {
+    jupiter_radii1 = planet_radius_helper(temperature, 78.0, temperature_radii[78], 260.0, temperature_radii[260], 875.0, temperature_radii[875]);
+    jupiter_radii2 = planet_radius_helper(temperature, 260.0, temperature_radii[260], 875.0, temperature_radii[875], 1300.0, temperature_radii[1300]);
+    jupiter_radii = rangeAdjust(temperature, jupiter_radii1, jupiter_radii2, 260.0, 875.0);
+  }
+  else if (temperature <= 1300.0)
+  {
+    jupiter_radii1 = planet_radius_helper(temperature, 260.0, temperature_radii[260], 875.0, temperature_radii[875], 1300.0, temperature_radii[1300]);
+    jupiter_radii2 = planet_radius_helper(temperature, 875.0, temperature_radii[875], 1300.0, temperature_radii[1300], 1960.0, temperature_radii[1960]);
+    jupiter_radii = rangeAdjust(temperature, jupiter_radii1, jupiter_radii2, 875.0, 1300.0);
+  }
+  else if (temperature <= 1960.0)
+  {
+    jupiter_radii1 = planet_radius_helper(temperature, 875.0, temperature_radii[875], 1300.0, temperature_radii[1300], 1960.0, temperature_radii[1960]);
+    jupiter_radii2 = planet_radius_helper3(temperature, 1300.0, temperature_radii[1300], 1960.0, temperature_radii[1960]);
+    jupiter_radii = rangeAdjust(temperature, jupiter_radii1, jupiter_radii2, 1300.0, 1960.0);
+  }
+  else
+  {
+    jupiter_radii = planet_radius_helper3(temperature, 1300.0, temperature_radii[1300], 1960.0, temperature_radii[1960]);
+  }
+  if (flag_verbose & 0x80000)
+  {
+    radiusDebug("300 million year old Gas Giants", the_planet, jupiter_radii, temperature_radii);
   }
   return jupiter_radii;
 }
@@ -2988,7 +3117,7 @@ long double gas_radius_1Gyr_1960K_10core_mass(long double total_earth_masses, pl
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.909;
   mass_radii[28] = 1.15;
   mass_radii[46] = 1.221;
@@ -3003,7 +3132,7 @@ long double gas_radius_1Gyr_1960K_10core_mass(long double total_earth_masses, pl
   mass_radii[3594] = 1.197;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -3080,7 +3209,7 @@ long double gas_radius_1Gyr_1960K_25core_mass(long double total_earth_masses, pl
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.461;
   mass_radii[46] = 0.838;
   mass_radii[77] = 1.022;
@@ -3094,7 +3223,7 @@ long double gas_radius_1Gyr_1960K_25core_mass(long double total_earth_masses, pl
   mass_radii[3594] = 1.192;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -3166,7 +3295,7 @@ long double gas_radius_1Gyr_1960K_50core_mass(long double total_earth_masses, pl
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.746;
   mass_radii[129] = 0.958;
   mass_radii[215] = 1.072;
@@ -3178,7 +3307,7 @@ long double gas_radius_1Gyr_1960K_50core_mass(long double total_earth_masses, pl
   mass_radii[3594] = 1.186;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -3240,7 +3369,7 @@ long double gas_radius_1Gyr_1960K_100core_mass(long double total_earth_masses, p
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.64;
   mass_radii[215] = 0.888;
   mass_radii[318] = 0.997;
@@ -3251,7 +3380,7 @@ long double gas_radius_1Gyr_1960K_100core_mass(long double total_earth_masses, p
   mass_radii[3594] = 1.173;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -3433,7 +3562,7 @@ long double gas_radius_1Gyr_1300K_10core_mass(long double total_earth_masses, pl
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.698;
   mass_radii[28] = 0.888;
   mass_radii[46] = 0.975;
@@ -3448,7 +3577,7 @@ long double gas_radius_1Gyr_1300K_10core_mass(long double total_earth_masses, pl
   mass_radii[3594] = 1.105;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -3525,7 +3654,7 @@ long double gas_radius_1Gyr_1300K_25core_mass(long double total_earth_masses, pl
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.436;
   mass_radii[46] = 0.739;
   mass_radii[77] = 0.908;
@@ -3539,7 +3668,7 @@ long double gas_radius_1Gyr_1300K_25core_mass(long double total_earth_masses, pl
   mass_radii[3594] = 1.101;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -3611,7 +3740,7 @@ long double gas_radius_1Gyr_1300K_50core_mass(long double total_earth_masses, pl
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.684;
   mass_radii[129] = 0.877;
   mass_radii[215] = 0.988;
@@ -3623,7 +3752,7 @@ long double gas_radius_1Gyr_1300K_50core_mass(long double total_earth_masses, pl
   mass_radii[3594] = 1.095;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -3685,7 +3814,7 @@ long double gas_radius_1Gyr_1300K_100core_mass(long double total_earth_masses, p
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.607;
   mass_radii[215] = 0.831;
   mass_radii[318] = 0.932;
@@ -3696,7 +3825,7 @@ long double gas_radius_1Gyr_1300K_100core_mass(long double total_earth_masses, p
   mass_radii[3594] = 1.084;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -3878,7 +4007,7 @@ long double gas_radius_1Gyr_875K_10core_mass(long double total_earth_masses, pla
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.665;
   mass_radii[28] = 0.847;
   mass_radii[46] = 0.934;
@@ -3893,7 +4022,7 @@ long double gas_radius_1Gyr_875K_10core_mass(long double total_earth_masses, pla
   mass_radii[3594] = 1.085;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -3970,7 +4099,7 @@ long double gas_radius_1Gyr_875K_25core_mass(long double total_earth_masses, pla
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.42;
   mass_radii[46] = 0.719;
   mass_radii[77] = 0.883;
@@ -3984,7 +4113,7 @@ long double gas_radius_1Gyr_875K_25core_mass(long double total_earth_masses, pla
   mass_radii[3594] = 1.081;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -4056,7 +4185,7 @@ long double gas_radius_1Gyr_875K_50core_mass(long double total_earth_masses, pla
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.67;
   mass_radii[129] = 0.859;
   mass_radii[215] = 0.97;
@@ -4068,7 +4197,7 @@ long double gas_radius_1Gyr_875K_50core_mass(long double total_earth_masses, pla
   mass_radii[3594] = 1.076;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -4130,7 +4259,7 @@ long double gas_radius_1Gyr_875K_100core_mass(long double total_earth_masses, pl
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.6;
   mass_radii[215] = 0.818;
   mass_radii[318] = 0.918;
@@ -4141,7 +4270,7 @@ long double gas_radius_1Gyr_875K_100core_mass(long double total_earth_masses, pl
   mass_radii[3594] = 1.065;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -4323,7 +4452,7 @@ long double gas_radius_1Gyr_260K_10core_mass(long double total_earth_masses, pla
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.646;
   mass_radii[28] = 0.823;
   mass_radii[46] = 0.915;
@@ -4338,7 +4467,7 @@ long double gas_radius_1Gyr_260K_10core_mass(long double total_earth_masses, pla
   mass_radii[3594] = 1.077;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -4415,7 +4544,7 @@ long double gas_radius_1Gyr_260K_25core_mass(long double total_earth_masses, pla
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.416;
   mass_radii[46] = 0.709;
   mass_radii[77] = 0.871;
@@ -4429,7 +4558,7 @@ long double gas_radius_1Gyr_260K_25core_mass(long double total_earth_masses, pla
   mass_radii[3594] = 1.073;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -4501,7 +4630,7 @@ long double gas_radius_1Gyr_260K_50core_mass(long double total_earth_masses, pla
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.663;
   mass_radii[129] = 0.85;
   mass_radii[215] = 0.961;
@@ -4513,7 +4642,7 @@ long double gas_radius_1Gyr_260K_50core_mass(long double total_earth_masses, pla
   mass_radii[3594] = 1.068;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -4575,7 +4704,7 @@ long double gas_radius_1Gyr_260K_100core_mass(long double total_earth_masses, pl
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.595;
   mass_radii[215] = 0.811;
   mass_radii[318] = 0.91;
@@ -4586,7 +4715,7 @@ long double gas_radius_1Gyr_260K_100core_mass(long double total_earth_masses, pl
   mass_radii[3594] = 1.057;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -4768,7 +4897,7 @@ long double gas_radius_1Gyr_78K_10core_mass(long double total_earth_masses, plan
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.532;
   mass_radii[28] = 0.683;
   mass_radii[46] = 0.791;
@@ -4783,7 +4912,7 @@ long double gas_radius_1Gyr_78K_10core_mass(long double total_earth_masses, plan
   mass_radii[3594] = 1.072;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -4860,7 +4989,7 @@ long double gas_radius_1Gyr_78K_25core_mass(long double total_earth_masses, plan
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.386;
   mass_radii[46] = 0.631;
   mass_radii[77] = 0.78;
@@ -4874,7 +5003,7 @@ long double gas_radius_1Gyr_78K_25core_mass(long double total_earth_masses, plan
   mass_radii[3594] = 1.069;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -4946,7 +5075,7 @@ long double gas_radius_1Gyr_78K_50core_mass(long double total_earth_masses, plan
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.61;
   mass_radii[129] = 0.784;
   mass_radii[215] = 0.904;
@@ -4958,7 +5087,7 @@ long double gas_radius_1Gyr_78K_50core_mass(long double total_earth_masses, plan
   mass_radii[3594] = 1.063;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -5020,7 +5149,7 @@ long double gas_radius_1Gyr_78K_100core_mass(long double total_earth_masses, pla
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.57;
   mass_radii[215] = 0.775;
   mass_radii[318] = 0.878;
@@ -5031,7 +5160,7 @@ long double gas_radius_1Gyr_78K_100core_mass(long double total_earth_masses, pla
   mass_radii[3594] = 1.053;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -5255,7 +5384,7 @@ long double gas_radius_4point5Gyr_1960K_10core_mass(long double total_earth_mass
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.726;
   mass_radii[28] = 0.934;
   mass_radii[46] = 1.019;
@@ -5270,7 +5399,7 @@ long double gas_radius_4point5Gyr_1960K_10core_mass(long double total_earth_mass
   mass_radii[3594] = 1.116;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -5347,7 +5476,7 @@ long double gas_radius_4point5Gyr_1960K_25core_mass(long double total_earth_mass
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.43;
   mass_radii[46] = 0.756;
   mass_radii[77] = 0.928;
@@ -5361,7 +5490,7 @@ long double gas_radius_4point5Gyr_1960K_25core_mass(long double total_earth_mass
   mass_radii[3594] = 1.112;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -5433,7 +5562,7 @@ long double gas_radius_4point5Gyr_1960K_50core_mass(long double total_earth_mass
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.695;
   mass_radii[129] = 0.891;
   mass_radii[215] = 1.004;
@@ -5445,7 +5574,7 @@ long double gas_radius_4point5Gyr_1960K_50core_mass(long double total_earth_mass
   mass_radii[3594] = 1.106;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -5507,7 +5636,7 @@ long double gas_radius_4point5Gyr_1960K_100core_mass(long double total_earth_mas
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.613;
   mass_radii[215] = 0.841;
   mass_radii[318] = 0.944;
@@ -5518,7 +5647,7 @@ long double gas_radius_4point5Gyr_1960K_100core_mass(long double total_earth_mas
   mass_radii[3594] = 1.095;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -5700,7 +5829,7 @@ long double gas_radius_4point5Gyr_1300K_10core_mass(long double total_earth_mass
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.599;
   mass_radii[28] = 0.775;
   mass_radii[46] = 0.878;
@@ -5715,7 +5844,7 @@ long double gas_radius_4point5Gyr_1300K_10core_mass(long double total_earth_mass
   mass_radii[3594] = 1.05;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -5792,7 +5921,7 @@ long double gas_radius_4point5Gyr_1300K_25core_mass(long double total_earth_mass
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.403;
   mass_radii[46] = 0.686;
   mass_radii[77] = 0.846;
@@ -5806,7 +5935,7 @@ long double gas_radius_4point5Gyr_1300K_25core_mass(long double total_earth_mass
   mass_radii[3594] = 1.047;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -5878,7 +6007,7 @@ long double gas_radius_4point5Gyr_1300K_50core_mass(long double total_earth_mass
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.648;
   mass_radii[129] = 0.831;
   mass_radii[215] = 0.942;
@@ -5890,7 +6019,7 @@ long double gas_radius_4point5Gyr_1300K_50core_mass(long double total_earth_mass
   mass_radii[3594] = 1.042;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -5952,7 +6081,7 @@ long double gas_radius_4point5Gyr_1300K_100core_mass(long double total_earth_mas
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.587;
   mass_radii[215] = 0.798;
   mass_radii[318] = 0.896;
@@ -5963,7 +6092,7 @@ long double gas_radius_4point5Gyr_1300K_100core_mass(long double total_earth_mas
   mass_radii[3594] = 1.032;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -6145,7 +6274,7 @@ long double gas_radius_4point5Gyr_875K_10core_mass(long double total_earth_masse
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.592;
   mass_radii[28] = 0.755;
   mass_radii[46] = 0.858;
@@ -6160,7 +6289,7 @@ long double gas_radius_4point5Gyr_875K_10core_mass(long double total_earth_masse
   mass_radii[3594] = 1.036;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -6237,7 +6366,7 @@ long double gas_radius_4point5Gyr_875K_25core_mass(long double total_earth_masse
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.404;
   mass_radii[46] = 0.675;
   mass_radii[77] = 0.829;
@@ -6251,7 +6380,7 @@ long double gas_radius_4point5Gyr_875K_25core_mass(long double total_earth_masse
   mass_radii[3594] = 1.033;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -6323,7 +6452,7 @@ long double gas_radius_4point5Gyr_875K_50core_mass(long double total_earth_masse
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.639;
   mass_radii[129] = 0.817;
   mass_radii[215] = 0.928;
@@ -6335,7 +6464,7 @@ long double gas_radius_4point5Gyr_875K_50core_mass(long double total_earth_masse
   mass_radii[3594] = 1.027;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -6397,7 +6526,7 @@ long double gas_radius_4point5Gyr_875K_100core_mass(long double total_earth_mass
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.582;
   mass_radii[215] = 0.788;
   mass_radii[318] = 0.884;
@@ -6408,7 +6537,7 @@ long double gas_radius_4point5Gyr_875K_100core_mass(long double total_earth_mass
   mass_radii[3594] = 1.018;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -6590,7 +6719,7 @@ long double gas_radius_4point5Gyr_260K_10core_mass(long double total_earth_masse
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.576;
   mass_radii[28] = 0.738;
   mass_radii[46] = 0.845;
@@ -6605,7 +6734,7 @@ long double gas_radius_4point5Gyr_260K_10core_mass(long double total_earth_masse
   mass_radii[3594] = 1.028;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -6682,7 +6811,7 @@ long double gas_radius_4point5Gyr_260K_25core_mass(long double total_earth_masse
 {
   long double jupiter_radii = 0.0;
   map<int, long long> mass_radii;
-  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.4;
   mass_radii[46] = 0.666;
   mass_radii[77] = 0.82;
@@ -6696,7 +6825,7 @@ long double gas_radius_4point5Gyr_260K_25core_mass(long double total_earth_masse
   mass_radii[3594] = 1.025;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -6768,7 +6897,7 @@ long double gas_radius_4point5Gyr_260K_50core_mass(long double total_earth_masse
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.633;
   mass_radii[129] = 0.81;
   mass_radii[215] = 0.92;
@@ -6780,7 +6909,7 @@ long double gas_radius_4point5Gyr_260K_50core_mass(long double total_earth_masse
   mass_radii[3594] = 1.02;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77)
@@ -6842,7 +6971,7 @@ long double gas_radius_4point5Gyr_260K_100core_mass(long double total_earth_mass
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.578;
   mass_radii[215] = 0.782;
   mass_radii[318] = 0.878;
@@ -6853,7 +6982,7 @@ long double gas_radius_4point5Gyr_260K_100core_mass(long double total_earth_mass
   mass_radii[3594] = 1.01;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)
@@ -7035,7 +7164,7 @@ long double gas_radius_4point5Gyr_78K_10core_mass(long double total_earth_masses
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.508;
   mass_radii[28] = 0.653;
   mass_radii[46] = 0.759;
@@ -7050,7 +7179,7 @@ long double gas_radius_4point5Gyr_78K_10core_mass(long double total_earth_masses
   mass_radii[3594] = 1.021;
   if (total_earth_masses < 10.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[10];
   }
   else if (total_earth_masses < 17.0)
@@ -7127,7 +7256,7 @@ long double gas_radius_4point5Gyr_78K_25core_mass(long double total_earth_masses
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.378;
   mass_radii[46] = 0.611;
   mass_radii[77] = 0.75;
@@ -7141,7 +7270,7 @@ long double gas_radius_4point5Gyr_78K_25core_mass(long double total_earth_masses
   mass_radii[3594] = 1.018;
   if (total_earth_masses < 25.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[25];
   }
   else if (total_earth_masses < 28.0)
@@ -7213,7 +7342,7 @@ long double gas_radius_4point5Gyr_78K_50core_mass(long double total_earth_masses
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.594;
   mass_radii[129] = 0.754;
   mass_radii[215] = 0.865;
@@ -7225,7 +7354,7 @@ long double gas_radius_4point5Gyr_78K_50core_mass(long double total_earth_masses
   mass_radii[3594] = 1.013;
   if (total_earth_masses < 50.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[50];
   }
   else if (total_earth_masses < 77.0)
@@ -7287,7 +7416,7 @@ long double gas_radius_4point5Gyr_78K_100core_mass(long double total_earth_masse
 {
   long double jupiter_radii = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.558;
   mass_radii[215] = 0.746;
   mass_radii[318] = 0.842;
@@ -7298,7 +7427,7 @@ long double gas_radius_4point5Gyr_78K_100core_mass(long double total_earth_masse
   mass_radii[3594] = 1.004;
   if (total_earth_masses < 100.0)
   {
-    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone()) / KM_JUPITER_RADIUS;
+    //jupiter_radii = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
     jupiter_radii = mass_radii[100];
   }
   else if (total_earth_masses < 129.0)

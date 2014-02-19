@@ -42,6 +42,8 @@ string my_strtoupper(string);
 int star_type_to_num(string spec_type, long double luminosity, int run = 1);
 void logfix(long double, long double, long double, long double, long double &, long double &);
 long double rangeAdjust(long double, long double, long double, long double, long double);
+void e_fix(long double, long double, long double, long double, long double &, long double &);
+long double e_trend(long double, long double, long double);
 
 template <typename T>
 string toString(T val, int decimals = 0);

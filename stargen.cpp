@@ -930,7 +930,7 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
   
   the_planet->setExosphericTemp(EARTH_EXOSPHERE_TEMP / pow2(the_planet->getA() / the_sun.getREcosphere()));
   the_planet->setRmsVelocity(rms_vel(MOL_NITROGEN, the_planet->getExosphericTemp()));
-  the_planet->setCoreRadius(radius_improved(the_planet->getDustMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), false, the_planet->getOrbitZone()));
+  the_planet->setCoreRadius(radius_improved(the_planet->getDustMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), false, the_planet->getOrbitZone(), the_planet));
   
   the_planet->setDensity(empirical_density(the_planet->getMass(), the_planet->getA(), the_sun.getREcosphere(), true));
   the_planet->setRadius(volume_radius(the_planet->getMass(), the_planet->getDensity()));
@@ -966,7 +966,7 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
   }
   else // If not, it's rocky.
   {
-    the_planet->setRadius(radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), false, the_planet->getOrbitZone()));
+    the_planet->setRadius(radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), false, the_planet->getOrbitZone(), the_planet));
     the_planet->setDensity(volume_density(the_planet->getMass(), the_planet->getRadius()));
     
     the_planet->setSurfAccel(acceleration(the_planet->getMass(), the_planet->getRadius()));
@@ -1161,7 +1161,7 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
 	ss.str("");
 	
 	//generate_planet(ptr, n, the_sun, random_tilt, moon_id, do_gases, do_moons, true, the_planet->getMass());
-	ptr->setRadius(radius_improved(ptr->getMass(), ptr->getImf(), ptr->getRmf(), ptr->getCmf(), false, ptr->getOrbitZone()));
+	ptr->setRadius(radius_improved(ptr->getMass(), ptr->getImf(), ptr->getRmf(), ptr->getCmf(), false, ptr->getOrbitZone(), ptr));
 	ptr->setDensity(volume_density(ptr->getMass(), ptr->getRadius()));
 	
 	roche_limit = 2.44 * the_planet->getRadius() * pow(the_planet->getDensity() / ptr->getDensity(), 1.0 / 3.0);
@@ -1434,7 +1434,7 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
 	assign_composition(new_moon, the_sun, true);
 	
 	//generate_planet(new_moon, n, the_sun, random_tilt, moon_id, do_gases, do_moons, true, the_planet->getMass());
-	new_moon->setRadius(radius_improved(new_moon->getMass(), new_moon->getImf(), new_moon->getRmf(), new_moon->getCmf(), false, new_moon->getOrbitZone()));
+	new_moon->setRadius(radius_improved(new_moon->getMass(), new_moon->getImf(), new_moon->getRmf(), new_moon->getCmf(), false, new_moon->getOrbitZone(), new_moon));
 	new_moon->setDensity(volume_density(new_moon->getMass(), new_moon->getRadius()));
 	
 	long double distance2;
