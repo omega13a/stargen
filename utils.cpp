@@ -384,3 +384,10 @@ long double e_trend(long double a, long double b, long double x)
 {
   return a + (b * exp(x));
 }
+
+void quadfix(long double x, long double y, long double w, long double z, long double p, long double q, long double &a, long double &b, long double &c)
+{
+  a = ((q * (w - x)) - (w * y) + (p * (y - z)) + (x * z)) / ((p - w) * (p - x) * (w - x));
+  b = ((q * (pow2(x) - pow2(w))) + (pow2(w) * y) - (pow2(x) * z) + (pow2(p) * (z -y))) / ((p - w) * (p -x) * (w - x));
+  c = ((q * w * x * (w - x)) + (p * ((p * w * y) - (pow2(w) * y) - (p * x * z) + (pow2(x) * z)))) / ((p - w) * (p - x) * (w - x));
+}

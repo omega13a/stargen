@@ -2929,11 +2929,11 @@ long double calcRadius(planet *the_planet)
   }
 }
 
-map<string, vector<double> > polynomial_cache;
+//map<string, vector<double> > polynomial_cache;
 
 long double planet_radius_helper(long double planet_mass, long double mass1, long double radius1, long double mass2, long double radius2, long double mass3, long double radius3)
 {
-  long double radius;
+  /*long double radius;
   double x[] = {mass1, mass2, mass3};
   double y[] = {radius1, radius2, radius3};
   stringstream ss;
@@ -2962,6 +2962,13 @@ long double planet_radius_helper(long double planet_mass, long double mass1, lon
     polynomial_cache[cache_name] = coeff_cache;
   }
   radius = quad_trend(coeff[2], coeff[1], coeff[0], planet_mass);
+  return radius;*/
+  long double radius = 0.0;
+  long double a = 0.0;
+  long double b = 0.0;
+  long double c = 0.0;
+  quadfix(mass1, radius1, mass2, radius2, mass3, radius3, a, b, c);
+  radius = quad_trend(a, b, c, planet_mass);
   return radius;
 }
 
