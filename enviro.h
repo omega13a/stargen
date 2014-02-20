@@ -45,7 +45,7 @@ long double inspired_partial_pressure(long double, long double);
 unsigned int breathability(planet *);
 void set_temp_range(planet *);
 long double getSpinResonanceFactor(long double);
-long double radius_improved(long double, long double, long double, long double, bool, int);
+long double radius_improved(long double, long double, long double, long double, bool, int, planet *);
 long double gas_radius(long double, long double, long double, long double, planet *);
 long double round_threshold(long double);
 long double ultimateStrength(long double);
