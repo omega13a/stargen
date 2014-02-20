@@ -4155,19 +4155,19 @@ long double gas_radius_1Gyr_1300K(long double core_earth_masses, long double tot
   {
     jupiter_radii1 = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
     jupiter_radii2 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
-    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 10.0, 25.0);
+    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 10.0, 25.0);
   }
   else if (core_earth_masses <= 50.0)
   {
     jupiter_radii1 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
     jupiter_radii2 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
-    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 25.0, 50.0);
+    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 25.0, 50.0);
   }
   else if (core_earth_masses <= 100.0)
   {
     jupiter_radii1 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
     jupiter_radii2 = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
-    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 50.0, 100.0);
+    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 50.0, 100.0);
   }
   else
   {
@@ -4205,7 +4205,7 @@ long double gas_radius_1Gyr_875K_0core_mass(long double total_earth_masses, plan
   else if (total_earth_masses < 28.0)
   {
     //jupiter_radii = quad_trend(1.825148E-4, -0.0173949843, 1.540967955, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 17.0, mass_radii[17], 28.0, mass_radii[28], 46.0, mass_radii[46]);
+    jupiter_radii = planet_radius_helper(total_earth_masses, 0.0, mass_radii[0], 17.0, mass_radii[17], 28.0, mass_radii[28]);
   }
   else if (total_earth_masses < 46.0)
   {
