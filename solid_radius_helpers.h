@@ -1,7 +1,7 @@
 #ifndef SOLID_RADIUS_HELPERS_H
 #define SOLID_RADIUS_HELPERS_H
 
-long double water_radius(long double);
+long double water_radius(long double, planet *);
 long double one_quater_rock_three_fourths_water_radius(long double, long double);
 long double half_rock_half_water_radius(long double, long double);
 long double rock_radius(long double, long double);
