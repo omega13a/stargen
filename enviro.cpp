@@ -2914,7 +2914,7 @@ long double calcGasRadius(planet *the_planet)
 
 long double calcSolidRadius(planet *the_planet)
 {
-  return radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone());
+  return radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet);
 }
 
 long double calcRadius(planet *the_planet)

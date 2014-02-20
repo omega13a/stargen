@@ -1,5 +1,6 @@
 #ifndef SOLID_RADIUS_HELPERS_H
 #define SOLID_RADIUS_HELPERS_H
+#include "structs.h"
 
 long double water_radius(long double, planet *);
 long double one_quater_rock_three_fourths_water_radius(long double, long double);
