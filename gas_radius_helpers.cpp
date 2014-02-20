@@ -7042,10 +7042,16 @@ long double gas_radius_4point5Gyr_1300K_100core_mass(long double total_earth_mas
     jupiter_radii2 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
     jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 1292.0, 2154.0);
   }
+  else if (total_earth_masses < 3594.0)
+  {
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii2 = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 2154.0, 3594.0);
+  }
   else
   {
     //jupiter_radii = ln_trend(1.527757403, -0.0605540647, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
   }
   if (flag_verbose & 0x80000)
   {
@@ -7101,6 +7107,8 @@ long double gas_radius_4point5Gyr_1300K(long double core_earth_masses, long doub
 long double gas_radius_4point5Gyr_875K_0core_mass(long double total_earth_masses, planet *the_planet)
 {
   long double jupiter_radii = 0.0;
+  long double jupiter_radii1 = 0.0;
+  long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
   mass_radii[0] = 0.0;
   mass_radii[17] = 1.068;
@@ -7123,56 +7131,83 @@ long double gas_radius_4point5Gyr_875K_0core_mass(long double total_earth_masses
   else if (total_earth_masses < 28.0)
   {
     //jupiter_radii = quad_trend(8.6381052E-5, -0.0076144201, 1.172481017, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 17.0, mass_radii[17], 28.0, mass_radii[28], 46.0, mass_radii[46]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 0.0, mass_radii[0], 17.0, mass_radii[17], 28.0, mass_radii[28]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 17.0, mass_radii[17], 28.0, mass_radii[28], 46.0, mass_radii[46]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 17.0, 28.0);
   }
   else if (total_earth_masses < 46.0)
   {
     //jupiter_radii = quad_trend(3.745154E-5, -0.0039936362, 1.109459805, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 28.0, mass_radii[28], 46.0, mass_radii[46], 77.0, mass_radii[77]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 17.0, mass_radii[17], 28.0, mass_radii[28], 46.0, mass_radii[46]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 28.0, mass_radii[28], 46.0, mass_radii[46], 77.0, mass_radii[77]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 28.0, 46.0);
   }
   else if (total_earth_masses < 77.0)
   {
     //jupiter_radii = quad_trend(1.4200723E-6, 4.3823433E-4, 0.9818363479, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 46.0, mass_radii[46], 77.0, mass_radii[77], 129.0, mass_radii[129]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 28.0, mass_radii[28], 46.0, mass_radii[46], 77.0, mass_radii[77]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 46.0, mass_radii[46], 77.0, mass_radii[77], 129.0, mass_radii[129]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 46.0, 77.0);
   }
   else if (total_earth_masses < 129.0)
   {
     //jupiter_radii = quad_trend(-3.357445E-6, 0.0014224028, 0.9343812709, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 46.0, mass_radii[46], 77.0, mass_radii[77], 129.0, mass_radii[129]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 77.0, 129.0);
   }
   else if (total_earth_masses < 215.0)
   {
     //jupiter_radii = quad_trend(-1.158191E-6, 6.658597E-4, 0.995377562, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 129.0, 215.0);
   }
   else if (total_earth_masses < 318.0)
   {
     //jupiter_radii = quad_trend(-1.3994E-7, 1.2313171E-4, 1.064995409, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 215.0, 318.0);
   }
   else if (total_earth_masses < 464.0)
   {
     //jupiter_radii = quad_trend(1.9478103E-8, -1.533247E-6, 1.088517869, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 318.0, 464.0);
   }
   else if (total_earth_masses < 774.0)
   {
     //jupiter_radii = quad_trend(-1.561369E-8, 4.1910394E-5, 1.075915142, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 464.0, 774.0);
   }
   else if (total_earth_masses < 1292.0)
   {
     //jupiter_radii = quad_trend(-2.380751E-8, 5.8838828E-5, 1.067721256, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 774.0, 1292.0);
   }
   else if (total_earth_masses < 2154.0)
   {
     //jupiter_radii = quad_trend(-3.797823E-9, -1.011456E-5, 1.123407579, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 1292.0, 2154.0);
+  }
+  else if (total_earth_masses < 3594.0)
+  {
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii2 = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 2154.0, 3594.0);
   }
   else
   {
-    jupiter_radii = ln_trend(1.773640017, -0.0898544185, total_earth_masses);
+    //jupiter_radii = ln_trend(1.773640017, -0.0898544185, total_earth_masses);
+    jupiter_radii = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
   }
   if (flag_verbose & 0x80000)
   {
@@ -7184,8 +7219,10 @@ long double gas_radius_4point5Gyr_875K_0core_mass(long double total_earth_masses
 long double gas_radius_4point5Gyr_875K_10core_mass(long double total_earth_masses, planet *the_planet)
 {
   long double jupiter_radii = 0.0;
+  long double jupiter_radii1 = 0.0;
+  long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[10] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
+  mass_radii[10] = radius_improved(10.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[17] = 0.592;
   mass_radii[28] = 0.755;
   mass_radii[46] = 0.858;
@@ -7215,56 +7252,83 @@ long double gas_radius_4point5Gyr_875K_10core_mass(long double total_earth_masse
   else if (total_earth_masses < 28.0)
   {
     //jupiter_radii = quad_trend(-3.136538E-4, 0.0289326019, 0.1907917102, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 17.0, mass_radii[17], 28.0, mass_radii[28], 46.0, mass_radii[46]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 10.0, mass_radii[10], 17.0, mass_radii[17], 28.0, mass_radii[28]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 17.0, mass_radii[17], 28.0, mass_radii[28], 46.0, mass_radii[46]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 17.0, 28.0);
   }
   else if (total_earth_masses < 46.0)
   {
     //jupiter_radii = quad_trend(-6.148051E-5, 0.0102717797, 0.5155908858, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 28.0, mass_radii[28], 46.0, mass_radii[46], 77.0, mass_radii[77]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 17.0, mass_radii[17], 28.0, mass_radii[28], 46.0, mass_radii[46]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 28.0, mass_radii[28], 46.0, mass_radii[46], 77.0, mass_radii[77]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 28.0, 46.0);
   }
   else if (total_earth_masses < 77.0)
   {
     //jupiter_radii = quad_trend(-1.735478E-5, 0.0048443152, 0.6718842118, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 46.0, mass_radii[46], 77.0, mass_radii[77], 129.0, mass_radii[129]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 28.0, mass_radii[28], 46.0, mass_radii[46], 77.0, mass_radii[77]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 46.0, mass_radii[46], 77.0, mass_radii[77], 129.0, mass_radii[129]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 28.0, 46.0);
   }
   else if (total_earth_masses < 129.0)
   {
     //jupiter_radii = quad_trend(-5.574136E-6, 0.0024175028, 0.7889013378, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 46.0, mass_radii[46], 77.0, mass_radii[77], 129.0, mass_radii[129]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 77.0, 129.0);
   }
   else if (total_earth_masses < 215.0)
   {
     //jupiter_radii = quad_trend(-1.823599E-6, 0.001127318, 0.8929224842, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 129.0, 215.0);
   }
   else if (total_earth_masses < 318.0)
   {
     //jupiter_radii = quad_trend(-3.487817E-7, 3.4124048E-4, 0.9937557337, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 129.0, 318.0);
   }
   else if (total_earth_masses < 464.0)
   {
     //jupiter_radii = quad_trend(-5.82405E-8, 1.1403722E-4, 1.036625676, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 318.0, 464.0);
   }
   else if (total_earth_masses < 774.0)
   {
     //jupiter_radii = quad_trend(-3.199453E-8, 8.1544708E-5, 1.046051549, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 464.0, 774.0);
   }
   else if (total_earth_masses < 1292.0)
   {
     //jupiter_radii = quad_trend(-2.632296E-8, 6.9827253E-5, 1.051723161, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 774.0, 1292.0);
   }
   else if (total_earth_masses < 2154.0)
   {
     //jupiter_radii = quad_trend(-4.202383E-9, -6.40026E-6, 1.113284022, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 1292.0, 2154.0);
+  }
+  else if (total_earth_masses < 3594.0)
+  {
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii2 = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 2154.0, 3594.0);
   }
   else
   {
-    jupiter_radii = ln_trend(1.739655669, -0.0859477047, total_earth_masses);
+    //jupiter_radii = ln_trend(1.739655669, -0.0859477047, total_earth_masses);
+    jupiter_radii = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
   }
   if (flag_verbose & 0x80000)
   {
@@ -7276,8 +7340,10 @@ long double gas_radius_4point5Gyr_875K_10core_mass(long double total_earth_masse
 long double gas_radius_4point5Gyr_875K_25core_mass(long double total_earth_masses, planet *the_planet)
 {
   long double jupiter_radii = 0.0;
+  long double jupiter_radii1 = 0.0;
+  long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[25] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
+  mass_radii[25] = radius_improved(25.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[28] = 0.404;
   mass_radii[46] = 0.675;
   mass_radii[77] = 0.829;
@@ -7306,51 +7372,76 @@ long double gas_radius_4point5Gyr_875K_25core_mass(long double total_earth_masse
   else if (total_earth_masses < 46.0)
   {
     //jupiter_radii = quad_trend(-2.058737E-4, 0.0302902129, -0.2827209421, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 28.0, mass_radii[28], 46.0, mass_radii[46], 77.0, mass_radii[77]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 25.0, mass_radii[25], 28.0, mass_radii[28], 46.0, mass_radii[46]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 28.0, mass_radii[28], 46.0, mass_radii[46], 77.0, mass_radii[77]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 28.0, 46.0);
   }
   else if (total_earth_masses < 77.0)
   {
     //jupiter_radii = quad_trend(-3.552423E-5, 0.0093372223, 0.3206570451, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 46.0, mass_radii[46], 77.0, mass_radii[77], 129.0, mass_radii[129]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 28.0, mass_radii[28], 46.0, mass_radii[46], 77.0, mass_radii[77]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 46.0, mass_radii[46], 77.0, mass_radii[77], 129.0, mass_radii[129]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 46.0, 77.0);
   }
   else if (total_earth_masses < 129.0)
   {
     //jupiter_radii = quad_trend(-8.902414E-6, 0.003853128, 0.5850915552, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 46.0, mass_radii[46], 77.0, mass_radii[77], 129.0, mass_radii[129]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 77.0, 129.0);
   }
   else if (total_earth_masses < 215.0)
   {
     //jupiter_radii = quad_trend(-2.539778E-6, 0.0016643813, 0.7615592541, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 129.0, 215.0);
   }
   else if (total_earth_masses < 318.0)
   {
     //jupiter_radii = quad_trend(-6.975635E-7, 6.8248095E-4, 0.8875114673, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 215.0, 318.0);
   }
   else if (total_earth_masses < 464.0)
   {
     //jupiter_radii = quad_trend(-1.377034E-7, 2.4467036E-4, 0.9701199433, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 318.0, 464.0);
   }
   else if (total_earth_masses < 774.0)
   {
     //jupiter_radii = quad_trend(-5.929592E-8, 1.476019E-4, 0.9982788934, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 464.0, 774.0);
   }
   else if (total_earth_masses < 1292.0)
   {
     //jupiter_radii = quad_trend(-3.079559E-8, 8.8720219E-5, 1.026779451, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 774.0, 1292.0);
   }
   else if (total_earth_masses < 2154.0)
   {
     //jupiter_radii = quad_trend(-5.110893E-9, 2.1074347E-7, 1.098259148, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 1292.0, 2154.0);
+  }
+  else if (total_earth_masses < 3594.0)
+  {
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii2 = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 2154.0, 3594.0);
   }
   else
   {
-    jupiter_radii = ln_trend(1.70467132, -0.0820409908, total_earth_masses);
+    //jupiter_radii = ln_trend(1.70467132, -0.0820409908, total_earth_masses);
+    jupiter_radii = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
   }
   if (flag_verbose & 0x80000)
   {
@@ -7362,8 +7453,10 @@ long double gas_radius_4point5Gyr_875K_25core_mass(long double total_earth_masse
 long double gas_radius_4point5Gyr_875K_50core_mass(long double total_earth_masses, planet *the_planet)
 {
   long double jupiter_radii = 0.0;
+  long double jupiter_radii1 = 0.0;
+  long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[50] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
+  mass_radii[50] = radius_improved(50.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[77] = 0.639;
   mass_radii[129] = 0.817;
   mass_radii[215] = 0.928;
@@ -7390,41 +7483,62 @@ long double gas_radius_4point5Gyr_875K_50core_mass(long double total_earth_masse
   else if (total_earth_masses < 129.0)
   {
     //jupiter_radii = quad_trend(-1.545202E-5, 0.0066061938, 0.2219381271, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 50.0, mass_radii[50], 77.0, mass_radii[77], 129.0, mass_radii[129]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 77.0, 129.0);
   }
   else if (total_earth_masses < 215.0)
   {
     //jupiter_radii = quad_trend(-4.055163E-6, 0.0026856738, 0.5380300509, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 77.0, mass_radii[77], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 129.0, 215.0);
   }
   else if (total_earth_masses < 318.0)
   {
     //jupiter_radii = quad_trend(-1.08774E-6, 0.0011040371, 0.7409127896, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 215.0, 318.0);
   }
   else if (total_earth_masses < 464.0)
   {
     //jupiter_radii = quad_trend(-3.010869E-7, 4.8887461E-4, 0.856984985, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 318.0, 464.0);
   }
   else if (total_earth_masses < 774.0)
   {
     //jupiter_radii = quad_trend(-9.129045E-8, 2.2914661E-4, 0.9323304424, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 464.0, 774.0);
   }
   else if (total_earth_masses < 1292.0)
   {
     //jupiter_radii = quad_trend(-3.778367E-8, 1.1860161E-4, 0.9858376464, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 774.0, 1292.0);
   }
   else if (total_earth_masses < 2154.0)
   {
     //jupiter_radii = quad_trend(-6.725632E-9, 1.15756E-5, 1.07227118, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 1292.0, 2154.0);
+  }
+  else if (total_earth_masses < 3594.0)
+  {
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii2 = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 2154.0, 3594.0);
   }
   else
   {
-    jupiter_radii = ln_trend(1.650694797, -0.0761809201, total_earth_masses);
+    //jupiter_radii = ln_trend(1.650694797, -0.0761809201, total_earth_masses);
+    jupiter_radii = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
   }
   if (flag_verbose & 0x80000)
   {
@@ -7436,8 +7550,10 @@ long double gas_radius_4point5Gyr_875K_50core_mass(long double total_earth_masse
 long double gas_radius_4point5Gyr_875K_100core_mass(long double total_earth_masses, planet *the_planet)
 {
   long double jupiter_radii = 0.0;
+  long double jupiter_radii1 = 0.0;
+  long double jupiter_radii2 = 0.0;
   map<int, long double> mass_radii;
-  mass_radii[100] = radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
+  mass_radii[100] = radius_improved(100.0 / SUN_MASS_IN_EARTH_MASSES, the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet) / KM_JUPITER_RADIUS;
   mass_radii[129] = 0.582;
   mass_radii[215] = 0.788;
   mass_radii[318] = 0.884;
@@ -7463,36 +7579,55 @@ long double gas_radius_4point5Gyr_875K_100core_mass(long double total_earth_mass
   else if (total_earth_masses < 215.0)
   {
     //jupiter_radii = quad_trend(-7.742381E-6, 0.0050587279, 0.058265064, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 100.0, mass_radii[100], 129.0, mass_radii[129], 215.0, mass_radii[215]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 129.0, 215.0);
   }
   else if (total_earth_masses < 318.0)
   {
     //jupiter_radii = quad_trend(-1.955154E-6, 0.0019741359, 0.4539377689, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 129.0, mass_radii[129], 215.0, mass_radii[215], 318.0, mass_radii[318]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 215.0, 318.0);
   }
   else if (total_earth_masses < 464.0)
   {
      //jupiter_radii = quad_trend(-5.165089E-7, 8.4911544E-4, 0.6662127358, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 215.0, mass_radii[215], 318.0, mass_radii[318], 464.0, mass_radii[464]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 318.0, 464.0);
   }
   else if (total_earth_masses < 774.0)
   {
     //jupiter_radii = quad_trend(-1.716303E-7, 4.2215568E-4, 0.7900710739, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 318.0, mass_radii[318], 464.0, mass_radii[464], 774.0, mass_radii[774]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 464.0, 774.0);
   }
   else if (total_earth_masses < 1292.0)
   {
     //jupiter_radii = quad_trend(-4.896201E-8, 1.6872307E-4, 0.9127403055, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 464.0, mass_radii[464], 774.0, mass_radii[774], 1292.0, mass_radii[1292]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 774.0, 1292.0);
   }
   else if (total_earth_masses < 2154.0)
   {
     //jupiter_radii = quad_trend(-9.351771E-9, 3.2226204E-5, 1.022974319, total_earth_masses);
-    jupiter_radii = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii1 =  planet_radius_helper(total_earth_masses, 774.0, mass_radii[774], 1292.0, mass_radii[1292], 2154.0, mass_radii[2154]);
+    jupiter_radii2 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 1292.0, 2154.0);
+  }
+  else if (total_earth_masses < 3594.0)
+  {
+    jupiter_radii1 = planet_radius_helper(total_earth_masses, 1292.0, mass_radii[1292], 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii2 = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
+    jupiter_radii = rangeAdjust(total_earth_masses, jupiter_radii1, jupiter_radii2, 2154.0, 3594.0);
   }
   else
   {
-    jupiter_radii = ln_trend(1.513757404, -0.0605540647, total_earth_masses);
+    //jupiter_radii = ln_trend(1.513757404, -0.0605540647, total_earth_masses);
+    jupiter_radii = planet_radius_helper2(total_earth_masses, 2154.0, mass_radii[2154], 3594.0, mass_radii[3594]);
   }
   if (flag_verbose & 0x80000)
   {
@@ -7503,42 +7638,44 @@ long double gas_radius_4point5Gyr_875K_100core_mass(long double total_earth_mass
 
 long double gas_radius_4point5Gyr_875K(long double core_earth_masses, long double total_earth_masses, planet *the_planet)
 {
-  long double lower_fraction = 0.0;
-  long double upper_fraction = 0.0;
-  long double range = 0.0;
   long double jupiter_radii = 0.0;
+  long double jupiter_radii1 = 0.0;
+  long double jupiter_radii2 = 0.0;
+  map<int, long double> core_mass_radii;
+  core_mass_radii[0] = gas_radius_4point5Gyr_875K_0core_mass(total_earth_masses, the_planet);
+  core_mass_radii[10] = gas_radius_4point5Gyr_875K_10core_mass(total_earth_masses, the_planet);
+  core_mass_radii[25] = gas_radius_4point5Gyr_875K_25core_mass(total_earth_masses, the_planet);
+  core_mass_radii[50] = gas_radius_4point5Gyr_875K_50core_mass(total_earth_masses, the_planet);
+  core_mass_radii[100] = gas_radius_4point5Gyr_875K_100core_mass(total_earth_masses, the_planet);
   if (core_earth_masses <= 10.0)
   {
-    range = 10.0 - 0.0;
-    upper_fraction = core_earth_masses / (long double)range;
-    lower_fraction = (1.0 - upper_fraction);
-    jupiter_radii = (lower_fraction * gas_radius_4point5Gyr_875K_0core_mass(total_earth_masses, the_planet)) + (upper_fraction * gas_radius_4point5Gyr_875K_10core_mass(total_earth_masses, the_planet));
+    jupiter_radii = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
   }
   else if (core_earth_masses <= 25.0)
   {
-    range = 25.0 - 10.0;
-    upper_fraction = (core_earth_masses - 10.0) / (long double)range;
-    lower_fraction = 1.0 - upper_fraction;
-    jupiter_radii = (lower_fraction * gas_radius_4point5Gyr_875K_10core_mass(total_earth_masses, the_planet)) + (upper_fraction * gas_radius_4point5Gyr_875K_25core_mass(total_earth_masses, the_planet));
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 0.0, core_mass_radii[0], 10.0, core_mass_radii[10], 25.0, core_mass_radii[25]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
+    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 10.0, 25.0);
   }
   else if (core_earth_masses <= 50.0)
   {
-    range = 50.0 - 25.0;
-    upper_fraction = (core_earth_masses - 25.0) / (long double)range;
-    lower_fraction = 1.0 - upper_fraction;
-    jupiter_radii = (lower_fraction * gas_radius_4point5Gyr_875K_25core_mass(total_earth_masses, the_planet)) + (upper_fraction * gas_radius_4point5Gyr_875K_50core_mass(total_earth_masses, the_planet));
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 10.0, core_mass_radii[10], 25.0, core_mass_radii[25], 50.0, core_mass_radii[50]);
+    jupiter_radii2 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 25.0, 50.0);
   }
   else if (core_earth_masses <= 100.0)
   {
-    range = 100.0 - 50.0;
-    upper_fraction = (core_earth_masses - 50.0) / (long double)range;
-    lower_fraction = 1.0 - upper_fraction;
-    jupiter_radii = (lower_fraction * gas_radius_4point5Gyr_875K_50core_mass(total_earth_masses, the_planet)) + (upper_fraction * gas_radius_4point5Gyr_875K_100core_mass(total_earth_masses, the_planet));
+    jupiter_radii1 = planet_radius_helper(core_earth_masses, 25.0, core_mass_radii[25], 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+    jupiter_radii2 = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+    jupiter_radii = rangeAdjust(core_earth_masses, jupiter_radii1, jupiter_radii2, 50.0, 100.0);
   }
   else
   {
-    upper_fraction = core_earth_masses / 100.0;
-    jupiter_radii = gas_radius_4point5Gyr_875K_100core_mass(total_earth_masses, the_planet) * pow1_4(upper_fraction);
+    jupiter_radii = planet_radius_helper2(core_earth_masses, 50.0, core_mass_radii[50], 100.0, core_mass_radii[100]);
+  }
+  if (flag_verbose & 0x80000)
+  {
+    radiusDebug("4.5 billion year old 875k Gas Giants", the_planet, jupiter_radii, core_mass_radii);
   }
   return jupiter_radii;
 }
