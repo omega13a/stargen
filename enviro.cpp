@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
 #include "const.h"
@@ -1857,15 +1858,19 @@ long double getSpinResonanceFactor(long double eccentricity)
 
 long double radius_improved(long double mass, long double imf, long double rmf, long double cmf, bool giant, int zone, planet *the_planet)
 {
-  long double range;
-  long double upper_fraction;
-  long double lower_fraction;
-  long double non_ice_radius;
-  long double ice_radius;
-  long double radius;
-  
+  long double non_ice_radius = 0.0;;
+  long double ice_radius = 0.0;
+  long double radius = 0.0;
+  long double radius1 = 0.0;
+  long double radius2 = 0.0;
+  map<long double, long double> non_ice_radii;
+  map<long double, long double> ice_radii;
   mass *= SUN_MASS_IN_EARTH_MASSES;
-  if (rmf <= 0.5)
+  non_ice_radii[0.0] = iron_radius(mass);
+  non_ice_radii[0.5] = half_rock_half_iron_radius(mass, cmf);
+  non_ice_radii[1.0] = rock_radius(mass, cmf);
+  non_ice_radius = planet_radius_helper(rmf, 0.0, non_ice_radii[0.0], 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0]);
+  /*if (rmf <= 0.5)
   {
     range = 0.5 - 0.0;
     upper_fraction = rmf / range;
@@ -1880,6 +1885,7 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
     lower_fraction = 1.0 - upper_fraction;
     non_ice_radius = (upper_fraction * rock_radius(mass, cmf)) + (lower_fraction * half_rock_half_iron_radius(mass, cmf));
   }
+  
   if (imf <= 0.5)
   {
     range = 0.5 - 0.0;
@@ -1900,6 +1906,27 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
     upper_fraction = (imf - 0.75) / range;
     lower_fraction = 1.0 - upper_fraction;
     ice_radius = (upper_fraction * water_radius(mass, the_planet)) + (lower_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf));
+  }*/
+  if (imf > 0.0)
+  {
+    ice_radii[0.0] = rock_radius(mass, cmf);
+    ice_radii[0.5] = half_rock_half_water_radius(mass, cmf);
+    ice_radii[0.75] = one_quater_rock_three_fourths_water_radius(mass, cmf);
+    ice_radii[1.0] = water_radius(mass, the_planet);
+    if (imf < 0.5)
+    {
+      ice_radius = planet_radius_helper(imf, 0.0, ice_radii[0.0], 0.5, ice_radii[0.5], 0.75, ice_radii[0.75]);
+    }
+    else if (imf < 0.75)
+    {
+      radius1 = planet_radius_helper(imf, 0.0, ice_radii[0.0], 0.5, ice_radii[0.5], 0.75, ice_radii[0.75]);
+      radius2 = planet_radius_helper(imf, 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], 1.0, ice_radii[1.0]);
+      ice_radius = rangeAdjust(imf, radius1, radius2, 0.5, 0.75);
+    }
+    else
+    {
+      ice_radius = planet_radius_helper(imf, 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], 1.0, ice_radii[1.0]);
+    }
   }
   radius = (ice_radius * imf) + (non_ice_radius * (1.0 - imf));
   radius *= KM_EARTH_RADIUS;
