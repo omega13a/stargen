@@ -1908,14 +1908,20 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
 
 long double gas_radius(long double temperature, long double core_mass, long double total_mass, long double star_age, planet *the_planet)
 {
+  long double jupiter_radii = 0.0;
+  long double jupiter_radii1 = 0.0;
+  long double jupiter_radii2 = 0.0;
+  long double core_earth_masses = core_mass * SUN_MASS_IN_EARTH_MASSES;
+  long double total_earth_masses = total_mass * SUN_MASS_IN_EARTH_MASSES;
   long double lower_fraction = 0.0;
   long double upper_fraction = 0.0;
   long double range = 0.0;
-  long double jupiter_radii = 0.0;
-  long double core_earth_masses = core_mass * SUN_MASS_IN_EARTH_MASSES;
-  long double total_earth_masses = total_mass * SUN_MASS_IN_EARTH_MASSES;
   long double radius;
-  if (star_age < 300.0E6)
+  map<int, long double> age_radii;
+  age_radii[300.0E6] = gas_radius_300Myr(temperature, core_earth_masses, total_earth_masses, the_planet);
+  age_radii[1.0E9] = gas_radius_1Gyr(temperature, core_earth_masses, total_earth_masses, the_planet);
+  age_radii[4.5E9] = gas_radius_4point5Gyr(temperature, core_earth_masses, total_earth_masses, the_planet);
+  /*if (star_age < 300.0E6)
   {
     upper_fraction = 300.0E6 / star_age;
     jupiter_radii = gas_radius_300Myr(temperature, core_earth_masses, total_earth_masses, the_planet) * sqrt(upper_fraction);
@@ -1937,8 +1943,27 @@ long double gas_radius(long double temperature, long double core_mass, long doub
   else
   {
     jupiter_radii = gas_radius_4point5Gyr(temperature, core_earth_masses, total_earth_masses, the_planet);
+  }*/
+  if (star_age < 300.0E6)
+  {
+    jupiter_radii = planet_radius_helper2(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9]);
   }
-  
+  else if (star_age < 1.0E9)
+  {
+    jupiter_radii1 = planet_radius_helper2(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9]);
+    jupiter_radii2 = planet_radius_helper(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9]);
+    jupiter_radii = rangeAdjust(star_age, jupiter_radii1, jupiter_radii2, 300.0E6, 1.0E9);
+  }
+  else if (star_age < 4.5E9)
+  {
+    jupiter_radii1 = planet_radius_helper(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9]);
+    jupiter_radii2 = planet_radius_helper2(star_age, 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9]);
+    jupiter_radii = rangeAdjust(star_age, jupiter_radii1, jupiter_radii2, 1.0E9, 4.5E9);
+  }
+  else
+  {
+    jupiter_radii = planet_radius_helper2(star_age, 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9]);
+  }
   radius = jupiter_radii * KM_JUPITER_RADIUS;
   
   if (total_earth_masses < 10)
@@ -2894,22 +2919,26 @@ long double calcLuminosity(planet *the_planet)
 
 long double calcGasRadius(planet *the_planet)
 {
-  long double range, lower_fraction, upper_fraction;
+  long double lower, upper, result;
   if (convert_su_to_eu(the_planet->getMass()) < 17.0)
     {
-      return mini_neptune_radius(the_planet);
+      result = mini_neptune_radius(the_planet);
     }
     else if (convert_su_to_eu(the_planet->getMass()) < 20.0)
     {
-      range = 20.0 - 17.0;
-      upper_fraction = (convert_su_to_eu(the_planet->getMass()) - 17.0) / range;
-      lower_fraction = 1.0 - upper_fraction;
-      return (lower_fraction * mini_neptune_radius(the_planet)) + (upper_fraction * gas_radius(the_planet->getEstimatedTemp(), the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet));
+      lower = mini_neptune_radius(the_planet);
+      upper = gas_radius(the_planet->getEstimatedTemp(), the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
+      result = rangeAdjust(convert_su_to_eu(the_planet->getMass()), lower, upper, 17.0, 20.0);
     }
     else
     {
-      return gas_radius(the_planet->getEstimatedTemp(), the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
+      result =  gas_radius(the_planet->getEstimatedTemp(), the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
     }
+    if (result < the_planet->getCoreRadius())
+    {
+      result = mini_neptune_radius(the_planet);
+    }
+    return result;
 }
 
 long double calcSolidRadius(planet *the_planet)
