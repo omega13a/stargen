@@ -416,7 +416,7 @@ long double water_radius(long double mass, planet *the_planet)
   return radius;
 }
 
-long double one_quater_rock_three_fourths_water_radius(long double mass, long double cmf)
+long double one_quater_rock_three_fourths_water_radius(long double mass, long double cmf, planet *the_planet)
 {
   long double radius;
   bool adjust_for_carbon;
@@ -638,7 +638,7 @@ long double one_quater_rock_three_fourths_water_radius(long double mass, long do
   return radius;
 }
 
-long double half_rock_half_water_radius(long double mass, long double cmf)
+long double half_rock_half_water_radius(long double mass, long double cmf, planet *the_planet)
 {
   long double radius;
   bool adjust_for_carbon;
@@ -860,7 +860,7 @@ long double half_rock_half_water_radius(long double mass, long double cmf)
   return radius;
 }
 
-long double rock_radius(long double mass, long double cmf)
+long double rock_radius(long double mass, long double cmf, planet *the_planet)
 {
   long double radius;
   bool adjust_for_carbon;
@@ -1082,7 +1082,7 @@ long double rock_radius(long double mass, long double cmf)
   return radius;
 }
 
-long double half_rock_half_iron_radius(long double mass, long double cmf)
+long double half_rock_half_iron_radius(long double mass, long double cmf, planet *the_planet)
 {
   long double radius;
   bool adjust_for_carbon;
@@ -1304,7 +1304,7 @@ long double half_rock_half_iron_radius(long double mass, long double cmf)
   return radius;
 }
 
-long double iron_radius(long double mass)
+long double iron_radius(long double mass, planet *the_planet)
 {
   long double radius;
   long double range;

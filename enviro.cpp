@@ -1865,11 +1865,11 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
   long double radius2 = 0.0;
   map<long double, long double> non_ice_radii;
   map<long double, long double> ice_radii;
+  long double range, upper_fraction, lower_fraction;
   mass *= SUN_MASS_IN_EARTH_MASSES;
-  non_ice_radii[0.0] = iron_radius(mass);
-  non_ice_radii[0.5] = half_rock_half_iron_radius(mass, cmf);
-  non_ice_radii[1.0] = rock_radius(mass, cmf);
-  non_ice_radius = planet_radius_helper(rmf, 0.0, non_ice_radii[0.0], 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0]);
+  non_ice_radii[0.0] = iron_radius(mass, the_planet);
+  non_ice_radii[0.5] = half_rock_half_iron_radius(mass, cmf, the_planet);
+  non_ice_radii[1.0] = rock_radius(mass, cmf, the_planet);
   /*if (rmf <= 0.5)
   {
     range = 0.5 - 0.0;
@@ -1907,11 +1907,12 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
     lower_fraction = 1.0 - upper_fraction;
     ice_radius = (upper_fraction * water_radius(mass, the_planet)) + (lower_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf));
   }*/
+  non_ice_radius = planet_radius_helper(rmf, 0.0, non_ice_radii[0.0], 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0]);
   if (imf > 0.0)
   {
-    ice_radii[0.0] = rock_radius(mass, cmf);
-    ice_radii[0.5] = half_rock_half_water_radius(mass, cmf);
-    ice_radii[0.75] = one_quater_rock_three_fourths_water_radius(mass, cmf);
+    ice_radii[0.0] = rock_radius(mass, cmf, the_planet);
+    ice_radii[0.5] = half_rock_half_water_radius(mass, cmf, the_planet);
+    ice_radii[0.75] = one_quater_rock_three_fourths_water_radius(mass, cmf, the_planet);
     ice_radii[1.0] = water_radius(mass, the_planet);
     if (imf < 0.5)
     {
@@ -3023,9 +3024,9 @@ long double planet_radius_helper(long double planet_mass, long double mass1, lon
   long double a = 0.0;
   long double b = 0.0;
   long double c = 0.0;
-  stringstream ss;
+  /*stringstream ss;
   string cache_name;
-  double coeff[3];
+  long double coeff[3];
   vector<long double> coeff_cache;
   ss.str("");
   ss << toString(mass1) << " " << toString(radius1) << " " << toString(mass2) << " " << toString(radius2) << " " << toString(mass3) << " " << toString(radius3);
@@ -3043,17 +3044,21 @@ long double planet_radius_helper(long double planet_mass, long double mass1, lon
     c = coeff[2];
   }
   else
-  {
+  {*/
     quadfix(mass1, radius1, mass2, radius2, mass3, radius3, a, b, c);
-    coeff[0] = a;
+    /*coeff[0] = a;
     coeff[1] = b;
     coeff[2] = c;
+    while (!coeff_cache.empty())
+    {
+      coeff_cache.pop_back();
+    }
     for (int i = 0; i < 3; i++)
     {
-      coeff_cache[i] = coeff[i];
+      coeff_cache.push_back(coeff[i]);
     }
     polynomial_cache[cache_name] = coeff_cache;
-  }
+  }*/
   radius = quad_trend(a, b, c, planet_mass);
   return radius;
 }
