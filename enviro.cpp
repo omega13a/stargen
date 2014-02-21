@@ -2985,7 +2985,7 @@ long double calcRadius(planet *the_planet)
   }
 }
 
-//map<string, vector<double> > polynomial_cache;
+map<string, vector<long double> > polynomial_cache;
 
 long double planet_radius_helper(long double planet_mass, long double mass1, long double radius1, long double mass2, long double radius2, long double mass3, long double radius3)
 {
@@ -3023,7 +3023,37 @@ long double planet_radius_helper(long double planet_mass, long double mass1, lon
   long double a = 0.0;
   long double b = 0.0;
   long double c = 0.0;
-  quadfix(mass1, radius1, mass2, radius2, mass3, radius3, a, b, c);
+  stringstream ss;
+  string cache_name;
+  double coeff[3];
+  vector<long double> coeff_cache;
+  ss.str("");
+  ss << toString(mass1) << " " << toString(radius1) << " " << toString(mass2) << " " << toString(radius2) << " " << toString(mass3) << " " << toString(radius3);
+  cache_name = ss.str();
+  ss.str("");
+  coeff_cache = polynomial_cache[cache_name];
+  if (!coeff_cache.empty())
+  {
+    for (int i = 0; i < 3; i++)
+    {
+      coeff[i] = coeff_cache[i];
+    }
+    a = coeff[0];
+    b = coeff[1];
+    c = coeff[2];
+  }
+  else
+  {
+    quadfix(mass1, radius1, mass2, radius2, mass3, radius3, a, b, c);
+    coeff[0] = a;
+    coeff[1] = b;
+    coeff[2] = c;
+    for (int i = 0; i < 3; i++)
+    {
+      coeff_cache[i] = coeff[i];
+    }
+    polynomial_cache[cache_name] = coeff_cache;
+  }
   radius = quad_trend(a, b, c, planet_mass);
   return radius;
 }
