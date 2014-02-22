@@ -77,7 +77,7 @@ long double calculate_moment_of_inertia(planet *);
 long double calcOblateness_improved(long double, long double, long double, long double);
 long double calcLuminosity(planet *);
 long double calcRadius(planet *);
-long double planet_radius_helper(long double, long double, long double, long double, long double, long double, long double);
+long double planet_radius_helper(long double planet_mass, long double mass1, long double radius1, long double mass2, long double radius2, long double mass3, long double radius3, bool use_cache = true);
 long double planet_radius_helper2(long double, long double, long double, long double, long double);
 long double planet_radius_helper3(long double, long double, long double, long double, long double);
 long double convert_su_to_eu(long double);

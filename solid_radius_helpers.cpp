@@ -64,22 +64,22 @@ long double water_radius(long double mass, planet *the_planet)
   mass_radii[390.1] = 4.639;
   mass_radii[435.9] = 4.656;
   mass_radii[486.4] = 4.669;
-  if (mass <= 0.04662)
+  if (mass <= 0.04663)
   {
     adjust_for_carbon = false;
     radius1 = fraction_radius(mass, 1.0, 0, 0);
-    radius2 = planet_radius_helper(mass, 0.04662, mass_radii[0.04662], 0.06174, mass_radii[0.06174], 0.08208, mass_radii[0.8208]);
-    radius = rangeAdjust(mass, radius1, radius2, 0.0, 0.04662);
+    radius2 = planet_radius_helper(mass, 0.04663, mass_radii[0.04663], 0.06174, mass_radii[0.06174], 0.08208, mass_radii[0.08208]);
+    radius = rangeAdjust(mass, radius1, radius2, 0.0, 0.04663);
   }
   else if (mass <= 0.06174)
   {
     //radius = quad_trend(-16.65123034, 5.113560675, 0.3777603833, mass);
-    radius = planet_radius_helper(mass, 0.04662, mass_radii[0.04662], 0.06174, mass_radii[0.06174], 0.08208, mass_radii[0.8208]);
+    radius = planet_radius_helper(mass, 0.04663, mass_radii[0.04663], 0.06174, mass_radii[0.06174], 0.08208, mass_radii[0.08208]);
   }
   else if (mass <= 0.08208)
   {
     //radius = quad_trend(-10.36320636, 4.209217066, 0.4096256944, mass);
-    radius1 = planet_radius_helper(mass, 0.04662, mass_radii[0.04662], 0.06174, mass_radii[0.06174], 0.08208, mass_radii[0.8208]);
+    radius1 = planet_radius_helper(mass, 0.04663, mass_radii[0.04663], 0.06174, mass_radii[0.06174], 0.08208, mass_radii[0.08208]);
     radius2 = planet_radius_helper(mass, 0.06174, mass_radii[0.06174], 0.08208, mass_radii[0.08208], 0.1091, mass_radii[0.1091]);
     radius = rangeAdjust(mass, radius1, radius2, 0.06174, 0.08208);
   }
@@ -826,6 +826,10 @@ long double one_quater_rock_three_fourths_water_radius(long double mass, long do
     carbon_fraction = rmf * cmf;
     grow_factor = (0.05 * carbon_fraction) + 1.0; // not very scientific but guested by eye-balling an image on wikipedia.
     radius *= grow_factor;
+  }
+  if (flag_verbose & 0x80000)
+  {
+    radiusDebug("25% rock, 75% water/ice", the_planet, radius, mass_radii);
   }
   return radius;
 }

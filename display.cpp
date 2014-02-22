@@ -1363,6 +1363,10 @@ void html_decribe_planet(planet* the_planet, int counter, int moons, bool do_gas
     the_file << "<br />" << toString(the_planet->getRadius() / KM_JUPITER_RADIUS) << " Jupiter radii";
   }
   the_file << "</td></tr>\n";
+  if (the_planet->getGasMass())
+  {
+    the_file << "<tr><th>Radius of Core</th><td>" << toString(the_planet->getCoreRadius()) << " km</td><td>" << toString(the_planet->getCoreRadius() / KM_EARTH_RADIUS) << " Earth radii</td></tr>";
+  }
   the_file << "<tr><th>Oblateness</th><td>" << toString(the_planet->getOblateness()) << "</td><td><table><tr><th>Equatorial Radius</th><th>Polar Radius</th></tr><tr><td>" << toString(the_planet->getEquatrorialRadius()) << " Km<br />" << toString(the_planet->getEquatrorialRadius() / KM_EARTH_RADIUS) << " Earth radii<br />" << toString(the_planet->getEquatrorialRadius() / KM_JUPITER_RADIUS) << " Jupiter radii</td><td>" << toString(the_planet->getPolarRadius()) << " Km<br />" << toString(the_planet->getPolarRadius() / KM_EARTH_RADIUS) << " Earth radii<br />" << toString(the_planet->getPolarRadius() / KM_JUPITER_RADIUS) << " Jupiter radii</td></tr></table>";
   the_file << "</td></tr>\n";
   

@@ -1907,7 +1907,17 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
     lower_fraction = 1.0 - upper_fraction;
     ice_radius = (upper_fraction * water_radius(mass, the_planet)) + (lower_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf));
   }*/
-  non_ice_radius = planet_radius_helper(rmf, 0.0, non_ice_radii[0.0], 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0]);
+  //non_ice_radius = planet_radius_helper(rmf, 0.0, non_ice_radii[0.0], 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0]);
+  if (rmf < 0.5)
+  {
+    non_ice_radius = planet_radius_helper(rmf, 0.0, non_ice_radii[0.0], 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0], false);
+  }
+  else
+  {
+    radius1 = planet_radius_helper(rmf, 0.0, non_ice_radii[0.0], 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0], false);
+    radius2 = planet_radius_helper2(rmf, 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0]);
+    non_ice_radius = rangeAdjust(rmf, radius1, radius2, 0.5, 1.0);
+  }
   if (imf > 0.0)
   {
     ice_radii[0.0] = rock_radius(mass, cmf, the_planet);
@@ -1916,17 +1926,19 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
     ice_radii[1.0] = water_radius(mass, the_planet);
     if (imf < 0.5)
     {
-      ice_radius = planet_radius_helper(imf, 0.0, ice_radii[0.0], 0.5, ice_radii[0.5], 0.75, ice_radii[0.75]);
+      ice_radius = planet_radius_helper(imf, 0.0, ice_radii[0.0], 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], false);
     }
     else if (imf < 0.75)
     {
-      radius1 = planet_radius_helper(imf, 0.0, ice_radii[0.0], 0.5, ice_radii[0.5], 0.75, ice_radii[0.75]);
-      radius2 = planet_radius_helper(imf, 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], 1.0, ice_radii[1.0]);
+      radius1 = planet_radius_helper(imf, 0.0, ice_radii[0.0], 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], false);
+      radius2 = planet_radius_helper(imf, 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], 1.0, ice_radii[1.0], false);
       ice_radius = rangeAdjust(imf, radius1, radius2, 0.5, 0.75);
     }
     else
     {
-      ice_radius = planet_radius_helper(imf, 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], 1.0, ice_radii[1.0]);
+      radius1 = planet_radius_helper(imf, 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], 1.0, ice_radii[1.0], false);
+      radius2 = planet_radius_helper2(imf, 0.75, ice_radii[0.75], 1.0, ice_radii[1.0]);
+      ice_radius = rangeAdjust(imf, radius1, radius2, 0.75, 1.0);
     }
   }
   radius = (ice_radius * imf) + (non_ice_radius * (1.0 - imf));
@@ -1979,12 +1991,12 @@ long double gas_radius(long double temperature, long double core_mass, long doub
   else if (star_age < 1.0E9)
   {
     jupiter_radii1 = planet_radius_helper2(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9]);
-    jupiter_radii2 = planet_radius_helper(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9]);
+    jupiter_radii2 = planet_radius_helper(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9], false);
     jupiter_radii = rangeAdjust(star_age, jupiter_radii1, jupiter_radii2, 300.0E6, 1.0E9);
   }
   else if (star_age < 4.5E9)
   {
-    jupiter_radii1 = planet_radius_helper(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9]);
+    jupiter_radii1 = planet_radius_helper(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9], false);
     jupiter_radii2 = planet_radius_helper2(star_age, 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9]);
     jupiter_radii = rangeAdjust(star_age, jupiter_radii1, jupiter_radii2, 1.0E9, 4.5E9);
   }
@@ -2194,11 +2206,16 @@ void gas_giant_temperature_albedo(planet* the_planet, long double parent_mass, b
   long double new_day;
   long double new_obleteness;
   int loops = 0;
-  
+  if (the_planet->getTheSun().getAge() == 0.0)
+  {
+    the_planet->setTheSun(the_sun_clone);
+  }
   temp3 = about(GAS_GIANT_ALBEDO, 0.1);
-  
+  the_planet->setAlbedo(temp3);
   temp1 = est_temp(the_planet->getTheSun().getREcosphere(), the_planet->getA(), the_planet->getAlbedo());
-  temp4 = new_radius = gas_radius(temp1, the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
+  the_planet->setEstimatedTemp(temp1);
+  //temp4 = new_radius = gas_radius(temp1, the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
+  temp4 = new_radius = calcRadius(the_planet);
   the_planet->setRadius(temp4);
   temp5 = new_day = day_length(the_planet, parent_mass, is_moon);
   //the_planet->setDay(temp5);
@@ -2244,7 +2261,9 @@ void gas_giant_temperature_albedo(planet* the_planet, long double parent_mass, b
     temp3 = ((new_albedo * 2.0) + temp3) / 3.0;
     temp2 = est_temp(the_planet->getTheSun().getREcosphere(), the_planet->getA(), temp3);
     temp1 = (temp2 + (temp1 * 2.0)) / 3.0;
-    new_radius = gas_radius(temp1, the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
+    the_planet->setEstimatedTemp(temp1);
+    //new_radius = gas_radius(temp1, the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
+    new_radius = calcRadius(the_planet);
     temp4 = (new_radius + (temp4 * 2.0)) / 3.0;
     the_planet->setRadius(temp4);
     new_day = day_length(the_planet, parent_mass, is_moon);
@@ -2947,26 +2966,45 @@ long double calcLuminosity(planet *the_planet)
 
 long double calcGasRadius(planet *the_planet)
 {
-  long double lower, upper, result;
+  long double lower, upper, result, density;
+  if (the_planet->getCoreRadius() <= 0.0)
+  {
+    the_planet->setCoreRadius(radius_improved(the_planet->getDustMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet));;
+  }
+  if (the_planet->getTheSun().getAge() == 0)
+  {
+    the_planet->setTheSun(the_sun_clone);
+  }
   if (convert_su_to_eu(the_planet->getMass()) < 17.0)
-    {
-      result = mini_neptune_radius(the_planet);
-    }
-    else if (convert_su_to_eu(the_planet->getMass()) < 20.0)
-    {
-      lower = mini_neptune_radius(the_planet);
-      upper = gas_radius(the_planet->getEstimatedTemp(), the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
-      result = rangeAdjust(convert_su_to_eu(the_planet->getMass()), lower, upper, 17.0, 20.0);
-    }
-    else
-    {
-      result =  gas_radius(the_planet->getEstimatedTemp(), the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
-    }
-    if (result < the_planet->getCoreRadius())
-    {
-      result = mini_neptune_radius(the_planet);
-    }
-    return result;
+  {
+    result = mini_neptune_radius(the_planet);
+  }
+  else if (convert_su_to_eu(the_planet->getMass()) < 20.0)
+  {
+    lower = mini_neptune_radius(the_planet);
+    upper = gas_radius(the_planet->getEstimatedTemp(), the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
+    result = rangeAdjust(convert_su_to_eu(the_planet->getMass()), lower, upper, 17.0, 20.0);
+  }
+  else
+  {
+    result = gas_radius(the_planet->getEstimatedTemp(), the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
+  }
+  if (the_planet->getCoreRadius() <= 0.0)
+  {
+    the_planet->setCoreRadius(radius_improved(the_planet->getDustMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet));;
+  }
+  if (result < the_planet->getCoreRadius())
+  {
+    result = mini_neptune_radius(the_planet);
+    //result = gas_dwarf_radius(the_planet);
+  }
+  density = volume_density(the_planet->getMass(), result);
+  while ((density / EARTH_DENSITY) < 0.01)
+  {
+    result *= 0.99;
+    density = volume_density(the_planet->getMass(), result);
+  }
+  return result;
 }
 
 long double calcSolidRadius(planet *the_planet)
@@ -2976,89 +3014,105 @@ long double calcSolidRadius(planet *the_planet)
 
 long double calcRadius(planet *the_planet)
 {
+  long double result;
+  if (the_planet->getCoreRadius() <= 0.0)
+  {
+    the_planet->setCoreRadius(radius_improved(the_planet->getDustMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet));;
+  }
   if (the_planet->getGasGiant() || the_planet->getGasMass() > 0.0)
   {
-    return calcGasRadius(the_planet);
+    result = calcGasRadius(the_planet);
+    if (result < the_planet->getCoreRadius())
+    {
+      //result = calcRadius(the_planet);
+    }
   }
   else
   {
-    return calcSolidRadius(the_planet);
+    result = calcSolidRadius(the_planet);
   }
+  return result;
 }
 
-map<string, vector<long double> > polynomial_cache;
+map<map<long double, long double>, vector<long double> > polynomial_cache;
 
-long double planet_radius_helper(long double planet_mass, long double mass1, long double radius1, long double mass2, long double radius2, long double mass3, long double radius3)
+long double planet_radius_helper(long double planet_mass, long double mass1, long double radius1, long double mass2, long double radius2, long double mass3, long double radius3, bool use_cache)
 {
-  /*long double radius;
-  double x[] = {mass1, mass2, mass3};
-  double y[] = {radius1, radius2, radius3};
-  stringstream ss;
-  string cache_name;
-  double coeff[3];
-  vector<double> coeff_cache;
-  ss.str("");
-  ss << toString(mass1) << " " << toString(radius1) << " " << toString(mass2) << " " << toString(radius2) << " " << toString(mass3) << " " << toString(radius3);
-  cache_name = ss.str();
-  ss.str("");
-  coeff_cache = polynomial_cache[cache_name];
-  if (!coeff_cache.empty())
+  // some imput validation for debuging purposes
+  bool show_debug = false;
+  if (mass1 != 0.0 && radius1 == 0.0)
   {
-    for (int i = 0; i < 3; i++)
-    {
-      coeff[i] = coeff_cache[i];
-    }
+    cout << "invalid radius for " << mass1 << endl;
+    show_debug = true;
   }
-  else
+  else if (mass2 != 0.0 && radius2 == 0.0)
   {
-    polynomialfit(3, 3, x, y, coeff);
-    for (int i = 0; i < 3; i++)
-    {
-      coeff_cache[i] = coeff[i];
-    }
-    polynomial_cache[cache_name] = coeff_cache;
+    cout << "invalid radius for " << mass2 << endl;
+    show_debug = true;
   }
-  radius = quad_trend(coeff[2], coeff[1], coeff[0], planet_mass);
-  return radius;*/
+  else if (mass3 != 0.0 && radius3 == 0.0)
+  {
+    cout << "invalid radius for " << mass3 << endl;
+    show_debug = true;
+  }
+  if (show_debug)
+  {
+    cout << endl;
+    cout << "Please send an email to omega13a@yahoo.com of this problem with the following debug info: " << endl;
+    cout << "Input was:" << endl;
+    cout << "planet_mass = " << planet_mass << endl;
+    cout << "mass1 = " << toString((long double)mass1) << endl;
+    cout << "radius1 = " << toString((long double)radius1) << endl;
+    cout << "mass2 = " << toString((long double)mass2) << endl;
+    cout << "radius2 = " << toString((long double)radius2) << endl;
+    cout << "mass3 = " << toString((long double)mass3) << endl;
+    cout << "radius3 = " << toString((long double)radius3) << endl;
+    exit(EXIT_FAILURE);
+  }
   long double radius = 0.0;
   long double a = 0.0;
   long double b = 0.0;
   long double c = 0.0;
-  /*stringstream ss;
-  string cache_name;
+  map<long double, long double> cache_name;
   long double coeff[3];
   vector<long double> coeff_cache;
-  ss.str("");
-  ss << toString(mass1) << " " << toString(radius1) << " " << toString(mass2) << " " << toString(radius2) << " " << toString(mass3) << " " << toString(radius3);
-  cache_name = ss.str();
-  ss.str("");
-  coeff_cache = polynomial_cache[cache_name];
-  if (!coeff_cache.empty())
+  if (use_cache)
   {
-    for (int i = 0; i < 3; i++)
+    cache_name[mass1] = radius1;
+    cache_name[mass2] = radius2;
+    cache_name[mass3] = radius3;
+    coeff_cache = polynomial_cache[cache_name];
+    if (!coeff_cache.empty())
     {
-      coeff[i] = coeff_cache[i];
+      for (int i = 0; i < 3; i++)
+      {
+	coeff[i] = coeff_cache[i];
+      }
+      a = coeff[0];
+      b = coeff[1];
+      c = coeff[2];
     }
-    a = coeff[0];
-    b = coeff[1];
-    c = coeff[2];
+    else
+    {
+      quadfix(mass1, radius1, mass2, radius2, mass3, radius3, a, b, c);
+      coeff[0] = a;
+      coeff[1] = b;
+      coeff[2] = c;
+      while (!coeff_cache.empty())
+      {
+	coeff_cache.pop_back();
+      }
+      for (int i = 0; i < 3; i++)
+      {
+	coeff_cache.push_back(coeff[i]);
+      }
+      polynomial_cache[cache_name] = coeff_cache;
+    }
   }
   else
-  {*/
+  {
     quadfix(mass1, radius1, mass2, radius2, mass3, radius3, a, b, c);
-    /*coeff[0] = a;
-    coeff[1] = b;
-    coeff[2] = c;
-    while (!coeff_cache.empty())
-    {
-      coeff_cache.pop_back();
-    }
-    for (int i = 0; i < 3; i++)
-    {
-      coeff_cache.push_back(coeff[i]);
-    }
-    polynomial_cache[cache_name] = coeff_cache;
-  }*/
+  }
   radius = quad_trend(a, b, c, planet_mass);
   return radius;
 }
