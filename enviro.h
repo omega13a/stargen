@@ -6,6 +6,7 @@
 #include "utils.h"
 
 extern string breathability_phrase[4];
+extern map<map<long double, long double>, vector<long double> > polynomial_cache;
 
 long double mass_to_luminosity(long double);
 long double luminosity_to_mass(long double);
@@ -46,6 +47,7 @@ unsigned int breathability(planet *);
 void set_temp_range(planet *);
 long double getSpinResonanceFactor(long double);
 long double radius_improved(long double, long double, long double, long double, bool, int, planet *);
+long double fudged_radius(long double, long double, long double, long double, bool, int, planet *);
 long double gas_radius(long double, long double, long double, long double, planet *);
 long double round_threshold(long double);
 long double ultimateStrength(long double);

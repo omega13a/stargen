@@ -1,6 +1,7 @@
 #include "solid_radius_helpers.h"
 #include "const.h"
 #include "enviro.h"
+#include "radius_tables.h"
 #include "stargen.h"
 #include "structs.h"
 #include "utils.h"
@@ -8,62 +9,12 @@
 
 using namespace std;
 
-long double water_radius(long double mass, planet *the_planet)
+long double water_radius(long double mass, planet *the_planet, map<long double, long double> &mass_radii)
 {
   long double radius;
   bool adjust_for_carbon;
   long double radius1;
   long double radius2;
-  map<long double, long double> mass_radii;
-  mass_radii[0.04663] = 0.58;
-  mass_radii[0.06174] = 0.63;
-  mass_radii[0.08208] = 0.6853;
-  mass_radii[0.1091] = 0.7455;
-  mass_radii[0.1445] = 0.8102;
-  mass_radii[0.1904] = 0.879;
-  mass_radii[0.2494] = 0.9515;
-  mass_radii[0.3249] = 1.028;
-  mass_radii[0.4206] = 1.107;
-  mass_radii[0.5416] = 1.19;
-  mass_radii[0.6938] = 1.276;
-  mass_radii[0.8866] = 1.366;
-  mass_radii[1.132] = 1.461;
-  mass_radii[1.444] = 1.562;
-  mass_radii[1.841] = 1.699;
-  mass_radii[2.346] = 1.782;
-  mass_radii[2.985] = 1.901;
-  mass_radii[3.77] = 2.023;
-  mass_radii[4.735] = 2.147;
-  mass_radii[5.909] = 2.274;
-  mass_radii[7.325] = 2.401;
-  mass_radii[9.038] = 2.529;
-  mass_radii[11.11] = 2.66;
-  mass_radii[13.55] = 2.789;
-  mass_radii[16.42] = 2.915;
-  mass_radii[19.77] = 3.039;
-  mass_radii[23.68] = 3.16;
-  mass_radii[28.21] = 3.278;
-  mass_radii[33.49] = 3.393;
-  mass_radii[39.62] = 3.506;
-  mass_radii[46.72] = 3.616;
-  mass_radii[54.92] = 3.724;
-  mass_radii[64.22] = 3.826;
-  mass_radii[74.79] = 3.924;
-  mass_radii[86.85] = 4.017;
-  mass_radii[100.3] = 4.104;
-  mass_radii[115.3] = 4.183;
-  mass_radii[131.9] = 4.256;
-  mass_radii[150.3] = 4.322;
-  mass_radii[170.8] = 4.382;
-  mass_radii[193.6] = 4.435;
-  mass_radii[218.7] = 4.483;
-  mass_radii[246.6] = 4.525;
-  mass_radii[277.3] = 4.561;
-  mass_radii[311.3] = 4.592;
-  mass_radii[348.7] = 4.618;
-  mass_radii[390.1] = 4.639;
-  mass_radii[435.9] = 4.656;
-  mass_radii[486.4] = 4.669;
   if (mass <= 0.04663)
   {
     adjust_for_carbon = false;
@@ -416,7 +367,7 @@ long double water_radius(long double mass, planet *the_planet)
   return radius;
 }
 
-long double one_quater_rock_three_fourths_water_radius(long double mass, long double cmf, planet *the_planet)
+long double one_quater_rock_three_fourths_water_radius(long double mass, long double cmf, planet *the_planet, map<long double, long double> &mass_radii)
 {
   long double radius;
   long double radius1;
@@ -425,56 +376,6 @@ long double one_quater_rock_three_fourths_water_radius(long double mass, long do
   long double carbon_fraction;
   long double grow_factor;
   long double rmf;
-  map<long double, long double> mass_radii;
-  mass_radii[0.01217] = 0.3616;
-  mass_radii[0.01699] = 0.4009;
-  mass_radii[0.02351] = 0.4432;
-  mass_radii[0.03213] = 0.4869;
-  mass_radii[0.04399] = 0.535;
-  mass_radii[0.06029] = 0.588;
-  mass_radii[0.08255] = 0.6461;
-  mass_radii[0.1127] = 0.7093;
-  mass_radii[0.1533] = 0.7777;
-  mass_radii[0.2074] = 0.8509;
-  mass_radii[0.2789] = 0.9289;
-  mass_radii[0.3726] = 1.011;
-  mass_radii[0.4946] = 1.098;
-  mass_radii[0.6517] = 1.188;
-  mass_radii[0.8529] = 1.282;
-  mass_radii[1.107] = 1.38;
-  mass_radii[1.42] = 1.477;
-  mass_radii[1.818] = 1.58;
-  mass_radii[2.321] = 1.688;
-  mass_radii[2.957] = 1.802;
-  mass_radii[3.752] = 1.92;
-  mass_radii[4.732] = 2.041;
-  mass_radii[5.936] = 2.164;
-  mass_radii[7.407] = 2.289;
-  mass_radii[9.127] = 2.411;
-  mass_radii[11.12] = 2.529;
-  mass_radii[13.52] = 2.647;
-  mass_radii[16.37] = 2.765;
-  mass_radii[19.72] = 2.882;
-  mass_radii[23.68] = 2.998;
-  mass_radii[28.31] = 3.111;
-  mass_radii[33.71] = 3.222;
-  mass_radii[39.97] = 3.33;
-  mass_radii[47.15] = 3.434;
-  mass_radii[55.31] = 3.534;
-  mass_radii[64.47] = 3.627;
-  mass_radii[74.65] = 3.713;
-  mass_radii[86.14] = 3.793;
-  mass_radii[99.08] = 3.87;
-  mass_radii[113.6] = 3.94;
-  mass_radii[129.7] = 4.006;
-  mass_radii[147.6] = 4.064;
-  mass_radii[167.2] = 4.116;
-  mass_radii[188.8] = 4.162;
-  mass_radii[212.5] = 4.202;
-  mass_radii[238.4] = 4.236;
-  mass_radii[266.8] = 4.265;
-  mass_radii[297.9] = 4.288;
-  mass_radii[332.1] = 4.307;
   adjust_for_carbon = true;
   rmf = 0.25;
   if (mass <= 0.01217)
@@ -834,66 +735,91 @@ long double one_quater_rock_three_fourths_water_radius(long double mass, long do
   return radius;
 }
 
-long double half_rock_half_water_radius(long double mass, long double cmf, planet *the_planet)
+long double half_rock_half_water_radius(long double mass, long double cmf, planet *the_planet, map<long double, long double> &mass_radii)
 {
   long double radius;
+  long double radius1;
+  long double radius2;
   bool adjust_for_carbon;
-  long double range;
-  long double upper_fraction;
-  long double lower_fraction;
   long double carbon_fraction;
   long double grow_factor;
   long double rmf;
-  
   adjust_for_carbon = true;
   rmf = 0.5;
   if (mass <= 0.008278)
   {
     adjust_for_carbon = false;
-    range = 0.008278 - 0;
-    upper_fraction = mass / range;
-    lower_fraction = (1.0 - upper_fraction);
-    radius = (quad_trend(-251.097088, 14.82282406, 0.1908031617, mass) * upper_fraction) + (fraction_radius(mass, 0.5, 0.5, cmf) * lower_fraction);
+    radius1 = fraction_radius(mass, 0.5, 0.5, cmf);
+    radius2 = planet_radius_helper(mass, 0.008278, mass_radii[0.008278], 0.01156, mass_radii[0.01156], 0.01615, mass_radii[0.01615]);
+    radius = rangeAdjust(mass, radius1, radius2, 0.0, 0.008278);
   }
   else if (mass <= 0.01156)
   {
-    radius = quad_trend(-251.097088, 14.82282406, 0.1908031617, mass);
+    //radius = quad_trend(-251.097088, 14.82282406, 0.1908031617, mass);
+    radius = planet_radius_helper(mass, 0.008278, mass_radii[0.008278], 0.01156, mass_radii[0.01156], 0.01615, mass_radii[0.01615]);
   }
   else if (mass <= 0.01615)
   {
-    radius = quad_trend(-144.1013419, 11.85797193, 0.2107786256, mass);
+    //radius = quad_trend(-144.1013419, 11.85797193, 0.2107786256, mass);
+    radius1 = planet_radius_helper(mass, 0.008278, mass_radii[0.008278], 0.01156, mass_radii[0.01156], 0.01615, mass_radii[0.01615]);
+    radius2 = planet_radius_helper(mass, 0.01156, mass_radii[0.01156], 0.01615, mass_radii[0.01615], 0.02255, mass_radii[0.02255]);
+    radius = rangeAdjust(mass, radius1, radius2, 0.01156, 0.01615);
   }
   else if (mass <= 0.02255)
   {
-    radius = quad_trend(-86.45685997, 9.627130481, 0.2317717371, mass);
+    //radius = quad_trend(-86.45685997, 9.627130481, 0.2317717371, mass);
+    radius1 = planet_radius_helper(mass, 0.01156, mass_radii[0.01156], 0.01615, mass_radii[0.01615], 0.02255, mass_radii[0.02255]);
+    radius2 = planet_radius_helper(mass, 0.01615, mass_radii[0.01615], 0.02255, mass_radii[0.02255], 0.0313, mass_radii[0.0313]);
+    radius = rangeAdjust(mass, radius1, radius2, 0.01615, 0.02255);
   }
   else if (mass <= 0.0313)
   {
-    radius = quad_trend(-52.75830191, 7.812463129, 0.2555566849, mass);
+    //radius = quad_trend(-52.75830191, 7.812463129, 0.2555566849, mass);
+    radius1 = planet_radius_helper(mass, 0.01615, mass_radii[0.01615], 0.02255, mass_radii[0.02255], 0.0313, mass_radii[0.0313]);
+    radius2 = planet_radius_helper(mass, 0.02255, mass_radii[0.02255], 0.0313, mass_radii[0.0313], 0.04314, mass_radii[0.04314]);
+    radius = rangeAdjust(mass, radius1, radius2, 0.02255, 0.0313);
   }
   else if (mass <= 0.04314)
   {
-    radius = quad_trend(-27.9087717, 5.9626641, 0.2891105582, mass);
+    //radius = quad_trend(-27.9087717, 5.9626641, 0.2891105582, mass);
+    radius1 = planet_radius_helper(mass, 0.02255, mass_radii[0.02255], 0.0313, mass_radii[0.0313], 0.04314, mass_radii[0.04314]);
+    radius2 = planet_radius_helper(mass, 0.02255, mass_radii[0.0313], 0.04314, mass_radii[0.04314], 0.05943, mass_radii[0.05943]);
+    radius = rangeAdjust(mass, radius1, radius2, 0.0313, 0.04314);
   }
   else if (mass <= 0.05943)
   {
-    radius = quad_trend(-15.88199788, 4.72907791, 0.3199449236, mass);
+    //radius = quad_trend(-15.88199788, 4.72907791, 0.3199449236, mass);
+    radius1 = planet_radius_helper(mass, 0.02255, mass_radii[0.0313], 0.04314, mass_radii[0.04314], 0.05943, mass_radii[0.05943]);
+    radius2 = planet_radius_helper(mass, 0.04314, mass_radii[0.04314], 0.05943, mass_radii[0.05943], 0.0817, mass_radii[0.0817]);
+    radius = rangeAdjust(mass, radius1, radius2, 0.04314, 0.05943);
   }
   else if (mass <= 0.0817)
   {
-    radius = quad_trend(-9.401792072, 3.814526464, 0.3514091157, mass);
+    //radius = quad_trend(-9.401792072, 3.814526464, 0.3514091157, mass);
+    radius1 = planet_radius_helper(mass, 0.04314, mass_radii[0.04314], 0.05943, mass_radii[0.05943], 0.0817, mass_radii[0.0817]);
+    radius2 = planet_radius_helper(mass, 0.05943, mass_radii[0.05943], 0.0817, mass_radii[0.0817], 0.112, mass_radii[0.112]);
+    radius = rangeAdjust(mass, radius1, radius2, 0.05943, 0.0817);
   }
   else if (mass <= 0.112)
   {
-    radius = quad_trend(-5.4572037, 3.050459697, 0.3875036772, mass);
+    //radius = quad_trend(-5.4572037, 3.050459697, 0.3875036772, mass);
+    radius1 = planet_radius_helper(mass, 0.05943, mass_radii[0.05943], 0.0817, mass_radii[0.0817], 0.112, mass_radii[0.112]);
+    radius2 = planet_radius_helper(mass, 0.0817, mass_radii[0.0817], 0.112, mass_radii[0.112], 0.1528, mass_radii[0.1528]);
+    radius = rangeAdjust(mass, radius1, radius2, 0.0817, 0.112);
   }
   else if (mass <= 0.1528)
   {
-    radius = quad_trend(-3.312524816, 2.482548728, 0.4242068537, mass);
+    //radius = quad_trend(-3.312524816, 2.482548728, 0.4242068537, mass);
+    radius1 = planet_radius_helper(mass, 0.0817, mass_radii[0.0817], 0.112, mass_radii[0.112], 0.1528, mass_radii[0.1528]);
+    radius2 = planet_radius_helper(mass, 0.112, mass_radii[0.112], 0.1528, mass_radii[0.1528], 0.2072, mass_radii[0.2072]);
+    radius = rangeAdjust(mass, radius1, radius2, 0.112, 0.1528);
   }
   else if (mass <= 0.2072)
   {
-    radius = quad_trend(-1.983760111, 2.003927681, 0.466316364, mass);
+    //radius = quad_trend(-1.983760111, 2.003927681, 0.466316364, mass);
+    radius1 = planet_radius_helper(mass, 0.112, mass_radii[0.112], 0.1528, mass_radii[0.1528], 0.2072, mass_radii[0.2072]);
+    radius2 = planet_radius_helper(mass, 0.1528, mass_radii[0.1528], 0.2072, mass_radii[0.2072], 0.2799, mass_radii[0.2799]);
+    radius = rangeAdjust(mass, radius1, radius2, 0.1528, 0.2072);
   }
   else if (mass <= 0.2799)
   {
@@ -1053,10 +979,14 @@ long double half_rock_half_water_radius(long double mass, long double cmf, plane
     grow_factor = (0.05 * carbon_fraction) + 1.0; // not very scientific but guested by eye-balling an image on wikipedia.
     radius *= grow_factor;
   }
+  if (flag_verbose & 0x80000)
+  {
+    radiusDebug("50% rock, 50% water/ice", the_planet, radius, mass_radii);
+  }
   return radius;
 }
 
-long double rock_radius(long double mass, long double cmf, planet *the_planet)
+long double rock_radius(long double mass, long double cmf, planet *the_planet, map<long double, long double> &mass_radii)
 {
   long double radius;
   bool adjust_for_carbon;
@@ -1278,7 +1208,7 @@ long double rock_radius(long double mass, long double cmf, planet *the_planet)
   return radius;
 }
 
-long double half_rock_half_iron_radius(long double mass, long double cmf, planet *the_planet)
+long double half_rock_half_iron_radius(long double mass, long double cmf, planet *the_planet, map<long double, long double> &mass_radii)
 {
   long double radius;
   bool adjust_for_carbon;
@@ -1500,7 +1430,7 @@ long double half_rock_half_iron_radius(long double mass, long double cmf, planet
   return radius;
 }
 
-long double iron_radius(long double mass, planet *the_planet)
+long double iron_radius(long double mass, planet *the_planet, map<long double, long double> &mass_radii)
 {
   long double radius;
   long double range;

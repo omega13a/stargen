@@ -884,6 +884,7 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
   long double tmp;
   long double ecc_coef = 0.077;
   long double lambda;
+  long double the_fudged_radius = 0.0;
   
   if (do_moons && !is_moon)
   {
@@ -966,6 +967,7 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
   }
   else // If not, it's rocky.
   {
+    the_fudged_radius = fudged_radius(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet);
     the_planet->setRadius(radius_improved(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), false, the_planet->getOrbitZone(), the_planet));
     the_planet->setDensity(volume_density(the_planet->getMass(), the_planet->getRadius()));
     
@@ -1083,9 +1085,9 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
     the_planet->setMolecWeight(min_molec_weight(the_planet));
     
     the_planet->setGreenhouseEffect(grnhouse(the_sun.getREcosphere(), the_planet->getA()));
-    
-    the_planet->setVolatileGasInventory(vol_inventory(the_planet->getMass(), the_planet->getEscVelocity(), the_planet->getRmsVelocity(), the_sun.getMass(), the_planet->getOrbitZone(), the_planet->getGreenhouseEffect(), (the_planet->getGasMass() / the_planet->getMass()) > 0.000001));
-    the_planet->setSurfPressure(pressure(the_planet->getVolatileGasInventory(), the_planet->getRadius(), the_planet->getSurfGrav()));
+    long double fudged_escape_velocity = escape_vel(the_planet->getMass(), the_fudged_radius);
+    the_planet->setVolatileGasInventory(vol_inventory(the_planet->getMass(), fudged_escape_velocity, the_planet->getRmsVelocity(), the_sun.getMass(), the_planet->getOrbitZone(), the_planet->getGreenhouseEffect(), the_planet->getGasMass() > 0.0));
+    the_planet->setSurfPressure(pressure(the_planet->getVolatileGasInventory(), the_fudged_radius, the_planet->getSurfGrav()));
     
     if (the_planet->getSurfPressure() == 0.0)
     {

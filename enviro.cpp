@@ -9,6 +9,7 @@
 #include "const.h"
 #include "elements.h"
 #include "gas_radius_helpers.h"
+#include "radius_tables.h"
 #include "solid_radius_helpers.h"
 #include "star_temps.h"
 #include "stargen.h"
@@ -23,6 +24,8 @@ string breathability_phrase[4] =
   "unbreathable",
   "poisonous"
 };
+
+map<map<long double, long double>, vector<long double> > polynomial_cache;
 
 long double mass_to_luminosity(long double mass)
 {
@@ -1478,6 +1481,7 @@ void calculate_surface_temp(planet *the_planet, bool first, long double last_wat
   long double greenhouse_temp;
   bool boil_off = false;
   sun the_sun = the_planet->getTheSun();
+  long double the_fudged_radius = fudged_radius(the_planet->getMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), the_planet->getGasGiant(), the_planet->getOrbitZone(), the_planet);
   
   do_gasses = (flags_arg_clone & fDoGases) != 0;
   
@@ -1503,15 +1507,20 @@ void calculate_surface_temp(planet *the_planet, bool first, long double last_wat
     
     the_planet->setGreenhouseEffect(false);
     
-    the_planet->setVolatileGasInventory(vol_inventory(the_planet->getMass(), the_planet->getEscVelocity(), the_planet->getRmsVelocity(), the_planet->getTheSun().getMass(), the_planet->getOrbitZone(), the_planet->getGreenhouseEffect(), (the_planet->getGasMass() / the_planet->getMass()) > 0.000001));
-    the_planet->setSurfPressure(pressure(the_planet->getVolatileGasInventory(), the_planet->getRadius(), the_planet->getSurfGrav()));
+    //the_planet->setVolatileGasInventory(vol_inventory(the_planet->getMass(), the_planet->getEscVelocity(), the_planet->getRmsVelocity(), the_planet->getTheSun().getMass(), the_planet->getOrbitZone(), the_planet->getGreenhouseEffect(), the_planet->getGasMass() > 0.0));
+    long double fudged_escape_velocity = escape_vel(the_planet->getMass(), the_fudged_radius);
+    the_planet->setVolatileGasInventory(vol_inventory(the_planet->getMass(), fudged_escape_velocity, the_planet->getRmsVelocity(), the_planet->getTheSun().getMass(), the_planet->getOrbitZone(), the_planet->getGreenhouseEffect(), the_planet->getGasMass() > 0.0));
+    the_planet->setSurfPressure(pressure(the_planet->getVolatileGasInventory(), the_fudged_radius, the_planet->getSurfGrav()));
+    //the_planet->setSurfPressure(pressure(the_planet->getVolatileGasInventory(), the_planet->getRadius(), the_planet->getSurfGrav()));
     
     the_planet->setBoilPoint(boiling_point(the_planet->getBoilPoint()));
   }
   
-  water_raw = hydro_fraction(the_planet->getVolatileGasInventory(), the_planet->getRadius());
+  //water_raw = hydro_fraction(the_planet->getVolatileGasInventory(), the_planet->getRadius());
+  water_raw = hydro_fraction(the_planet->getVolatileGasInventory(), the_fudged_radius);
   the_planet->setHydrosphere(water_raw);
-  clouds_raw = cloud_fraction(the_planet->getSurfTemp(), the_planet->getMolecWeight(), the_planet->getRadius(), the_planet->getHydrosphere());
+  //clouds_raw = cloud_fraction(the_planet->getSurfTemp(), the_planet->getMolecWeight(), the_planet->getRadius(), the_planet->getHydrosphere());
+  clouds_raw = cloud_fraction(the_planet->getSurfTemp(), the_planet->getMolecWeight(), the_fudged_radius, the_planet->getHydrosphere());
   the_planet->setCloudCover(clouds_raw);
   the_planet->setIceCover(ice_fraction(the_planet->getHydrosphere(), the_planet->getSurfTemp()));
   
@@ -1867,47 +1876,9 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
   map<long double, long double> ice_radii;
   long double range, upper_fraction, lower_fraction;
   mass *= SUN_MASS_IN_EARTH_MASSES;
-  non_ice_radii[0.0] = iron_radius(mass, the_planet);
-  non_ice_radii[0.5] = half_rock_half_iron_radius(mass, cmf, the_planet);
-  non_ice_radii[1.0] = rock_radius(mass, cmf, the_planet);
-  /*if (rmf <= 0.5)
-  {
-    range = 0.5 - 0.0;
-    upper_fraction = rmf / range;
-    lower_fraction = 1.0 - upper_fraction;
-    non_ice_radius = (upper_fraction * half_rock_half_iron_radius(mass, cmf)) + (lower_fraction * iron_radius(mass));
-  }
-  else
-  {
-    range = 1.0 - 0.5;
-    rmf += quad_trend(-3, 4.5, -1.5, rmf);
-    upper_fraction = (rmf - 0.5) / range;
-    lower_fraction = 1.0 - upper_fraction;
-    non_ice_radius = (upper_fraction * rock_radius(mass, cmf)) + (lower_fraction * half_rock_half_iron_radius(mass, cmf));
-  }
-  
-  if (imf <= 0.5)
-  {
-    range = 0.5 - 0.0;
-    upper_fraction = imf / range;
-    lower_fraction = 1.0 - upper_fraction;
-    ice_radius = (upper_fraction * half_rock_half_water_radius(mass, cmf)) + (lower_fraction * rock_radius(mass, cmf));
-  }
-  else if (imf <= 0.75)
-  {
-    range = 0.75 - 0.5;
-    upper_fraction = (imf - 0.5) / range;
-    lower_fraction = 1.0 - upper_fraction;
-    ice_radius = (upper_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf)) + (lower_fraction * half_rock_half_water_radius(mass, cmf));
-  }
-  else
-  {
-    range = 1.0 - 0.75;
-    upper_fraction = (imf - 0.75) / range;
-    lower_fraction = 1.0 - upper_fraction;
-    ice_radius = (upper_fraction * water_radius(mass, the_planet)) + (lower_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf));
-  }*/
-  //non_ice_radius = planet_radius_helper(rmf, 0.0, non_ice_radii[0.0], 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0]);
+  non_ice_radii[0.0] = iron_radius(mass, the_planet, solid_iron);
+  non_ice_radii[0.5] = half_rock_half_iron_radius(mass, cmf, the_planet, solid_half_rock_half_iron);
+  non_ice_radii[1.0] = rock_radius(mass, cmf, the_planet, solid_rock);
   if (rmf < 0.5)
   {
     non_ice_radius = planet_radius_helper(rmf, 0.0, non_ice_radii[0.0], 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0], false);
@@ -1920,10 +1891,10 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
   }
   if (imf > 0.0)
   {
-    ice_radii[0.0] = rock_radius(mass, cmf, the_planet);
-    ice_radii[0.5] = half_rock_half_water_radius(mass, cmf, the_planet);
-    ice_radii[0.75] = one_quater_rock_three_fourths_water_radius(mass, cmf, the_planet);
-    ice_radii[1.0] = water_radius(mass, the_planet);
+    ice_radii[0.0] = rock_radius(mass, cmf, the_planet, solid_rock);
+    ice_radii[0.5] = half_rock_half_water_radius(mass, cmf, the_planet, solid_half_rock_half_water);
+    ice_radii[0.75] = one_quater_rock_three_fourths_water_radius(mass, cmf, the_planet, solid_one_quater_rock_three_fourths_water);
+    ice_radii[1.0] = water_radius(mass, the_planet, solid_water);
     if (imf < 0.5)
     {
       ice_radius = planet_radius_helper(imf, 0.0, ice_radii[0.0], 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], false);
@@ -1940,6 +1911,52 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
       radius2 = planet_radius_helper2(imf, 0.75, ice_radii[0.75], 1.0, ice_radii[1.0]);
       ice_radius = rangeAdjust(imf, radius1, radius2, 0.75, 1.0);
     }
+  }
+  radius = (ice_radius * imf) + (non_ice_radius * (1.0 - imf));
+  radius *= KM_EARTH_RADIUS;
+  return radius;
+}
+
+long double fudged_radius(long double mass, long double imf, long double rmf, long double cmf, bool giant, int zone, planet *the_planet)
+{
+  long double range, upper_fraction, lower_fraction, non_ice_radius, ice_radius, radius;
+  mass *= SUN_MASS_IN_EARTH_MASSES;
+  if (rmf <= 0.5)
+  {
+    range = 0.5 - 0.0;
+    upper_fraction = rmf / range;
+    lower_fraction = 1.0 - upper_fraction;
+    non_ice_radius = (upper_fraction * half_rock_half_iron_radius(mass, cmf, the_planet, solid_half_rock_half_iron)) + (lower_fraction * iron_radius(mass, the_planet, solid_iron));
+  }
+  else
+  {
+    range = 1.0 - 0.5;
+    rmf += quad_trend(-3, 4.5, -1.5, rmf);
+    upper_fraction = (rmf - 0.5) / range;
+    lower_fraction = 1.0 - upper_fraction;
+    non_ice_radius = (upper_fraction * rock_radius(mass, cmf, the_planet, solid_rock)) + (lower_fraction * half_rock_half_iron_radius(mass, cmf, the_planet, solid_half_rock_half_iron));
+  }
+  
+  if (imf <= 0.5)
+  {
+    range = 0.5 - 0.0;
+    upper_fraction = imf / range;
+    lower_fraction = 1.0 - upper_fraction;
+    ice_radius = (upper_fraction * half_rock_half_water_radius(mass, cmf, the_planet, solid_half_rock_half_water)) + (lower_fraction * rock_radius(mass, cmf, the_planet, solid_rock));
+  }
+  else if (imf <= 0.75)
+  {
+    range = 0.75 - 0.5;
+    upper_fraction = (imf - 0.5) / range;
+    lower_fraction = 1.0 - upper_fraction;
+    ice_radius = (upper_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf, the_planet, solid_one_quater_rock_three_fourths_water)) + (lower_fraction * half_rock_half_water_radius(mass, cmf, the_planet, solid_half_rock_half_water));
+  }
+  else
+  {
+    range = 1.0 - 0.75;
+    upper_fraction = (imf - 0.75) / range;
+    lower_fraction = 1.0 - upper_fraction;
+    ice_radius = (upper_fraction * water_radius(mass, the_planet, solid_water)) + (lower_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf, the_planet, solid_one_quater_rock_three_fourths_water));
   }
   radius = (ice_radius * imf) + (non_ice_radius * (1.0 - imf));
   radius *= KM_EARTH_RADIUS;
@@ -3033,8 +3050,6 @@ long double calcRadius(planet *the_planet)
   }
   return result;
 }
-
-map<map<long double, long double>, vector<long double> > polynomial_cache;
 
 long double planet_radius_helper(long double planet_mass, long double mass1, long double radius1, long double mass2, long double radius2, long double mass3, long double radius3, bool use_cache)
 {

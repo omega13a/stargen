@@ -10,6 +10,7 @@
 #include "jimb.h"
 #include "omega_galaxy.h"
 #include "planets.h"
+#include "radius_tables.h"
 #include "ring_universe.h"
 #include "solstation.h"
 #include "stargen.h"
@@ -480,6 +481,7 @@ int main(int argc, char **argv)
 
 void initData()
 {
+  initRadii();
   initGases();
   initPlanets();
   initDole();
