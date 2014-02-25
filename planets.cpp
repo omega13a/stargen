@@ -900,29 +900,33 @@ void initPlanets()
   kepler11f = new planet();
   kepler11f->setPlanetNo(5);
   kepler11f->setA(0.25);
-  kepler11f->setDustMass(EM(2.3));
+  kepler11f->setDustMass(EM(2.0) * (1.0 - (4.0 / 100.0)));
+  kepler11f->setGasMass(EM(2.0) * (4.0 / 100.0));
   kepler11f->next_planet = kepler11g;
   
   kepler11e = new planet();
   kepler11e->setPlanetNo(4);
   kepler11e->setA(0.194);
-  kepler11e->setDustMass(EM(8.4));
+  kepler11e->setDustMass(EM(8.0) * (1.0 - (15.7 / 100.0)));
+  kepler11e->setGasMass(EM(8.0) * (15.7 / 100.0));
   kepler11e->next_planet = kepler11f;
   
   kepler11d = new planet();
   kepler11d->setA(0.159);
-  kepler11d->setDustMass(EM(6.1));
+  kepler11d->setDustMass(EM(7.3) * (1.0 - (6.6 / 100.0)));
+  kepler11d->setGasMass(EM(7.3) * (6.6 / 100.0));
   kepler11d->next_planet = kepler11e;
   
   kepler11c = new planet();
   kepler11c->setA(0.106);
-  kepler11c->setDustMass(EM(13.51 * 0.75));
-  kepler11c->setGasMass(EM(13.51 * 0.25));
+  kepler11c->setDustMass(EM(2.9) * (1.0 - (5.0 / 100.0)));
+  kepler11c->setGasMass(EM(2.9) * (5.0 / 100.0));
   kepler11c->next_planet = kepler11d;
   
   kepler11b = new planet();
   kepler11b->setA(0.091);
-  kepler11b->setDustMass(EM(4.3));
+  kepler11b->setDustMass(EM(1.9) * (1.0 - (0.51 / 100.0)));
+  kepler11b->setGasMass(EM(1.9) * (0.51 / 100.0));
   kepler11b->next_planet = kepler11c;
   
   bajorXIV = new planet();
