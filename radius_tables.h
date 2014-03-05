@@ -85,5 +85,9 @@ extern map<long double, long double> solid_half_rock_half_water;
 extern map<long double, long double> solid_rock;
 extern map<long double, long double> solid_half_rock_half_iron;
 extern map<long double, long double> solid_iron;
+extern map<long double, long double> solid_0point953_iron_0point047_water;
+extern map<long double, long double> solid_0point51_iron_0point49_water;
+extern map<long double, long double> solid_0point264_iron_0point736_water;
+
 void initRadii();
 #endif

@@ -1867,66 +1867,112 @@ long double getSpinResonanceFactor(long double eccentricity)
 
 long double radius_improved(long double mass, long double imf, long double rmf, long double cmf, bool giant, int zone, planet *the_planet)
 {
-  long double non_ice_radius = 0.0;;
-  long double ice_radius = 0.0;
+  long double non_ice_rock_radius = 0.0;;
+  long double ice_rock_radius = 0.0;
+  long double ice_iron_radius = 0.0;
   long double radius = 0.0;
   long double radius1 = 0.0;
   long double radius2 = 0.0;
-  map<long double, long double> non_ice_radii;
-  map<long double, long double> ice_radii;
+  map<long double, long double> non_ice_rock_radii;
+  map<long double, long double> ice_rock_radii;
+  map<long double, long double> ice_iron_radii;
   long double range, upper_fraction, lower_fraction;
+  long double half_mass_factor = 0.0;
+  long double iron_ratio = 0.0;
+  if (imf < 1.0)
+  {
+    iron_ratio = (1.0 - imf - rmf) / (1.0 - imf);
+  }
+  long double average = 0.0;
   mass *= SUN_MASS_IN_EARTH_MASSES;
-  non_ice_radii[0.0] = iron_radius(mass, the_planet, solid_iron);
-  non_ice_radii[0.5] = half_rock_half_iron_radius(mass, cmf, the_planet, solid_half_rock_half_iron);
-  non_ice_radii[1.0] = rock_radius(mass, cmf, the_planet, solid_rock);
-  if (rmf < 0.5)
-  {
-    non_ice_radius = planet_radius_helper(rmf, 0.0, non_ice_radii[0.0], 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0], false);
-  }
-  else
-  {
-    radius1 = planet_radius_helper(rmf, 0.0, non_ice_radii[0.0], 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0], false);
-    radius2 = planet_radius_helper2(rmf, 0.5, non_ice_radii[0.5], 1.0, non_ice_radii[1.0]);
-    non_ice_radius = rangeAdjust(rmf, radius1, radius2, 0.5, 1.0);
-  }
+  non_ice_rock_radii[0.0] = iron_radius(mass, the_planet, solid_iron);
+  non_ice_rock_radii[0.5] = half_rock_half_iron_radius(mass, cmf, the_planet, solid_half_rock_half_iron);
+  non_ice_rock_radii[1.0] = rock_radius(mass, cmf, the_planet, solid_rock);
   if (imf > 0.0)
   {
-    ice_radii[0.0] = rock_radius(mass, cmf, the_planet, solid_rock);
-    ice_radii[0.5] = half_rock_half_water_radius(mass, cmf, the_planet, solid_half_rock_half_water);
-    ice_radii[0.75] = one_quater_rock_three_fourths_water_radius(mass, cmf, the_planet, solid_one_quater_rock_three_fourths_water);
-    ice_radii[1.0] = water_radius(mass, the_planet, solid_water);
+    ice_rock_radii[0.0] = rock_radius(mass, cmf, the_planet, solid_rock);
+    ice_rock_radii[0.5] = half_rock_half_water_radius(mass, cmf, the_planet, solid_half_rock_half_water);
+    ice_rock_radii[0.75] = one_quater_rock_three_fourths_water_radius(mass, cmf, the_planet, solid_one_quater_rock_three_fourths_water);
+    ice_rock_radii[1.0] = water_radius(mass, the_planet, solid_water);
     if (imf < 0.5)
     {
-      ice_radius = planet_radius_helper(imf, 0.0, ice_radii[0.0], 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], false);
+      ice_rock_radius = planet_radius_helper(imf, 0.0, ice_rock_radii[0.0], 0.5, ice_rock_radii[0.5], 0.75, ice_rock_radii[0.75], false);
     }
     else if (imf < 0.75)
     {
-      radius1 = planet_radius_helper(imf, 0.0, ice_radii[0.0], 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], false);
-      radius2 = planet_radius_helper(imf, 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], 1.0, ice_radii[1.0], false);
-      ice_radius = rangeAdjust(imf, radius1, radius2, 0.5, 0.75);
+      radius1 = planet_radius_helper(imf, 0.0, ice_rock_radii[0.0], 0.5, ice_rock_radii[0.5], 0.75, ice_rock_radii[0.75], false);
+      radius2 = planet_radius_helper(imf, 0.5, ice_rock_radii[0.5], 0.75, ice_rock_radii[0.75], 1.0, ice_rock_radii[1.0], false);
+      ice_rock_radius = rangeAdjust(imf, radius1, radius2, 0.5, 0.75);
     }
     else
     {
-      radius1 = planet_radius_helper(imf, 0.5, ice_radii[0.5], 0.75, ice_radii[0.75], 1.0, ice_radii[1.0], false);
-      radius2 = planet_radius_helper2(imf, 0.75, ice_radii[0.75], 1.0, ice_radii[1.0]);
-      ice_radius = rangeAdjust(imf, radius1, radius2, 0.75, 1.0);
+      radius1 = planet_radius_helper(imf, 0.5, ice_rock_radii[0.5], 0.75, ice_rock_radii[0.75], 1.0, ice_rock_radii[1.0], false);
+      radius2 = planet_radius_helper2(imf, 0.75, ice_rock_radii[0.75], 1.0, ice_rock_radii[1.0]);
+      ice_rock_radius = rangeAdjust(imf, radius1, radius2, 0.75, 1.0);
     }
+    ice_iron_radii[0.0] = iron_radius(mass, the_planet, solid_iron);
+    ice_iron_radii[0.047] = solid_0point953_iron_0point047_water_radius(mass, the_planet, solid_0point953_iron_0point047_water);
+    ice_iron_radii[0.49] = solid_0point51_iron_0point49_water_radius(mass, the_planet, solid_0point51_iron_0point49_water);
+    ice_iron_radii[0.736] = solid_0point264_iron_0point736_water_radius(mass, the_planet, solid_0point264_iron_0point736_water);
+    ice_iron_radii[1.0] = ice_rock_radii[1.0];
+    if (imf < 0.047)
+    {
+      ice_iron_radius = planet_radius_helper(imf, 0.0, ice_iron_radii[0.0], 0.047, ice_iron_radii[0.047], 0.49, ice_iron_radii[0.49], false);
+    }
+    else if (imf < 0.49)
+    {
+      radius1 = planet_radius_helper(imf, 0.0, ice_iron_radii[0.0], 0.047, ice_iron_radii[0.047], 0.49, ice_iron_radii[0.49], false);
+      radius2 = planet_radius_helper(imf, 0.047, ice_iron_radii[0.047], 0.49, ice_iron_radii[0.49], 0.736, ice_iron_radii[0.736], false);
+      ice_iron_radius = rangeAdjust(imf, radius1, radius2, 0.047, 0.49);
+    }
+    else if (imf < 0.736)
+    {
+      radius1 = planet_radius_helper(imf, 0.047, ice_iron_radii[0.047], 0.49, ice_iron_radii[0.49], 0.736, ice_iron_radii[0.736], false);
+      radius2 = planet_radius_helper(imf, 0.49, ice_iron_radii[0.49], 0.736, ice_iron_radii[0.736], 1.0, ice_iron_radii[1.0], false);
+      ice_iron_radius = rangeAdjust(imf, radius1, radius2, 0.49, 0.736);
+    }
+    else
+    {
+      radius1 = planet_radius_helper(imf, 0.49, ice_iron_radii[0.49], 0.736, ice_iron_radii[0.736], 1.0, ice_iron_radii[1.0], false);
+      radius2 = planet_radius_helper2(imf, 0.736, ice_iron_radii[0.736], 1.0, ice_iron_radii[1.0]);
+      ice_iron_radius = rangeAdjust(imf, radius1, radius2, 0.736, 1.0);
+    }
+    half_mass_factor = 1.0;
+    if (mass > 0.0)
+    {
+      average = AVE(non_ice_rock_radii[0.0], non_ice_rock_radii[1.0]);
+      half_mass_factor = non_ice_rock_radii[0.5] / average;
+    }
+    radius = planet_radius_helper(iron_ratio, 0.0, ice_rock_radius, 0.5, AVE(ice_rock_radius, ice_iron_radius) * half_mass_factor, 1.0, ice_iron_radius, false);
   }
-  radius = (ice_radius * imf) + (non_ice_radius * (1.0 - imf));
+  else
+  {
+    if (rmf < 0.5)
+    {
+      non_ice_rock_radius = planet_radius_helper(rmf, 0.0, non_ice_rock_radii[0.0], 0.5, non_ice_rock_radii[0.5], 1.0, non_ice_rock_radii[1.0], false);
+    }
+    else
+    {
+      radius1 = planet_radius_helper(rmf, 0.0, non_ice_rock_radii[0.0], 0.5, non_ice_rock_radii[0.5], 1.0, non_ice_rock_radii[1.0], false);
+      radius2 = planet_radius_helper2(rmf, 0.5, non_ice_rock_radii[0.5], 1.0, non_ice_rock_radii[1.0]);
+      non_ice_rock_radius = rangeAdjust(rmf, radius1, radius2, 0.5, 1.0);
+    }
+    radius = non_ice_rock_radius;
+  }
   radius *= KM_EARTH_RADIUS;
   return radius;
 }
 
 long double fudged_radius(long double mass, long double imf, long double rmf, long double cmf, bool giant, int zone, planet *the_planet)
 {
-  long double range, upper_fraction, lower_fraction, non_ice_radius, ice_radius, radius;
+  long double range, upper_fraction, lower_fraction, non_ice_rock_radius, ice_rock_radius, radius;
   mass *= SUN_MASS_IN_EARTH_MASSES;
   if (rmf <= 0.5)
   {
     range = 0.5 - 0.0;
     upper_fraction = rmf / range;
     lower_fraction = 1.0 - upper_fraction;
-    non_ice_radius = (upper_fraction * half_rock_half_iron_radius(mass, cmf, the_planet, solid_half_rock_half_iron)) + (lower_fraction * iron_radius(mass, the_planet, solid_iron));
+    non_ice_rock_radius = (upper_fraction * half_rock_half_iron_radius(mass, cmf, the_planet, solid_half_rock_half_iron)) + (lower_fraction * iron_radius(mass, the_planet, solid_iron));
   }
   else
   {
@@ -1934,7 +1980,7 @@ long double fudged_radius(long double mass, long double imf, long double rmf, lo
     rmf += quad_trend(-3, 4.5, -1.5, rmf);
     upper_fraction = (rmf - 0.5) / range;
     lower_fraction = 1.0 - upper_fraction;
-    non_ice_radius = (upper_fraction * rock_radius(mass, cmf, the_planet, solid_rock)) + (lower_fraction * half_rock_half_iron_radius(mass, cmf, the_planet, solid_half_rock_half_iron));
+    non_ice_rock_radius = (upper_fraction * rock_radius(mass, cmf, the_planet, solid_rock)) + (lower_fraction * half_rock_half_iron_radius(mass, cmf, the_planet, solid_half_rock_half_iron));
   }
   
   if (imf <= 0.5)
@@ -1942,23 +1988,23 @@ long double fudged_radius(long double mass, long double imf, long double rmf, lo
     range = 0.5 - 0.0;
     upper_fraction = imf / range;
     lower_fraction = 1.0 - upper_fraction;
-    ice_radius = (upper_fraction * half_rock_half_water_radius(mass, cmf, the_planet, solid_half_rock_half_water)) + (lower_fraction * rock_radius(mass, cmf, the_planet, solid_rock));
+    ice_rock_radius = (upper_fraction * half_rock_half_water_radius(mass, cmf, the_planet, solid_half_rock_half_water)) + (lower_fraction * rock_radius(mass, cmf, the_planet, solid_rock));
   }
   else if (imf <= 0.75)
   {
     range = 0.75 - 0.5;
     upper_fraction = (imf - 0.5) / range;
     lower_fraction = 1.0 - upper_fraction;
-    ice_radius = (upper_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf, the_planet, solid_one_quater_rock_three_fourths_water)) + (lower_fraction * half_rock_half_water_radius(mass, cmf, the_planet, solid_half_rock_half_water));
+    ice_rock_radius = (upper_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf, the_planet, solid_one_quater_rock_three_fourths_water)) + (lower_fraction * half_rock_half_water_radius(mass, cmf, the_planet, solid_half_rock_half_water));
   }
   else
   {
     range = 1.0 - 0.75;
     upper_fraction = (imf - 0.75) / range;
     lower_fraction = 1.0 - upper_fraction;
-    ice_radius = (upper_fraction * water_radius(mass, the_planet, solid_water)) + (lower_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf, the_planet, solid_one_quater_rock_three_fourths_water));
+    ice_rock_radius = (upper_fraction * water_radius(mass, the_planet, solid_water)) + (lower_fraction * one_quater_rock_three_fourths_water_radius(mass, cmf, the_planet, solid_one_quater_rock_three_fourths_water));
   }
-  radius = (ice_radius * imf) + (non_ice_radius * (1.0 - imf));
+  radius = (ice_rock_radius * imf) + (non_ice_rock_radius * (1.0 - imf));
   radius *= KM_EARTH_RADIUS;
   return radius;
 }
@@ -2612,6 +2658,15 @@ bool is_gas_planet(planet* the_planet)
   return false;
 }
 
+bool is_earth_like_size(planet* the_planet)
+{
+  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.1 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 5.0) || ((the_planet->getRadius() / KM_EARTH_RADIUS) >= 0.8 && (the_planet->getRadius() / KM_EARTH_RADIUS) <= 1.25))
+  {
+    return true;
+  }
+  return false;
+}
+
 bool is_earth_like(planet* the_planet)
 {
   long double rel_temp = (the_planet->getSurfTemp() - FREEZING_POINT_OF_WATER) - EARTH_AVERAGE_CELSIUS;
@@ -2625,6 +2680,10 @@ bool is_earth_like(planet* the_planet)
   if (!is_habitable(the_planet))
   {
     //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": Not habitable" << endl;
+    return false;
+  }
+  else if (!is_earth_like_size(the_planet))
+  {
     return false;
   }
   else if (the_planet->getEsi() < 0.8)
@@ -2839,6 +2898,23 @@ long double calcSph(planet* the_planet)
   return ht * hrh;
 }
 
+bool is_potentialy_habitable_size(planet *the_planet)
+{
+  /*if ((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) > 10.0 || (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) < 0.1) // The Plantary Habitablity Laboratory believes habitable planets have to be in the range of 0.1 to 10 earth masses in size.
+   *  {
+   *    return false;
+   }
+   else if ((the_planet->radius / KM_EARTH_RADIUS) > 2.5 || (the_planet->radius / KM_EARTH_RADIUS) < 0.5)  // The Plantary Habitablity Laboratory believes habitable planets have to be in the range of 0.5 to 2.5 earth radii in size.
+   {
+     return false;
+   }*/
+  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.1 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 10.0) || ((the_planet->getRadius() / KM_EARTH_RADIUS) >= 0.5 && (the_planet->getRadius() / KM_EARTH_RADIUS) <= 2.5))
+  {
+    return true;
+  }
+  return false;
+}
+
 bool is_potentialy_habitable(planet* the_planet)
 {
   sun the_sun = the_planet->getTheSun();
@@ -2858,7 +2934,8 @@ bool is_potentialy_habitable(planet* the_planet)
   {
     return false;
   }
-  else if ((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) > 10.0 || (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) < 0.1) // The Plantary Habitablity Laboratory believes habitable planets have to be in the range of 0.1 to 10 earth masses in size.
+  //else if ((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) > 10.0 || (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) < 0.1) // The Plantary Habitablity Laboratory believes habitable planets have to be in the range of 0.1 to 10 earth masses in size.
+  else if (!is_potentialy_habitable_size(the_planet))
   {
     return false;
   }

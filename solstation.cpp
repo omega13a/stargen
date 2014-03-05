@@ -77,7 +77,7 @@ void initSolStation()
   star MuAri(		1.90,			1.10,			5820,		"G3V",		0,			0,	0,	 	0,		0,		muaric,		"MU Ari",       true,	"Mu Arae");
   star HD28185(		0.8596,			0.99,			5482,		"G5V",		0,			0,	0,		0,		0,		hd28185b,	"HD 28185",	true,	"HIP 20723");
   star HD40307(		0.23,			0.75,			4977,		"K2V",		0,			0,	0,		0,		0,		hd40307b,	"HD 40307",	true,	"HIP 27887");
-  star Kepler22(	0.79,			0.97,			5518,		"G5V",		0,			0,	0,		0,		0,		kepler22b,	"Kepler-22",	true,	"Kepler-22");
+  star Kepler22(	0.797227,		0.97,			5518,		"G5V",		0,			0,	0,		0,		0,		kepler22b,	"Kepler-22",	true,	"Kepler-22");
   star HIP10(		2.6716,			0,			0,		"F6V",		0,			0,	0,		0,		0,		NULL,		"HIP 10",	true,	"HIP 10");
   star HD197027(	abs2luminosity(4.72),	0.97,   		5723,		"G3V",		0,			0,	0,		0,		0,		NULL,		"HD 197027",	true,	"HIP 102152");
   star Sco18(		1.058,			1.02,			5433,		"G2V",		0,			0,	0,		0,		0,		NULL,		"18 Sco",	true,	"18 Scorpii");
@@ -90,7 +90,7 @@ void initSolStation()
   deltri.setDistance(0.11146);
   deltri.setEccentricity(0.011);
   star sirius(		25.4,			2.02,			9940,		"A1V",		0.978,			0.5923,	19.8,		136.53,		44.57,		NULL,		"ALF CMa",	true,	"Sirius");
-  star kepler11(	abs2luminosity(vis2abs(14.2, 613 * PARSEC)), 0.95, 5680,	"G6V",		0,			0,	0,		0,		0,		kepler11b,	"Kepler-11",	true,	"Kepler-11");
+  star kepler11(	1.129974,		0.95,			5680,		"G6V",		0,			0,	0,		0,		0,		kepler11b,	"Kepler-11",	true,	"Kepler-11");
   star gliese667C(	0.0137,			0.31,			3700,		"M2V",		(0.73 + 0.69),		0,	230,		0,		0,		gliese667Cb,	"GJ 667C",	true,	"Gliese 667C");
   solstation.addStar(sol);
   solstation.addStar(ALFCenA);
