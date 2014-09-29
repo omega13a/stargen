@@ -648,7 +648,7 @@ planet* dist_planetary_masses(sun &the_sun, long double inner_dust, long double 
   {
     planet_outer_bound = farthest_planet(stell_mass_ratio);
   }
-  else if (outer_planet_limit == 0)
+  else if (is_close(outer_planet_limit, (long double)0) || outer_planet_limit <= (long double)0.0 || outer_planet_limit <= planet_inner_bound)
   {
     planet_outer_bound = farthest_planet(stell_mass_ratio);
   }
@@ -656,6 +656,13 @@ planet* dist_planetary_masses(sun &the_sun, long double inner_dust, long double 
   {
     planet_outer_bound = outer_planet_limit;
   }
+  
+  while (planet_outer_bound <= planet_inner_bound)
+  {
+      planet_outer_bound = farthest_planet(stell_mass_ratio);
+  }
+  
+  //cout << planet_inner_bound << " " << planet_outer_bound << endl;
   
   while (dust_left)
   {
@@ -1034,6 +1041,134 @@ bool is_predefined_planet(planet *the_planet)
     return true;
   }
   else if (is_in_bajor(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_gliese667C(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_kepler283(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_kepler62(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_kepler296(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_gliese180(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_gliese163(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_kepler61(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_gliese422(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_kepler298(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_kepler174(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_gliese682(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd38529(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd202206(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd8673(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd22781(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd217786(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd106270(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd38801(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd39091(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd141937(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd33564(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd23596(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd222582(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd86264(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd196067(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd10697(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd132406(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd13908(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd2039(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd82943(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_moa2011blg293l(the_planet))
+  {
+    return true;
+  }
+  else if (is_in_hd213240(the_planet))
   {
     return true;
   }
@@ -1533,6 +1668,373 @@ bool is_in_gliese667C(planet* the_planet)
     return true;
   }
   else if (is_predified_planet_helper(the_planet, gliese667Ch))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_kepler283(planet* the_planet)
+{
+  if (is_predified_planet_helper(the_planet, kepler283b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler283c))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_kepler62(planet* the_planet)
+{
+  if (is_predified_planet_helper(the_planet, kepler62b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler62c))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler62d))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler62e))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler62f))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_kepler296(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, kepler296b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler296c))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler296d))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler296e))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler296f))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_gliese180(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, gliese180b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, gliese180c))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_gliese163(planet* the_planet)
+{
+  if (is_predified_planet_helper(the_planet, gliese163b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, gliese163c))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, gliese163d))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_kepler61(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, kepler61b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_gliese422(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, gliese422b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_kepler298(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, kepler298b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler298c))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler298d))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_kepler174(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, kepler174b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler174c))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, kepler174d))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_gliese682(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, gliese682b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, gliese682c))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd38529(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd38529b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, hd38529c))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd202206(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd202206b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, hd202206c))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd8673(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd8673b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd22781(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd22781b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd217786(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd217786b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd106270(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd106270b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd38801(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd38801b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd39091(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd39091b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd141937(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd141937b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd33564(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd33564b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd23596(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd23596b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd222582(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd222582b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd86264(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd86264b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd196067(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd196067b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd10697(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd10697b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd132406(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd132406b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd13908(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd13908b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, hd13908c))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd2039(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd2039b))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd82943(planet* the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd82943b))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, hd82943c))
+  {
+    return true;
+  }
+  else if (is_predified_planet_helper(the_planet, hd82943d))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_moa2011blg293l(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, moa2011blg293lb))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_in_hd213240(planet *the_planet)
+{
+  if (is_predified_planet_helper(the_planet, hd213240b))
   {
     return true;
   }

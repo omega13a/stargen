@@ -28,6 +28,8 @@ long double dust_density_coeff = DUST_DENSITY_COEFF;
 long flag_seed = 0;
 
 long double min_age = 0;
+long double max_age = 10.0E9;
+long double max_age_backup = 10.0E9;
 
 bool is_circumbinary = false;
 long double compainion_mass_arg = 0;
@@ -36,6 +38,7 @@ long double compainion_distant_arg = 0;
 long double compainion_lum_arg = 0;
 long double compainion_eff_arg = 0;
 string companion_spec_arg = "";
+int decimals_arg = 0;
 
 long double temp_arg = 0;
 string type_arg = "";
@@ -48,6 +51,13 @@ int habitable_superterrans =0;
 int total_habitable = 0;
 int potential_habitable = 0;
 int total_worlds = 0;
+int total_habitable_earthlike = 0;
+int total_habitable_conservative = 0;
+int total_habitable_optimistic = 0;
+int total_potentially_habitable = 0;
+int total_potentially_habitable_earthlike = 0;
+int total_potentially_habitable_conservative = 0;
+int total_potentially_habitable_optimistic = 0;
 
 long double min_breathable_terrestrial_g = 1000.0;
 long double min_breathable_g = 1000.0;
@@ -65,6 +75,20 @@ long double max_moon_mass = 0.0;
 long double min_breathable_mass = 0;
 long double max_breathable_mass = 0;
 
+long double min_potential_terrestrial_g = 1000.0;
+long double min_potential_g = 1000.0;
+long double max_potential_terrestrial_g = 0.0;
+long double max_potential_g = 0.0;
+long double min_potential_temp = 1000.0;
+long double max_potential_temp = 0.0;
+long double min_potential_p = 100000.0;
+long double max_potential_p = 0.0;
+long double min_potential_terrestrial_l = 1000.0;
+long double min_potential_l = 1000.0;
+long double max_potential_terrestrial_l = 0.0;
+long double max_potential_l = 0.0;
+long double min_potential_mass = 0;
+long double max_potential_mass = 0;
 
 int type_counts[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //seb
 int type_count = 0;
@@ -343,6 +367,8 @@ int stargen(actions action, string flag_char, string path, string url_path_arg, 
     bool in_celestia;
     
     init();
+    
+    outer_limit = 0;
     
     if (do_catalog || sys_no_arg)
     {
@@ -625,6 +651,7 @@ int stargen(actions action, string flag_char, string path, string url_path_arg, 
     }
     
     total_habitable += habitable;
+    total_potentially_habitable += potential_habitable;
     total_earthlike += earthlike;
     if ((!(only_habitable || only_multi_habitable || only_jovian_habitable || only_earthlike || only_three_habitable || only_superterrans || only_potential_habitable)) || (only_habitable && (habitable > 0) && !only_jovian_habitable) || (only_habitable && only_jovian_habitable && habitable > 0 && habitable_jovians > 0) || (only_multi_habitable && (habitable > 1) && !only_jovian_habitable) || (only_multi_habitable && only_jovian_habitable && habitable > 1 && habitable_jovians > 0) || (only_earthlike && (earthlike > 0) && !only_jovian_habitable) || (only_earthlike && only_jovian_habitable && earthlike > 0 && habitable_jovians > 0) || (only_jovian_habitable && (habitable_jovians > 0) && !(only_earthlike || only_multi_habitable || only_habitable || only_three_habitable)) || (only_three_habitable && only_jovian_habitable && habitable > 2 && habitable_jovians > 0) || (only_three_habitable && (habitable > 2)) || (only_superterrans && habitable_superterrans > 0) || (only_potential_habitable && potential_habitable > 0))
     {
@@ -649,9 +676,9 @@ int stargen(actions action, string flag_char, string path, string url_path_arg, 
 	  {
 	    create_svg_file(innermost_planet, path, file_name, ".svg", prognam, do_moons);
 	  }
-	  html_thumbnails(innermost_planet, thumbnails, system_name, url_path, system_url, svg_url, file_name, false, true, false, do_moons, graphic_format);
+	  html_thumbnails(innermost_planet, thumbnails, system_name, url_path, system_url, svg_url, file_name, false, true, false, do_moons, graphic_format, do_gases);
 	  open_html_file(system_name, flag_seed, path, url_path, file_name, ".html", prognam, html_file);
-	  html_thumbnails(innermost_planet, html_file, system_name, url_path, system_url, svg_url, file_name, true, false, true, do_moons, graphic_format);
+	  html_thumbnails(innermost_planet, html_file, system_name, url_path, system_url, svg_url, file_name, true, false, true, do_moons, graphic_format, do_gases);
 	  html_describe_system(innermost_planet, do_gases, do_moons, url_path, html_file);
 	  close_html_file(html_file);
 	  break;
@@ -802,25 +829,43 @@ void generate_stellar_system(sun &the_sun, bool use_seed_system, planet *seed_sy
   {
     the_sun.setEffTemp(spec_type_to_eff_temp(the_sun.getSpecType()));
   }
-
+  max_age = max_age_backup;
   if (use_seed_system)
   {
     innermost_planet = seed_system;
     
-    long double max_age = the_sun.getLife();
-    if (max_age > 10E9)
+    long double max_age_of_star = the_sun.getLife();
+    if (max_age_of_star > 10E9)
     {
-      max_age = 10E9;
+      max_age_of_star = 10E9;
     }
+    if (max_age > max_age_of_star)
+    {
+      max_age = max_age_of_star;
+    }
+    if (min_age > max_age_of_star)
+    {
+      min_age = max_age_of_star;
+    }
+    //cout << min_age << " " << max_age << endl;
     the_sun.setAge(random_number(min_age, max_age));
   }
   else
   {
-    long double max_age = the_sun.getLife();
-    if (max_age > 10E9)
+    long double max_age_of_star = the_sun.getLife();
+    if (max_age_of_star > 10E9)
     {
-      max_age = 10E9;
+      max_age_of_star = 10E9;
     }
+    if (max_age > max_age_of_star)
+    {
+      max_age = max_age_of_star;
+    }
+    if (min_age > max_age_of_star)
+    {
+      min_age = max_age_of_star;
+    }
+    //cout << min_age << " " << max_age << endl;
     innermost_planet = dist_planetary_masses(the_sun, inner_dust_limit, outer_dust_limit, outer_planet_limit, dust_density_coeff, ecc_coef, inner_planet_factor, seed_system, do_moons);
     the_sun.setAge(random_number(min_age, max_age));
   }
@@ -846,9 +891,12 @@ void generate_planets(sun &the_sun, bool random_tilt, string flag_char, int sys_
     ss << system_name <<" (-s" << toString(flag_seed) << " -" << flag_char << toString(sys_no) << ") " << toString(planet_no);
     planet_id = ss.str();
     //cout << planet_id << endl;
-    the_planet->setImf(0);
-    the_planet->setRmf(0);
-    the_planet->setCmf(0);
+    if (!(the_planet->getKnownRadius() > 0))
+    {
+      the_planet->setImf(0);
+      the_planet->setRmf(0);
+      the_planet->setCmf(0);
+    }
     
     if (!the_sun.getIsCircumbinary())
     {
@@ -893,14 +941,7 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
   
   the_planet->setTheSun(the_sun);
   
-  if (!the_sun.getIsCircumbinary())
-  {
-    the_planet->setOrbitZone(orb_zone(the_sun.getLuminosity(), the_planet->getA()));
-  }
-  else
-  {
-    the_planet->setOrbitZone(orb_zone(the_sun.getCombinedLuminosity(), the_planet->getA()));
-  }
+  the_planet->setOrbitZone(orb_zone(the_sun.getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES), the_planet->getA()));
   
   the_planet->setHzd(calcHzd(the_planet));
   
@@ -929,11 +970,11 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
   the_planet->setLongitudeOfPericenter(random_number(0.0, 360.0));
   the_planet->setMeanLongitude(random_number(0.0, 360.0));
   
-  the_planet->setExosphericTemp(EARTH_EXOSPHERE_TEMP / pow2(the_planet->getA() / the_sun.getREcosphere()));
+  the_planet->setExosphericTemp(EARTH_EXOSPHERE_TEMP / pow2(the_planet->getA() / the_sun.getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES)));
   the_planet->setRmsVelocity(rms_vel(MOL_NITROGEN, the_planet->getExosphericTemp()));
   the_planet->setCoreRadius(radius_improved(the_planet->getDustMass(), the_planet->getImf(), the_planet->getRmf(), the_planet->getCmf(), false, the_planet->getOrbitZone(), the_planet));
   
-  the_planet->setDensity(empirical_density(the_planet->getMass(), the_planet->getA(), the_sun.getREcosphere(), true));
+  the_planet->setDensity(empirical_density(the_planet->getMass(), the_planet->getA(), the_sun.getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES), true));
   the_planet->setRadius(volume_radius(the_planet->getMass(), the_planet->getDensity()));
   
   the_planet->setSurfAccel(acceleration(the_planet->getMass(), the_planet->getRadius()));
@@ -1046,7 +1087,7 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
     
     the_planet->setDensity(volume_density(the_planet->getMass(), the_planet->getRadius()));
     
-    the_planet->setEstimatedTerrTemp(est_temp(the_sun.getREcosphere(), the_planet->getA(), EARTH_ALBEDO));
+    the_planet->setEstimatedTerrTemp(est_temp(the_sun.getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES), the_planet->getA(), EARTH_ALBEDO));
     
     if (do_gases)
     {
@@ -1078,13 +1119,13 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
   }
   else
   {
-    the_planet->setEstimatedTemp(est_temp(the_sun.getREcosphere(), the_planet->getA(),  EARTH_ALBEDO));
-    the_planet->setEstimatedTerrTemp(est_temp(the_sun.getREcosphere(), the_planet->getA(),  EARTH_ALBEDO));
+    the_planet->setEstimatedTemp(est_temp(the_sun.getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES), the_planet->getA(),  EARTH_ALBEDO));
+    the_planet->setEstimatedTerrTemp(est_temp(the_sun.getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES), the_planet->getA(),  EARTH_ALBEDO));
     
     the_planet->setSurfGrav(gravity(the_planet->getSurfAccel()));
     the_planet->setMolecWeight(min_molec_weight(the_planet));
     
-    the_planet->setGreenhouseEffect(grnhouse(the_sun.getREcosphere(), the_planet->getA()));
+    the_planet->setGreenhouseEffect(grnhouse(the_sun.getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES), the_planet->getA()));
     long double fudged_escape_velocity = escape_vel(the_planet->getMass(), the_fudged_radius);
     the_planet->setVolatileGasInventory(vol_inventory(the_planet->getMass(), fudged_escape_velocity, the_planet->getRmsVelocity(), the_sun.getMass(), the_planet->getOrbitZone(), the_planet->getGreenhouseEffect(), the_planet->getGasMass() > 0.0));
     the_planet->setSurfPressure(pressure(the_planet->getVolatileGasInventory(), the_fudged_radius, the_planet->getSurfGrav()));
@@ -1106,7 +1147,7 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
       calculate_gases(the_sun, the_planet, planet_id);
     }
     
-    assign_type(the_planet, planet_id, is_moon);
+    assign_type(the_sun, the_planet, planet_id, is_moon, do_gases, false);
   }
   
   the_planet->setHzc(calcHzc(the_planet));
@@ -1408,6 +1449,7 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
 	new_moon->setOrbitZone(the_planet->getOrbitZone());
 	new_moon->setA(the_planet->getA());
 	new_moon->setE(the_planet->getE());
+	new_moon->setHzd(the_planet->getHzd());
 	
 	double r1 = randf();
 	double maxln = exp(1.0);
@@ -1567,13 +1609,13 @@ void generate_planet(planet* the_planet, int planet_no, sun& the_sun, bool rando
 	      iterate_surface_temp(tmp, do_gases);
 	      if (do_gases)
 	      {
+		tmp->clearGases();
 		calculate_gases(the_sun, tmp, moon_id);
 	      }
-	      assign_type(tmp, moon_id, true);
+	      assign_type(the_sun, tmp, moon_id, true, do_gases, false);
 	    }
 	  }
 	  
-	  tmp->setHzd(calcHzd(tmp));
 	  tmp->setHzc(calcHzc(tmp));
 	  tmp->setHza(calcHza(tmp));
 	  tmp->setEsi(calcEsi(tmp));
@@ -1664,16 +1706,28 @@ void check_planet(planet* the_planet, string planet_id, bool is_moon)
   
   //if (breathe == BREATHABLE && the_planet->getA() > habitable_zone_distance(the_planet->getTheSun(), RECENT_VENUS) && the_planet->getA() < habitable_zone_distance(the_planet->getTheSun(), EARLY_MARS))
   total_worlds++;
-  if (is_potentialy_habitable(the_planet))
-  {
-    potential_habitable++;
-  }
   if (is_habitable(the_planet))
   {
     bool list_it = false;
     long double illumination = calcLuminosity(the_planet);
     
     habitable++;
+    
+    if (is_habitable_earth_like(the_planet))
+    {
+      total_habitable_earthlike++;
+      total_habitable_conservative++;
+      total_habitable_optimistic++;
+    }
+    else if (is_habitable_conservative(the_planet))
+    {
+      total_habitable_conservative++;
+      total_habitable_optimistic++;
+    }
+    else if (is_habitable_optimistic(the_planet))
+    {
+      total_habitable_optimistic++;
+    }
     
     if ((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 2.0)
     {
@@ -1833,6 +1887,181 @@ void check_planet(planet* the_planet, string planet_id, bool is_moon)
       cerr << type_string(the_planet) << "\tp=" << toString(the_planet->getSurfPressure()) << "\tm=" << toString(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) << "\tg=" << toString(the_planet->getSurfGrav()) << "\tt=" << toString(the_planet->getSurfTemp() - EARTH_AVERAGE_KELVIN) << "\tl=" << toString(illumination) << "\t" << planet_id << endl;
     }
   }
+  else if (is_potentialy_habitable(the_planet))
+  {
+    potential_habitable++;
+    bool list_it = false;
+    long double illumination = calcLuminosity(the_planet);
+    
+    if (is_potentialy_habitable_earth_like(the_planet))
+    {
+      total_potentially_habitable_earthlike++;
+      total_potentially_habitable_conservative++;
+      total_potentially_habitable_optimistic++;
+    }
+    else if (is_potentialy_habitable_conservative(the_planet))
+    {
+      total_potentially_habitable_conservative++;
+      total_potentially_habitable_optimistic++;
+    }
+    else if (is_potentialy_habitable_optimistic(the_planet))
+    {
+      total_potentially_habitable_optimistic++;
+    }
+    
+    if (min_potential_temp > the_planet->getSurfTemp() || min_potential_temp == 0.0)
+    {
+      min_potential_temp = the_planet->getSurfTemp();
+      
+      if (flag_verbose & 0x0002)
+      {
+	list_it = true;
+      }
+    }
+    
+    if (max_potential_temp < the_planet->getSurfTemp())
+    {
+      max_potential_temp = the_planet->getSurfTemp();
+      
+      if (flag_verbose & 0x0002)
+      {
+	list_it = true;
+      }
+    }
+    
+    if (min_potential_g > the_planet->getSurfGrav() || min_potential_g == 0.0)
+    {
+      min_potential_g = the_planet->getSurfGrav();
+      
+      if (flag_verbose & 0x0002)
+      {
+	list_it = true;
+      }
+    }
+    
+    if (max_potential_g < the_planet->getSurfGrav())
+    {
+      max_potential_g = the_planet->getSurfGrav();
+      
+      if (flag_verbose & 0x0002)
+      {
+	list_it = true;
+      }
+    }
+    
+    if (min_potential_l > illumination || min_potential_l == 0.0)
+    {
+      min_potential_l = illumination;
+      
+      if (flag_verbose & 0x0002)
+      {
+	list_it = true;
+      }
+    }
+    
+    if (max_potential_l < illumination)
+    {
+      max_potential_l = illumination;
+      
+      if (flag_verbose & 0x0002)
+      {
+	list_it = true;
+      }
+    }
+    
+    if (the_planet->getType() == tTerrestrial || (the_planet->getType() == t1Face && the_planet->getHydrosphere() >= 0.05 && the_planet->getHydrosphere() <= 0.8))
+    {
+      if (min_breathable_terrestrial_g > the_planet->getSurfGrav() || min_breathable_terrestrial_g == 0.0)
+      {
+	min_breathable_terrestrial_g = the_planet->getSurfGrav();
+	
+	if (flag_verbose & 0x0002)
+	{
+	  list_it = true;
+	}
+      }
+      
+      if (max_breathable_terrestrial_g < the_planet->getSurfGrav())
+      {
+	max_breathable_terrestrial_g = the_planet->getSurfGrav();
+	
+	if (flag_verbose & 0x0002)
+	{
+	  list_it = true;
+	}
+      }
+      
+      if (min_breathable_terrestrial_l > illumination || min_breathable_terrestrial_l == 0.0)
+      {
+	min_breathable_terrestrial_l = illumination;
+	
+	if (flag_verbose & 0x0002)
+	{
+	  list_it = true;
+	}
+      }
+      
+      if (max_breathable_terrestrial_l < illumination)
+      {
+	max_breathable_terrestrial_l = illumination;
+	
+	if (flag_verbose & 0x0002)
+	{
+	  list_it = true;
+	}
+      }
+    }
+    
+    if (min_potential_p > the_planet->getSurfPressure() || min_potential_p == 0.0)
+    {
+      min_potential_p = the_planet->getSurfPressure();
+      
+      if (flag_verbose & 0x0002)
+      {
+	list_it = true;
+      }
+    }
+    
+    if (max_potential_p < the_planet->getSurfPressure())
+    {
+      max_potential_p = the_planet->getSurfPressure();
+      
+      if (flag_verbose & 0x0002)
+      {
+	list_it = true;
+      }
+    }
+    
+    if (min_potential_mass > the_planet->getMass() || min_potential_mass == 0.0)
+    {
+      min_potential_mass = the_planet->getMass();
+      
+      if (flag_verbose & 0x0002)
+      {
+	list_it = true;
+      }
+    }
+    
+    if (max_potential_mass < the_planet->getMass())
+    {
+      max_potential_mass = the_planet->getMass();
+      
+      if (flag_verbose & 0x0002)
+      {
+	list_it = true;
+      }
+    }
+    
+    if (flag_verbose & 0x0004)
+    {
+      list_it = true;
+    }
+    
+    if (list_it)
+    {
+      cerr << type_string(the_planet) << "\tp=" << toString(the_planet->getSurfPressure()) << "\tm=" << toString(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) << "\tg=" << toString(the_planet->getSurfGrav()) << "\tt=" << toString(the_planet->getSurfTemp() - EARTH_AVERAGE_KELVIN) << "\tl=" << toString(illumination) << "\t" << planet_id << endl;
+    }
+  }
   
   if (is_moon && max_moon_mass < the_planet->getMass())
   {
@@ -1881,7 +2110,7 @@ void check_planet(planet* the_planet, string planet_id, bool is_moon)
   }
 }
 
-void assign_type(planet *the_planet, string planet_id, bool is_moon)
+void assign_type(sun &the_sun, planet *the_planet, string planet_id, bool is_moon, bool do_gases, bool second_time)
 {
   if (the_planet->getSurfPressure() < 1.0)
   {
@@ -1918,8 +2147,12 @@ void assign_type(planet *the_planet, string planet_id, bool is_moon)
     if ((((int)the_planet->getDay() == (int)(the_planet->getOrbPeriod() * 24.0)) || the_planet->getResonantPeriod()) && !is_moon)
     {
       the_planet->setType(t1Face);
+      if (!second_time)
+      {
+	makeHabitable(the_sun, the_planet, planet_id, is_moon, do_gases);
+      }
     }
-    else if (the_planet->getImf() >= 0.5)
+    else if (the_planet->getImf() >= 0.05 && the_planet->getHydrosphere() == 0.0)
     {
       the_planet->setType(tIce);
       the_planet->setIceCover(the_planet->getIceCover() + the_planet->getHydrosphere());
@@ -1928,6 +2161,10 @@ void assign_type(planet *the_planet, string planet_id, bool is_moon)
 	the_planet->setIceCover(1.0);
       }
       the_planet->setHydrosphere(0.0);
+      if (!second_time)
+      {
+	makeHabitable(the_sun, the_planet, planet_id, is_moon, do_gases);
+      }
     }
     else if (the_planet->getHydrosphere() >= 0.8) // In Star Trek, any planet that is 80% covered with water, it is considered an ocean planet
     {
@@ -1939,10 +2176,18 @@ void assign_type(planet *the_planet, string planet_id, bool is_moon)
       {
 	the_planet->setType(tWater);
       }
+      if (!second_time)
+      {
+	makeHabitable(the_sun, the_planet, planet_id, is_moon, do_gases);
+      }
     }
     else if (the_planet->getIceCover() >= 0.8) // In Star Trek, any planet that is 80% covered with ice, it is considered an ice planet
     {
       the_planet->setType(tIce);
+      if (!second_time)
+      {
+	makeHabitable(the_sun, the_planet, planet_id, is_moon, do_gases);
+      }
     }
     else if (the_planet->getHydrosphere() >= 0.05)
     {
@@ -1954,27 +2199,51 @@ void assign_type(planet *the_planet, string planet_id, bool is_moon)
       {
 	the_planet->setType(tTerrestrial);
       }
+      if (!second_time)
+      {
+	makeHabitable(the_sun, the_planet, planet_id, is_moon, do_gases);
+      }
     }
     else if (the_planet->getSurfTemp() > the_planet->getBoilPoint())
     {
       the_planet->setType(tVenusian);
+      if (!second_time)
+      {
+	makeHabitable(the_sun, the_planet, planet_id, is_moon, do_gases);
+      }
     }
     else if ((the_planet->getGasMass() / the_planet->getMass()) > 0.0001)
     {
       the_planet->setType(tIce); // Accreted gas but no Greenhouseor or liquid water
       the_planet->setIceCover(1.0);
+      if (!second_time)
+      {
+	makeHabitable(the_sun, the_planet, planet_id, is_moon, do_gases);
+      }
     }
     else if (the_planet->getSurfPressure() < 250)
     {
       the_planet->setType(tMartian);
+      if (!second_time)
+      {
+	makeHabitable(the_sun, the_planet, planet_id, is_moon, do_gases);
+      }
     }
     else if (the_planet->getSurfTemp() < FREEZING_POINT_OF_WATER)
     {
       the_planet->setType(tIce);
+      if (!second_time)
+      {
+	makeHabitable(the_sun, the_planet, planet_id, is_moon, do_gases);
+      }
     }
     else
     {
       the_planet->setType(tUnknown);
+      if (!second_time)
+      {
+	makeHabitable(the_sun, the_planet, planet_id, is_moon, do_gases);
+      }
       
       if (flag_verbose & 0x0001)
       {

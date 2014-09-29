@@ -113,6 +113,66 @@ planet *gliese667Ce = NULL;
 planet *gliese667Cf = NULL;
 planet *gliese667Cg = NULL;
 planet *gliese667Ch = NULL;
+planet *kepler283b = NULL;
+planet *kepler283c = NULL;
+planet *kepler62f = NULL;
+planet *kepler62e = NULL;
+planet *kepler62d = NULL;
+planet *kepler62c = NULL;
+planet *kepler62b = NULL;
+planet *kepler296b = NULL;
+planet *kepler296c = NULL;
+planet *kepler296d = NULL;
+planet *kepler296e = NULL;
+planet *kepler296f = NULL;
+planet *gliese180b = NULL;
+planet *gliese180c = NULL;
+planet *gliese163b = NULL;
+planet *gliese163c = NULL;
+planet *gliese163d = NULL;
+planet *kepler61b = NULL;
+planet *gliese422b = NULL;
+planet *kepler298b = NULL;
+planet *kepler298c = NULL;
+planet *kepler298d = NULL;
+planet *kepler174b = NULL;
+planet *kepler174c = NULL;
+planet *kepler174d = NULL;
+planet *gliese682b = NULL;
+planet *gliese682c = NULL;
+planet *hd38529b = NULL;
+planet *hd38529c = NULL;
+planet *hd202206b = NULL;
+planet *hd202206c = NULL;
+planet *hd8673b = NULL;
+planet *hd22781b = NULL;
+planet *hd217786b = NULL;
+planet *hd106270b = NULL;
+planet *hd38801b = NULL;
+planet *hd39091b = NULL;
+planet *hd141937b = NULL;
+planet *hd33564b = NULL;
+planet *hd23596b = NULL;
+planet *hd222582b = NULL;
+planet *hd86264b = NULL;
+planet *hd196067b = NULL;
+planet *hd10697b = NULL;
+planet *hd132406b = NULL;
+planet *hd13908b = NULL;
+planet *hd13908c = NULL;
+planet *hd2039b = NULL;
+planet *hd82943b = NULL;
+planet *hd82943c = NULL;
+planet *hd82943d = NULL;
+planet *moa2011blg293lb = NULL;
+planet *hd213240b = NULL;
+planet *kepler186b = NULL;
+planet *kepler186c = NULL;
+planet *kepler186d = NULL;
+planet *kepler186e = NULL;
+planet *kepler186f = NULL;
+planet *kapteynb = NULL;
+planet *kapteync = NULL;
 
 planet *bajorI = NULL;
 planet *bajorII = NULL;
@@ -480,36 +540,32 @@ void initPlanets()
   UPSAndAe = new planet();
   UPSAndAe->setPlanetNo(4);
   UPSAndAe->setA(5.2456);
-  UPSAndAe->setE(0.00536);
-  UPSAndAe->setGasGiant(true);
-  UPSAndAe->setDustMass(EM(1.059 * JUPITER_MASS) / 5.0);
-  UPSAndAe->setGasMass(EM(1.059 * JUPITER_MASS) - (EM(1.059 * JUPITER_MASS) / 5.0));
+  UPSAndAe->setE(0.01);
+  UPSAndAe->setDustMass(JUPITER_CORE_RATIO(336.7));
+  UPSAndAe->setGasMass(JUPITER_GAS_RATIO(336.7));
   
   UPSAndAd = new planet();
   UPSAndAd->setPlanetNo(3);
   UPSAndAd->setA(2.55);
-  UPSAndAd->setE(0.274);
-  UPSAndAd->setGasGiant(true);
-  UPSAndAd->setDustMass(EM(10.19 * JUPITER_MASS) / 5.0);
-  UPSAndAd->setGasMass(EM(10.19 * JUPITER_MASS) - (EM(10.19 * JUPITER_MASS) / 5.0));
+  UPSAndAd->setE(0.27);
+  UPSAndAd->setDustMass(JUPITER_CORE_RATIO(3239.81));
+  UPSAndAd->setGasMass(JUPITER_GAS_RATIO(3239.81));
   UPSAndAd->next_planet = UPSAndAe;
   
   UPSAndAc = new planet();
   UPSAndAc->setPlanetNo(2);
   UPSAndAc->setA(0.861);
   UPSAndAc->setE(0.24);
-  UPSAndAc->setGasGiant(true);
-  UPSAndAc->setDustMass(EM(1.8 * JUPITER_MASS) / 5.0);
-  UPSAndAc->setGasMass(EM(1.8 * JUPITER_MASS) - (EM(1.8 * JUPITER_MASS) / 5.0));
+  UPSAndAc->setDustMass(JUPITER_CORE_RATIO(572.29));
+  UPSAndAc->setGasMass(JUPITER_GAS_RATIO(572.29));
   UPSAndAc->next_planet = UPSAndAd;
   
   UPSAndAb = new planet();
   UPSAndAb->setPlanetNo(1);
   UPSAndAb->setA(0.059);
-  UPSAndAb->setE(0.013);
-  UPSAndAb->setGasGiant(true);
-  UPSAndAb->setDustMass(EM(0.62 * JUPITER_MASS) / 5.0);
-  UPSAndAb->setGasMass(EM(0.62 * JUPITER_MASS) - (EM(0.62 * JUPITER_MASS) / 5.0));
+  UPSAndAb->setE(0.01);
+  UPSAndAb->setDustMass(JUPITER_CORE_RATIO(197.12));
+  UPSAndAb->setGasMass(JUPITER_GAS_RATIO(197.12));
   UPSAndAb->next_planet = UPSAndAc;
   
   hd10180h = new planet();
@@ -693,25 +749,25 @@ void initPlanets()
   
   hd28185b = new planet();
   hd28185b->setPlanetNo(1);
-  hd28185b->setA(1.031);
+  hd28185b->setA(1.03);
   hd28185b->setE(0.07);
   hd28185b->setGasGiant(true);
-  hd28185b->setDustMass(EM(5.7 * JUPITER_MASS) / 5.0);
-  hd28185b->setGasMass(EM(5.7 * JUPITER_MASS) - (EM(5.7 * JUPITER_MASS) / 5.0));
+  hd28185b->setDustMass(JUPITER_CORE_RATIO(1812.26));
+  hd28185b->setGasMass(JUPITER_GAS_RATIO(1812.26));
   
   hd40307g = new planet();
   hd40307g->setPlanetNo(6);
   hd40307g->setA(0.6);
   hd40307g->setE(0.29);
   hd40307g->setGasGiant(false);
-  hd40307g->setDustMass(EM(7.1));
+  hd40307g->setDustMass(EM(7.09));
   
   hd40307f = new planet();
   hd40307f->setPlanetNo(5);
   hd40307f->setA(0.247);
   hd40307f->setE(0.02);
   hd40307f->setGasGiant(false);
-  hd40307f->setDustMass(EM(5.2));
+  hd40307f->setDustMass(EM(5.21));
   hd40307f->next_planet = hd40307g;
   
   hd40307e = new planet();
@@ -727,15 +783,15 @@ void initPlanets()
   hd40307d->setA(0.1321);
   hd40307d->setE(0.07);
   hd40307d->setGasGiant(false);
-  hd40307d->setDustMass(EM(9.5));
+  hd40307d->setDustMass(EM(9.51));
   hd40307d->next_planet = hd40307e;
   
   hd40307c = new planet();
   hd40307c->setPlanetNo(2);
   hd40307c->setA(0.0799);
-  hd40307c->setE(0.0799);
+  hd40307c->setE(0.06);
   hd40307c->setGasGiant(false);
-  hd40307c->setDustMass(EM(6.6));
+  hd40307c->setDustMass(EM(6.61));
   hd40307c->next_planet = hd40307d;
   
   hd40307b = new planet();
@@ -743,14 +799,14 @@ void initPlanets()
   hd40307b->setA(0.0468);
   hd40307b->setE(0.2);
   hd40307b->setGasGiant(false);
-  hd40307b->setDustMass(EM(4.0));
+  hd40307b->setDustMass(EM(4.01));
   hd40307b->next_planet = hd40307c;
   
   kepler22b = new planet();
   kepler22b->setPlanetNo(1);
-  kepler22b->setA(0.80312754201605);
+  kepler22b->setA(0.849);
   kepler22b->setGasGiant(false);
-  kepler22b->setDustMass(EM(6.4));
+  kepler22b->setDustMass(EM(20.36));
   
   taucetf = new planet();
   taucetf->setPlanetNo(5);
@@ -1099,4 +1155,333 @@ void initPlanets()
   gliese667Cb->setE(0.113);
   gliese667Cb->setDustMass(EM(5.6));
   gliese667Cb->next_planet = gliese667Ch;
+  
+  kepler283c = new planet();
+  kepler283c->setA(0.341);
+  kepler283c->setDustMass(EM(7.04));
+  
+  kepler283b = new planet();
+  kepler283b->setA(0.0815);
+  kepler283b->setDustMass(EM(13.26));
+  kepler283b->next_planet = kepler283c;
+  
+  kepler62f = new planet();
+  kepler62f->setA(0.718);
+  kepler62f->setDustMass(EM(2.81));
+  
+  kepler62e = new planet();
+  kepler62e->setA(0.427);
+  kepler62e->setDustMass(EM(4.54));
+  kepler62e->next_planet = kepler62f;
+  
+  kepler62d = new planet();
+  kepler62d->setA(0.12);
+  kepler62d->setDustMass(EM(9.29));
+  kepler62d->next_planet = kepler62e;
+  
+  kepler62c = new planet();
+  kepler62c->setA(0.0929);
+  kepler62c->setDustMass(EM(0.12));
+  kepler62c->next_planet = kepler62d;
+  
+  kepler62b = new planet();
+  kepler62b->setA(0.0553);
+  kepler62b->setDustMass(EM(2.17));
+  kepler62b->next_planet = kepler62c;
+  
+  kepler296f = new planet();
+  kepler296f->setA(0.263);
+  kepler296f->setDustMass(EM(6.72));
+  
+  kepler296e = new planet();
+  kepler296e->setA(0.174);
+  kepler296e->setDustMass(EM(6.1));
+  kepler296e->next_planet = kepler296f;
+  
+  kepler296d = new planet();
+  kepler296d->setA(0.122);
+  kepler296d->setDustMass(EM(17.55));
+  kepler296d->next_planet = kepler296e;
+  
+  kepler296c = new planet();
+  kepler296c->setA(0.054);
+  kepler296c->setDustMass(EM(13.85));
+  kepler296c->next_planet = kepler296d;
+  
+  kepler296b = new planet();
+  kepler296b->setA(0.039);
+  kepler296b->setDustMass(EM(0.71));
+  kepler296b->next_planet = kepler296c;
+  
+  gliese180c = new planet();
+  gliese180c->setA(0.129);
+  gliese180c->setE(0.09);
+  gliese180c->setDustMass(EM(6.4));
+  
+  gliese180b = new planet();
+  gliese180b->setA(0.103);
+  gliese180b->setE(0.11);
+  gliese180b->setDustMass(EM(8.3));
+  gliese180b->next_planet = gliese180c;
+  
+  gliese163d = new planet();
+  gliese163d->setA(1.0269);
+  gliese163d->setE(0.4);
+  gliese163d->setDustMass(EM(22.08 / 2.0));
+  gliese163d->setGasMass(EM(22.08 / 2.0));
+  
+  gliese163c = new planet();
+  gliese163c->setA(0.1254);
+  gliese163c->setE(0.09);
+  gliese163c->setDustMass(EM(7.26));
+  gliese163c->next_planet = gliese163d;
+  
+  gliese163b = new planet();
+  gliese163b->setA(0.0607);
+  gliese163b->setE(0.01);
+  gliese163b->setDustMass(EM(10.62 / 2.0));
+  gliese163b->setGasMass(EM(10.62 / 2.0));
+  gliese163b->next_planet = gliese163c;
+  
+  kepler61b = new planet();
+  kepler61b->setA(0.27);
+  kepler61b->setE(0.25);
+  kepler61b->setDustMass(EM(13.85));
+  
+  gliese422b = new planet();
+  gliese422b->setA(0.119);
+  gliese422b->setE(0.05);
+  gliese422b->setDustMass(EM(9.9));
+  
+  kepler298d = new planet();
+  kepler298d->setA(0.305);
+  kepler298d->setDustMass(EM(26.81));
+  
+  kepler298c = new planet();
+  kepler298c->setA(0.136);
+  kepler298c->setDustMass(EM(8.88));
+  kepler298c->next_planet = kepler298d;
+  
+  kepler298b = new planet();
+  kepler298b->setA(0.08);
+  kepler298b->setDustMass(EM(9.51));
+  kepler298b->next_planet = kepler298c;
+  
+  kepler174d = new planet();
+  kepler174d->setA(0.68);
+  kepler174d->setDustMass(EM(14.78));
+  
+  kepler174c = new planet();
+  kepler174c->setA(0.214);
+  kepler174c->setDustMass(EM(3.4));
+  kepler174c->next_planet = kepler174d;
+  
+  kepler174b = new planet();
+  kepler174b->setA(0.1);
+  kepler174b->setDustMass(EM(9.51));
+  kepler174b->next_planet = kepler174c;
+  
+  gliese682c = new planet();
+  gliese682c->setA(0.176);
+  gliese682c->setE(0.1);
+  gliese682c->setDustMass(EM(8.7));
+  
+  gliese682b = new planet();
+  gliese682b->setA(0.08);
+  gliese682b->setE(0.08);
+  gliese682b->setDustMass(EM(4.4));
+  gliese682b->next_planet = gliese682c;
+  
+  hd38529c = new planet();
+  hd38529c->setA(3.695);
+  hd38529c->setE(0.36);
+  hd38529c->setDustMass(JUPITER_CORE_RATIO(5627.54));
+  hd38529c->setGasMass(JUPITER_GAS_RATIO(5627.54));
+  
+  hd38529b = new planet();
+  hd38529b->setA(0.131);
+  hd38529b->setE(0.25);
+  hd38529b->setDustMass(JUPITER_CORE_RATIO(247.99));
+  hd38529b->setGasMass(JUPITER_GAS_RATIO(247.99));
+  hd38529b->next_planet = hd38529c;
+  
+  hd202206c = new planet();
+  hd202206c->setA(2.55);
+  hd202206c->setE(0.27);
+  hd202206c->setDustMass(JUPITER_CORE_RATIO(775.77));
+  hd202206c->setGasMass(JUPITER_GAS_RATIO(775.77));
+  
+  hd202206b = new planet();
+  hd202206b->setA(0.83);
+  hd202206b->setE(0.43);
+  hd202206b->setDustMass(JUPITER_CORE_RATIO(5532.16));
+  hd202206b->setGasMass(JUPITER_GAS_RATIO(5532.16));
+  hd202206b->next_planet = hd202206c;
+  
+  hd8673b = new planet();
+  hd8673b->setA(3.02);
+  hd8673b->setE(0.72);
+  hd8673b->setDustMass(JUPITER_CORE_RATIO(4514.75));
+  hd8673b->setGasMass(JUPITER_GAS_RATIO(4514.75));
+  
+  hd22781b = new planet();
+  hd22781b->setA(1.167);
+  hd22781b->setE(0.82);
+  hd22781b->setDustMass(JUPITER_CORE_RATIO(4339.88));
+  hd22781b->setGasMass(JUPITER_GAS_RATIO(4339.88));
+  
+  hd217786b = new planet();
+  hd217786b->setA(2.38);
+  hd217786b->setE(0.4);
+  hd217786b->setDustMass(JUPITER_CORE_RATIO(4133.22));
+  hd217786b->setGasMass(JUPITER_GAS_RATIO(4133.22));
+  
+  hd106270b = new planet();
+  hd106270b->setA(4.3);
+  hd106270b->setE(0.4);
+  hd106270b->setDustMass(JUPITER_CORE_RATIO(3497.34));
+  hd106270b->setGasMass(JUPITER_GAS_RATIO(3497.34));
+  
+  hd38801b = new planet();
+  hd38801b->setA(1.7);
+  hd38801b->setDustMass(JUPITER_CORE_RATIO(3401.96));
+  hd38801b->setGasMass(JUPITER_GAS_RATIO(3401.96));
+  
+  hd39091b = new planet();
+  hd39091b->setA(3.28);
+  hd39091b->setE(0.61);
+  hd39091b->setDustMass(JUPITER_CORE_RATIO(3274.78));
+  hd39091b->setGasMass(JUPITER_GAS_RATIO(3274.78));
+  
+  hd141937b = new planet();
+  hd141937b->setA(1.52);
+  hd141937b->setE(0.41);
+  hd141937b->setDustMass(JUPITER_CORE_RATIO(3084.02));
+  hd141937b->setGasMass(JUPITER_GAS_RATIO(3084.02));
+  
+  hd33564b = new planet();
+  hd33564b->setA(1.1);
+  hd33564b->setE(0.34);
+  hd33564b->setDustMass(JUPITER_CORE_RATIO(2893.25));
+  hd33564b->setGasMass(JUPITER_GAS_RATIO(2893.25));
+  
+  hd23596b = new planet();
+  hd23596b->setA(2.88);
+  hd23596b->setE(0.29);
+  hd23596b->setDustMass(JUPITER_CORE_RATIO(2575.31));
+  hd23596b->setGasMass(JUPITER_GAS_RATIO(2575.31));
+  
+  hd222582b = new planet();
+  hd222582b->setA(1.35);
+  hd222582b->setE(0.72);
+  hd222582b->setDustMass(JUPITER_CORE_RATIO(2464.04));
+  hd222582b->setGasMass(JUPITER_GAS_RATIO(2464.04));
+  
+  hd86264b = new planet();
+  hd86264b->setA(2.86);
+  hd86264b->setE(0.7);
+  hd86264b->setDustMass(JUPITER_CORE_RATIO(2225.58));
+  hd86264b->setGasMass(JUPITER_GAS_RATIO(2225.58));
+  
+  hd196067b = new planet();
+  hd196067b->setA(5.02);
+  hd196067b->setE(0.66);
+  hd196067b->setDustMass(JUPITER_CORE_RATIO(2193.79));
+  hd196067b->setGasMass(JUPITER_GAS_RATIO(2193.79));
+  
+  hd10697b = new planet();
+  hd10697b->setA(2.16);
+  hd10697b->setE(0.1);
+  hd10697b->setDustMass(JUPITER_CORE_RATIO(2028.46));
+  hd10697b->setGasMass(JUPITER_GAS_RATIO(2028.46));
+  
+  hd132406b = new planet();
+  hd132406b->setA(1.98);
+  hd132406b->setE(0.34);
+  hd132406b->setDustMass(JUPITER_CORE_RATIO(1783.64));
+  hd132406b->setGasMass(JUPITER_GAS_RATIO(1783.64));
+  
+  hd13908c = new planet();
+  hd13908c->setA(2.03);
+  hd13908c->setE(0.12);
+  hd13908c->setDustMass(JUPITER_CORE_RATIO(1631.03));
+  hd13908c->setGasMass(JUPITER_GAS_RATIO(1631.03));
+  
+  hd13908b = new planet();
+  hd13908b->setA(0.154);
+  hd13908b->setE(0.05);
+  hd13908b->setDustMass(JUPITER_CORE_RATIO(275.02));
+  hd13908b->setGasMass(JUPITER_GAS_RATIO(275.02));
+  hd13908b->next_planet = hd13908c;
+  
+  hd2039b = new planet();
+  hd2039b->setA(2.2);
+  hd2039b->setE(0.67);
+  hd2039b->setDustMass(JUPITER_CORE_RATIO(1557.91));
+  hd2039b->setGasMass(JUPITER_GAS_RATIO(1557.91));
+  
+  hd82943d = new planet();
+  hd82943d->setA(2.145);
+  hd82943d->setDustMass(JUPITER_CORE_RATIO(92.2));
+  hd82943d->setGasMass(JUPITER_GAS_RATIO(92.2));
+  
+  hd82943b = new planet();
+  hd82943b->setA(1.19);
+  hd82943b->setE(0.2);
+  hd82943b->setDustMass(JUPITER_CORE_RATIO(1526.11));
+  hd82943b->setGasMass(JUPITER_GAS_RATIO(1526.11));
+  hd82943b->next_planet = hd82943d;
+  
+  hd82943c = new planet();
+  hd82943c->setA(0.746);
+  hd82943c->setE(0.42);
+  hd82943c->setDustMass(JUPITER_CORE_RATIO(1519.75));
+  hd82943c->setGasMass(JUPITER_GAS_RATIO(1519.75));
+  hd82943c->next_planet = hd82943b;
+  
+  moa2011blg293lb = new planet();
+  moa2011blg293lb->setA(1.1);
+  moa2011blg293lb->setDustMass(JUPITER_CORE_RATIO(1526.11));
+  moa2011blg293lb->setGasMass(JUPITER_GAS_RATIO(1526.11));
+  
+  hd213240b = new planet();
+  hd213240b->setA(2.03);
+  hd213240b->setE(0.45);
+  hd213240b->setDustMass(JUPITER_CORE_RATIO(1430.73));
+  hd213240b->setGasMass(JUPITER_GAS_RATIO(1430.73));
+  
+  kepler186f = new planet();
+  kepler186f->setA(0.3926);
+  kepler186f->setKnownRadius(1.13);
+  
+  kepler186e = new planet();
+  kepler186e->setA(0.1216);
+  kepler186e->setKnownRadius(1.33);
+  kepler186e->next_planet = kepler186f;
+  
+  kepler186d = new planet();
+  kepler186d->setA(0.0861);
+  kepler186d->setKnownRadius(1.39);
+  kepler186d->next_planet = kepler186e;
+  
+  kepler186c = new planet();
+  kepler186c->setA(0.0574);
+  kepler186c->setKnownRadius(1.25);
+  kepler186c->next_planet = kepler186d;
+  
+  kepler186b = new planet();
+  kepler186b->setA(0.0378);
+  kepler186b->setKnownRadius(1.08);
+  kepler186b->next_planet = kepler186c;
+  
+  kapteync = new planet();
+  kapteync->setA(0.311);
+  kapteync->setE(0.23);
+  kepler11c->setDustMass(EM(7.0));
+  
+  kapteynb = new planet();
+  kapteynb->setA(0.168);
+  kapteynb->setE(0.21);
+  kapteynb->setDustMass(EM(4.7));
+  kapteynb->next_planet = kapteync;
 }

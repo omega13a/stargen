@@ -737,13 +737,13 @@ string eff_temp_to_spec_type(long double eff_temp, long double luminosity)
 /*	 the orbital 'zone' of the particle.                                */
 /*--------------------------------------------------------------------------*/
 
-int orb_zone(long double luminosity, long double orb_radius)
+int orb_zone(long double ecosphere_radius, long double orb_radius)
 {
-  if (orb_radius < (4.0 * sqrt(luminosity)))
+  if (orb_radius < (4.0 * ecosphere_radius))
   {
     return 1;
   }
-  else if (orb_radius < (15.0 * sqrt(luminosity)))
+  else if (orb_radius < (15.0 * ecosphere_radius))
   {
     return 2;
   }
@@ -921,7 +921,7 @@ long double inclination(long double orb_radius, long double parent_mass)
   // a. want real result, not integer
   // b. obliquity of planets near stars is erroded by tidal heating
   // ref: http://arxiv.org/abs/1101.2156
-  // Tidal obliquity evolution of potentially habitable planets
+  // Tidal obliquity evolution of potentialy habitable planets
   // Heller et al. (2011)
   
   long double temp; 
@@ -1492,7 +1492,7 @@ void calculate_surface_temp(planet *the_planet, bool first, long double last_wat
       the_planet->setAlbedo(EARTH_ALBEDO);
     }
     
-    effective_temp = eff_temp(the_planet->getTheSun().getREcosphere(), the_planet->getA(), the_planet->getAlbedo());
+    effective_temp = eff_temp(the_planet->getTheSun().getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES), the_planet->getA(), the_planet->getAlbedo());
     greenhouse_temp = green_rise(opacity(the_planet->getMolecWeight(), the_planet->getSurfPressure()), effective_temp, the_planet->getSurfPressure());
     the_planet->setSurfTemp(effective_temp + greenhouse_temp);
     set_temp_range(the_planet);
@@ -1562,7 +1562,7 @@ void calculate_surface_temp(planet *the_planet, bool first, long double last_wat
     }
     the_planet->setAlbedo(planet_albedo(the_planet));
   }
-  effective_temp = eff_temp(the_planet->getTheSun().getREcosphere(), the_planet->getA(), the_planet->getAlbedo());
+  effective_temp = eff_temp(the_planet->getTheSun().getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES), the_planet->getA(), the_planet->getAlbedo());
   greenhouse_temp = green_rise(opacity(the_planet->getMolecWeight(), the_planet->getSurfPressure()), effective_temp, the_planet->getSurfPressure());
   the_planet->setSurfTemp(effective_temp + greenhouse_temp);
   
@@ -1594,7 +1594,7 @@ void calculate_surface_temp(planet *the_planet, bool first, long double last_wat
 void iterate_surface_temp(planet* the_planet, bool do_gasses)
 {
   int count = 0;
-  long double initial_temp = est_temp(the_planet->getTheSun().getREcosphere(), the_planet->getA(), the_planet->getAlbedo());
+  long double initial_temp = est_temp(the_planet->getTheSun().getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES), the_planet->getA(), the_planet->getAlbedo());
   
   long double h2_life = gas_life(MOL_HYDROGEN, the_planet);
   long double h2o_life = gas_life(WATER_VAPOR, the_planet);
@@ -1605,7 +1605,7 @@ void iterate_surface_temp(planet* the_planet, bool do_gasses)
   
   if (flag_verbose & 0x20000)
   {
-    cerr << the_planet->getPlanetNo() << ":                     " << toString(initial_temp) << " it [" << toString(the_planet->getTheSun().getREcosphere()) << " re " << toString(the_planet->getA()) << " a " << toString(the_planet->getAlbedo()) << " alb]" << endl;
+    cerr << the_planet->getPlanetNo() << ":                     " << toString(initial_temp) << " it [" << toString(the_planet->getTheSun().getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES)) << " re " << toString(the_planet->getA()) << " a " << toString(the_planet->getAlbedo()) << " alb]" << endl;
   }
   
   if (flag_verbose & 0x0040)
@@ -1635,7 +1635,7 @@ void iterate_surface_temp(planet* the_planet, bool do_gasses)
   
   if (flag_verbose & 0x20000)
   {
-    cerr << the_planet->getPlanetNo() << ": " << toString(the_planet->getGreenhsRise()) << " gh = " << toString(the_planet->getSurfTemp()) << " (" << toString(the_planet->getSurfTemp() - FREEZING_POINT_OF_WATER) << " C) st - " << toString(initial_temp) << " it [" << toString(the_planet->getTheSun().getREcosphere()) << " re " << toString(the_planet->getA()) << " a " << toString(the_planet->getAlbedo()) << " alb]" << endl;
+    cerr << the_planet->getPlanetNo() << ": " << toString(the_planet->getGreenhsRise()) << " gh = " << toString(the_planet->getSurfTemp()) << " (" << toString(the_planet->getSurfTemp() - FREEZING_POINT_OF_WATER) << " C) st - " << toString(initial_temp) << " it [" << toString(the_planet->getTheSun().getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES)) << " re " << toString(the_planet->getA()) << " a " << toString(the_planet->getAlbedo()) << " alb]" << endl;
   }
 }
 
@@ -1885,6 +1885,10 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
   }
   long double average = 0.0;
   mass *= SUN_MASS_IN_EARTH_MASSES;
+  if (mass == 0.0)
+  {
+    mass = PROTOPLANET_MASS;
+  }
   non_ice_rock_radii[0.0] = iron_radius(mass, the_planet, solid_iron);
   non_ice_rock_radii[0.5] = half_rock_half_iron_radius(mass, cmf, the_planet, solid_half_rock_half_iron);
   non_ice_rock_radii[1.0] = rock_radius(mass, cmf, the_planet, solid_rock);
@@ -1900,12 +1904,16 @@ long double radius_improved(long double mass, long double imf, long double rmf, 
     }
     else if (imf < 0.75)
     {
+      //cout << "test1" << endl;
+      //cout << toString(mass) << endl;
       radius1 = planet_radius_helper(imf, 0.0, ice_rock_radii[0.0], 0.5, ice_rock_radii[0.5], 0.75, ice_rock_radii[0.75], false);
       radius2 = planet_radius_helper(imf, 0.5, ice_rock_radii[0.5], 0.75, ice_rock_radii[0.75], 1.0, ice_rock_radii[1.0], false);
       ice_rock_radius = rangeAdjust(imf, radius1, radius2, 0.5, 0.75);
     }
     else
     {
+      //cout << "test2" << endl;
+      //cout << toString(mass) << endl;
       radius1 = planet_radius_helper(imf, 0.5, ice_rock_radii[0.5], 0.75, ice_rock_radii[0.75], 1.0, ice_rock_radii[1.0], false);
       radius2 = planet_radius_helper2(imf, 0.75, ice_rock_radii[0.75], 1.0, ice_rock_radii[1.0]);
       ice_rock_radius = rangeAdjust(imf, radius1, radius2, 0.75, 1.0);
@@ -2047,15 +2055,16 @@ long double gas_radius(long double temperature, long double core_mass, long doub
   {
     jupiter_radii = gas_radius_4point5Gyr(temperature, core_earth_masses, total_earth_masses, the_planet);
   }*/
-  if (star_age < 300.0E6)
+  /*if (star_age < 300.0E6)
   {
     jupiter_radii = planet_radius_helper2(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9]);
   }
-  else if (star_age < 1.0E9)
+  else */if (star_age < 1.0E9)
   {
-    jupiter_radii1 = planet_radius_helper2(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9]);
-    jupiter_radii2 = planet_radius_helper(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9], false);
-    jupiter_radii = rangeAdjust(star_age, jupiter_radii1, jupiter_radii2, 300.0E6, 1.0E9);
+    //jupiter_radii1 = planet_radius_helper2(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9]);
+    //jupiter_radii2 = planet_radius_helper(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9], false);
+    //jupiter_radii = rangeAdjust(star_age, jupiter_radii1, jupiter_radii2, 300.0E6, 1.0E9);
+    jupiter_radii = planet_radius_helper(star_age, 300.0E6, age_radii[300.0E6], 1.0E9, age_radii[1.0E9], 4.5E9, age_radii[4.5E9], false);
   }
   else if (star_age < 4.5E9)
   {
@@ -2081,7 +2090,7 @@ long double gas_radius(long double temperature, long double core_mass, long doub
 
 long double round_threshold(long double density)
 {
-  return 170.0 * sqrt(ultimateStrength(density)) * pow(density, -1.0);
+  return (170.0 * sqrt(ultimateStrength(density)) * pow(density, -1.0)) / 2.0;
 }
 
 long double ultimateStrength(long double density)
@@ -2103,24 +2112,107 @@ long double calc_stellar_flux(long double a, long double b, long double c, long 
   return (seff) + (a * t) + (b * pow(t, 2.0)) + (c * pow(t, 3.0)) + (d * pow(t, 4.0));
 }
 
-long double habitable_zone_distance_helper(long double effTemp, long double luminosity, int mode)
+long double habitable_zone_distance_helper(long double effTemp, long double luminosity, int mode, long double mass)
 {
   long double stellar_flux = 0;
+  long double a, b, c, d, seff;
+  long double stellar_flux_green1, stellar_flux_green2, stellar_flux_moist1, stellar_flux_earth1, stellar_flux_max1, stellar_flux_max2, diff, percent, temp;
+  
+  if (mass < 0.1)
+  {
+    mass = 0.1;
+  }
+  else if (mass > 10.0)
+  {
+    mass = 10.0;
+  }
+  
+  a = b = c = d = seff = 0.0;
   if (mode == RECENT_VENUS)
   {
-    stellar_flux = calc_stellar_flux(1.4316E-4, 2.9875E-9, -7.5702E-12, -1.1635E-15, 1.7753, effTemp, luminosity);
+    //stellar_flux = calc_stellar_flux(1.4316E-4, 2.9875E-9, -7.5702E-12, -1.1635E-15, 1.7753, effTemp, luminosity);
+    stellar_flux = calc_stellar_flux(2.136E-4, 2.533E-8, -1.332E-11, -3.097E-15, 1.776, effTemp, luminosity);
   }
   else if (mode == RUNAWAY_GREENHOUSE)
   {
-    stellar_flux = calc_stellar_flux(1.3242E-4, 1.5418E-8, -7.9895E-12, -1.8328E-15, 1.0512, effTemp, luminosity);
+    //stellar_flux = calc_stellar_flux(1.3242E-4, 1.5418E-8, -7.9895E-12, -1.8328E-15, 1.0512, effTemp, luminosity);
+    if (mass < 1.0)
+    {
+      a = planet_radius_helper(mass, 0.1, 1.209E-4, 1.0, 1.332E-4, 5.0, 1.433E-4);
+      b = planet_radius_helper(mass, 0.1, 1.404E-8, 1.0, 1.58E-8, 5.0, 1.707E-8);
+      c = planet_radius_helper(mass, 0.1, -7.418E-12, 1.0, -8.308E-12, 5.0, -8.968E-12);
+      d = planet_radius_helper(mass, 0.1, -1.713E-15, 1.0, -1.931E-15, 5.0, -2.084E-15);
+      seff = planet_radius_helper(mass, 0.1, 0.99, 1.0, 1.107, 5.0, 1.188);
+    }
+    else
+    {
+      a = planet_radius_helper2(mass, 1.0, 1.332E-4, 5.0, 1.433E-4);
+      b = planet_radius_helper2(mass, 1.0, 1.58E-8, 5.0, 1.707E-8);
+      c = planet_radius_helper2(mass, 1.0, -8.308E-12, 5.0, -8.968E-12);
+      d = planet_radius_helper2(mass, 1.0, -1.931E-15, 5.0, -2.084E-15);
+      seff = planet_radius_helper2(mass, 1.0, 1.107, 5.0, 1.188);
+    }
+    stellar_flux = calc_stellar_flux(a, b, c, d, seff, effTemp, luminosity);
   }
   else if (mode == MOIST_GREENHOUSE)
   {
-    stellar_flux = calc_stellar_flux(8.1774E-5, 1.7063E-9, -4.3241E-12, -6.6462E-16, 1.0140, effTemp, luminosity);
+    //stellar_flux = calc_stellar_flux(8.1774E-5, 1.7063E-9, -4.3241E-12, -6.6462E-16, 1.0140, effTemp, luminosity);
+    stellar_flux_green1 = calc_stellar_flux(1.332E-4, 1.58E-8, -8.308E-12, -1.931E-15, 1.107, effTemp, luminosity);
+    stellar_flux_moist1 = calc_stellar_flux(8.1774E-5, 1.7063E-9, -4.3241E-12, -6.6462E-16, 1.0140, effTemp, luminosity);
+    stellar_flux_max1 = calc_stellar_flux(5.8942E-5, 1.6558E-9, -3.0045E-12, -5.2983E-16, 0.3438, effTemp, luminosity);
+    diff = stellar_flux_green1 - stellar_flux_max1;
+    percent = (stellar_flux_green1 - stellar_flux_moist1) / diff;
+    if (mass < 1.0)
+    {
+      a = planet_radius_helper(mass, 0.1, 1.209E-4, 1.0, 1.332E-4, 5.0, 1.433E-4);
+      b = planet_radius_helper(mass, 0.1, 1.404E-8, 1.0, 1.58E-8, 5.0, 1.707E-8);
+      c = planet_radius_helper(mass, 0.1, -7.418E-12, 1.0, -8.308E-12, 5.0, -8.968E-12);
+      d = planet_radius_helper(mass, 0.1, -1.713E-15, 1.0, -1.931E-15, 5.0, -2.084E-15);
+      seff = planet_radius_helper(mass, 0.1, 0.99, 1.0, 1.107, 5.0, 1.188);
+    }
+    else
+    {
+      a = planet_radius_helper2(mass, 1.0, 1.332E-4, 5.0, 1.433E-4);
+      b = planet_radius_helper2(mass, 1.0, 1.58E-8, 5.0, 1.707E-8);
+      c = planet_radius_helper2(mass, 1.0, -8.308E-12, 5.0, -8.968E-12);
+      d = planet_radius_helper2(mass, 1.0, -1.931E-15, 5.0, -2.084E-15);
+      seff = planet_radius_helper2(mass, 1.0, 1.107, 5.0, 1.188);
+    }
+    stellar_flux_green2 = calc_stellar_flux(a, b, c, d, seff, effTemp, luminosity);
+    stellar_flux_max2 = calc_stellar_flux(6.171E-5, 1.698E-9, -3.198E-12, -5.575E-16, 0.356, effTemp, luminosity);
+    diff = stellar_flux_green2 - stellar_flux_max2;
+    temp = diff * percent;
+    stellar_flux = stellar_flux_green2 - (temp * diff);
   }
   else if (mode == EARTH_LIKE)
   {
-    stellar_flux = calc_stellar_flux(8.3104E-5, 1.7677E-9, -4.39E-12, -6.79E-16, 1.0, effTemp, luminosity);
+    //stellar_flux = calc_stellar_flux(8.3104E-5, 1.7677E-9, -4.39E-12, -6.79E-16, 1.0, effTemp, luminosity);
+    stellar_flux_green1 = calc_stellar_flux(1.332E-4, 1.58E-8, -8.308E-12, -1.931E-15, 1.107, effTemp, luminosity);
+    stellar_flux_earth1 = calc_stellar_flux(8.3104E-5, 1.7677E-9, -4.39E-12, -6.79E-16, 1.0, effTemp, luminosity);
+    stellar_flux_max1 = calc_stellar_flux(5.8942E-5, 1.6558E-9, -3.0045E-12, -5.2983E-16, 0.3438, effTemp, luminosity);
+    diff = stellar_flux_green1 - stellar_flux_max1;
+    percent = (stellar_flux_green1 - stellar_flux_earth1) / diff;
+    if (mass < 1.0)
+    {
+      a = planet_radius_helper(mass, 0.1, 1.209E-4, 1.0, 1.332E-4, 5.0, 1.433E-4);
+      b = planet_radius_helper(mass, 0.1, 1.404E-8, 1.0, 1.58E-8, 5.0, 1.707E-8);
+      c = planet_radius_helper(mass, 0.1, -7.418E-12, 1.0, -8.308E-12, 5.0, -8.968E-12);
+      d = planet_radius_helper(mass, 0.1, -1.713E-15, 1.0, -1.931E-15, 5.0, -2.084E-15);
+      seff = planet_radius_helper(mass, 0.1, 0.99, 1.0, 1.107, 5.0, 1.188);
+    }
+    else
+    {
+      a = planet_radius_helper2(mass, 1.0, 1.332E-4, 5.0, 1.433E-4);
+      b = planet_radius_helper2(mass, 1.0, 1.58E-8, 5.0, 1.707E-8);
+      c = planet_radius_helper2(mass, 1.0, -8.308E-12, 5.0, -8.968E-12);
+      d = planet_radius_helper2(mass, 1.0, -1.931E-15, 5.0, -2.084E-15);
+      seff = planet_radius_helper2(mass, 1.0, 1.107, 5.0, 1.188);
+    }
+    stellar_flux_green2 = calc_stellar_flux(a, b, c, d, seff, effTemp, luminosity);
+    stellar_flux_max2 = calc_stellar_flux(6.171E-5, 1.698E-9, -3.198E-12, -5.575E-16, 0.356, effTemp, luminosity);
+    diff = stellar_flux_green2 - stellar_flux_max2;
+    temp = diff * percent;
+    stellar_flux = stellar_flux_green2 - (temp * diff);
   }
   else if (mode == FIRST_CO2_CONDENSATION_LIMIT)
   {
@@ -2128,11 +2220,13 @@ long double habitable_zone_distance_helper(long double effTemp, long double lumi
   }
   else if (mode == MAXIMUM_GREENHOUSE)
   {
-    stellar_flux = calc_stellar_flux(5.8942E-5, 1.6558E-9, -3.0045E-12, -5.2983E-16, 0.3438, effTemp, luminosity);
+    //stellar_flux = calc_stellar_flux(5.8942E-5, 1.6558E-9, -3.0045E-12, -5.2983E-16, 0.3438, effTemp, luminosity);
+    stellar_flux = calc_stellar_flux(6.171E-5, 1.698E-9, -3.198E-12, -5.575E-16, 0.356, effTemp, luminosity);
   }
   else if (mode == EARLY_MARS)
   {
-    stellar_flux = calc_stellar_flux(5.4513E-5, 1.5313E-9, -2.7786E-12, -4.8997E-16, 0.3179, effTemp, luminosity);
+    //stellar_flux = calc_stellar_flux(5.4513E-5, 1.5313E-9, -2.7786E-12, -4.8997E-16, 0.3179, effTemp, luminosity);
+    stellar_flux = calc_stellar_flux(5.547E-5, 1.526E-9, -2.874E-12, -5.011E-16, 0.32, effTemp, luminosity);
   }
   else if (mode == TWO_AU_CLOUD_LIMIT)
   {
@@ -2141,7 +2235,7 @@ long double habitable_zone_distance_helper(long double effTemp, long double lumi
   return stellar_flux;
 }
 
-long double habitable_zone_distance(sun &the_sun, int mode)
+long double habitable_zone_distance(sun &the_sun, int mode, long double mass)
 {
   long double stellar_flux = 0;
   //long double stellar_flux2 = 0;
@@ -2150,11 +2244,11 @@ long double habitable_zone_distance(sun &the_sun, int mode)
   {
     if (!the_sun.getIsCircumbinary())
     {
-      stellar_flux = habitable_zone_distance_helper(the_sun.getEffTemp(), the_sun.getLuminosity(), mode);
+      stellar_flux = habitable_zone_distance_helper(the_sun.getEffTemp(), the_sun.getLuminosity(), mode, mass);
     }
     else
     {
-      stellar_flux = habitable_zone_distance_helper(the_sun.getCombinedEffTemp(), the_sun.getLuminosity(), mode);
+      stellar_flux = habitable_zone_distance_helper(the_sun.getCombinedEffTemp(), the_sun.getLuminosity(), mode, mass);
     }
     
     if (stellar_flux <= 0)
@@ -2275,7 +2369,7 @@ void gas_giant_temperature_albedo(planet* the_planet, long double parent_mass, b
   }
   temp3 = about(GAS_GIANT_ALBEDO, 0.1);
   the_planet->setAlbedo(temp3);
-  temp1 = est_temp(the_planet->getTheSun().getREcosphere(), the_planet->getA(), the_planet->getAlbedo());
+  temp1 = est_temp(the_planet->getTheSun().getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES), the_planet->getA(), the_planet->getAlbedo());
   the_planet->setEstimatedTemp(temp1);
   //temp4 = new_radius = gas_radius(temp1, the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
   temp4 = new_radius = calcRadius(the_planet);
@@ -2289,31 +2383,31 @@ void gas_giant_temperature_albedo(planet* the_planet, long double parent_mass, b
     {
       break;
     }
-    if (temp1 > 2240)
+    if (temp1 > TEMPERATURE_CARBON_GIANT)
     {
       new_albedo = about(CARBON_GIANT_ALBEDO, 0.1);
     }
-    else if (temp1 > 1400)
+    else if (temp1 > TEMPERATURE_CLASS_V)
     {
       new_albedo = about(getGasGiantAlbedo("V", the_planet->getTheSun().getSpecType(), the_planet->getTheSun().getLuminosity()), 0.1);
     }
-    else if (temp1 > 900)
+    else if (temp1 > TEMPERATURE_CLASS_IV)
     {
       new_albedo = about(getGasGiantAlbedo("IV", the_planet->getTheSun().getSpecType(), the_planet->getTheSun().getLuminosity()), 0.1);
     }
-    else if (temp1 > 360)
+    else if (temp1 > TEMPERATURE_CLASS_III)
     {
       new_albedo = about(getGasGiantAlbedo("III", the_planet->getTheSun().getSpecType(), the_planet->getTheSun().getLuminosity()), 0.1);
     }
-    else if (temp1 > 320)
+    else if (temp1 > TEMPERATURE_SULFUR_GIANT)
     {
       new_albedo = about(SULFAR_GIANT_ALBEDO, 0.1);
     }
-    else if (temp1 > 150)
+    else if (temp1 > TEMPERATURE_CLASS_II)
     {
       new_albedo = about(getGasGiantAlbedo("II", the_planet->getTheSun().getSpecType(), the_planet->getTheSun().getLuminosity()), 0.1);
     }
-    else if (temp1 > 81) // visually, this is where it starts to turn blue in selden's version of StarGen
+    else if (temp1 > TEMPERATURE_CLASS_I) // visually, this is where it starts to turn blue in selden's version of StarGen
     {
       new_albedo = about(getGasGiantAlbedo("I", the_planet->getTheSun().getSpecType(), the_planet->getTheSun().getLuminosity()), 0.3);
     }
@@ -2322,7 +2416,7 @@ void gas_giant_temperature_albedo(planet* the_planet, long double parent_mass, b
       new_albedo = about(METHANE_GIANT_ALBEDO, 0.1);
     }
     temp3 = ((new_albedo * 2.0) + temp3) / 3.0;
-    temp2 = est_temp(the_planet->getTheSun().getREcosphere(), the_planet->getA(), temp3);
+    temp2 = est_temp(the_planet->getTheSun().getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES), the_planet->getA(), temp3);
     temp1 = (temp2 + (temp1 * 2.0)) / 3.0;
     the_planet->setEstimatedTemp(temp1);
     //new_radius = gas_radius(temp1, the_planet->getDustMass(), the_planet->getMass(), the_planet->getTheSun().getAge(), the_planet);
@@ -2399,7 +2493,7 @@ void calculate_gases(sun &the_sun, planet* the_planet, string planet_id)
     //cout << "test 1" << endl;
     //cout << planet_id << endl;
     long double *amount = NULL;
-    long double totamount = 0;
+    long double totalamount = 0;
     long double pressure  = the_planet->getSurfPressure() / MILLIBARS_PER_BAR;
     amount = new long double[gases.count()];
     int n;
@@ -2469,7 +2563,7 @@ void calculate_gases(sun &the_sun, planet* the_planet, string planet_id)
 	  cerr << toString(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) << " " << gases[i].getSymbol() << ", " << toString(amount[i]) << " = a " << toString(abund) << " * p " << toString(pvrms) << " * r " << toString(react) << " * p2 " << toString(pres2) << " * f " << toString(fract) << "\t(" << toString(100.0 * (the_planet->getGasMass() / the_planet->getMass())) << "%)" << endl;
 	}
 	
-	totamount += amount[i];
+	totalamount += amount[i];
 	if (amount[i] > 0.0)
 	{
 	  n++;
@@ -2490,8 +2584,122 @@ void calculate_gases(sun &the_sun, planet* the_planet, string planet_id)
       }
     }
     
+    long double original_total = totalamount;
+    long double increase_factor = 1.0;
+    //long double pressure = 0.0;
+    map<int, long double> new_values;
+    map<int, bool> do_overs_more, do_overs_less;
+    long double the_amount = 0.0;
+    long double ipp = 0.0;
+    bool bad_air = false;
+    int counter = 0;
+    
     if (n > 0)
     {
+      do
+      {
+	original_total = totalamount;
+	increase_factor = 1.0;
+	for (int i = 0; i < gases.count(); i++)
+	{
+	  new_values[i] = 0;
+	  if (is_potentialy_habitable(the_planet))
+	  {
+	    if (planet_id == "")
+	    {
+	      stringstream ss;
+	      ss.str("");
+	      ss << toString(the_planet->getA()) << " " << toString(the_planet->getMoonA());
+	      planet_id = ss.str();
+	      ss.str("");
+	    }
+	    if (the_planet->getSurfPressure() >= (1.2 * MIN_O2_IPP) && the_planet->getSurfPressure() <= MAX_HABITABLE_PRESSURE)
+	    {
+	      //the_amount = the_planet->getSurfPressure() * amount[i] / original_total;
+	      the_amount = amount[i];
+	      pressure = the_planet->getSurfPressure() * (amount[i] / original_total);
+	      ipp = inspired_partial_pressure(the_planet->getSurfPressure(), pressure);
+	      if (ipp > gases[i].getMaxIpp())
+	      {
+		//cout << "test1 too high " << gases[i].getSymbol() << " " << planet_id << endl;
+		//cout << toString(amount[i]) << endl;
+		amount[i] *= 0.99;
+		totalamount -= the_amount;
+		totalamount += amount[i];
+	      }
+	      else if (ipp < gases[i].getMinIpp())
+	      {
+		//cout << "test1 too low " << gases[i].getSymbol() << " " << planet_id << endl;
+		//if (planet_id == "1.05853286955409876162 0.00153819919909735927041")
+		{
+		  for (int i = 0; i < gases.count(); i++)
+		  {
+		    //cout << gases[i].getName() << ": " << toString(amount[i]) << endl;
+		  }
+		  //exit(EXIT_FAILURE);
+		}
+		//cout << toString(amount[i]) << " " << toString(ipp) << " " << toString(the_planet->getSurfPressure()) << endl;
+		if (amount[i] <= 0.0)
+		{
+		  amount[i] = 1.0E-9;
+		}
+		else
+		{
+		  amount[i] *= 1.01;
+		  totalamount -= the_amount;
+		}
+		totalamount += amount[i];
+	      }
+	    }
+	  }
+	}
+	original_total = totalamount;
+	long double old_amount = 0.0;
+	for (int i = 0, n = 0; i < gases.count(); i++)
+	{
+	  if (is_potentialy_habitable(the_planet))
+	  {
+	    if (the_planet->getSurfPressure() >= (1.2 * MIN_O2_IPP) && the_planet->getSurfPressure() <= MAX_HABITABLE_PRESSURE)
+	    {
+	      //cout << "test2 " << planet_id << endl;
+	      if (new_values[i] > 0.0)
+	      {
+		amount[i] = new_values[i] * totalamount;
+	      }
+	      ipp = inspired_partial_pressure(the_planet->getSurfPressure(), the_planet->getSurfPressure() * amount[i] / totalamount);
+	      if (ipp > gases[i].getMaxIpp())
+	      {
+		bad_air = true;
+		do_overs_less[i] = true;
+		do_overs_more[i] = false;
+		//cout << i << ". " << gases[i].getName() << " Too high: " << ipp << " (Max allowed: " << gases[i].getMaxIpp() << ")" << endl;
+		break;
+	      }
+	      else if (ipp < gases[i].getMinIpp() && gases[i].getNum() == AN_O)
+	      {
+		bad_air = true;
+		do_overs_less[i] = false;
+		do_overs_more[i] = true;
+		//cout << i << ". " << gases[i].getName() << " Too low: " << ipp << " (Min allowed: " << gases[i].getMinIpp() << ")" << endl;
+		break;
+	      }
+	      else
+	      {
+		do_overs_less[i] = false;
+		do_overs_more[i] = false;
+		bad_air = false;
+	      }
+	    }
+	  }
+	}
+	counter++;
+	if (counter > 1000)
+	{
+	  break;
+	}
+      }
+      while (bad_air);
+      
       for (int i = 0, n = 0; i < gases.count(); i++)
       {
 	if (amount[i] > 0.0)
@@ -2500,7 +2708,14 @@ void calculate_gases(sun &the_sun, planet* the_planet, string planet_id)
 	  //cout << planet_id << endl;
 	  gas substance;
 	  substance.setNum(gases[i].getNum());
-	  substance.setSurfPressure(the_planet->getSurfPressure() * amount[i] / totamount);
+	  if (new_values[i] > 0.0)
+	  {
+	    substance.setSurfPressure(the_planet->getSurfPressure() * new_values[i]);
+	  }
+	  else
+	  {
+	    substance.setSurfPressure(the_planet->getSurfPressure() * amount[i] / totalamount);
+	  }
 	  the_planet->addGas(substance);
 	  
 	  if (flag_verbose & 0x2000)
@@ -2511,6 +2726,7 @@ void calculate_gases(sun &the_sun, planet* the_planet, string planet_id)
 	    }
 	  }
 	}
+	n++;
       }
     }
     delete [] amount;
@@ -2548,7 +2764,7 @@ void assign_composition(planet *the_planet, sun &the_sun, bool is_moon)
       {
 	the_planet->setImf(random_number(0, 1));
       }
-      if (the_planet->getA() < habitable_zone_distance(the_sun, RECENT_VENUS))
+      if (the_planet->getA() < habitable_zone_distance(the_sun, RECENT_VENUS, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES))
       {
 	rock_max = 0.5;
       }
@@ -2660,7 +2876,7 @@ bool is_gas_planet(planet* the_planet)
 
 bool is_earth_like_size(planet* the_planet)
 {
-  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.1 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 5.0) || ((the_planet->getRadius() / KM_EARTH_RADIUS) >= 0.8 && (the_planet->getRadius() / KM_EARTH_RADIUS) <= 1.25))
+  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.1 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 5.0) || ((convert_km_to_eu(the_planet->getRadius())) >= 0.8 && (convert_km_to_eu(the_planet->getRadius())) <= 1.25))
   {
     return true;
   }
@@ -2749,15 +2965,33 @@ bool is_earth_like(planet* the_planet)
   return true;
 }
 
+bool is_habitable_jovian_conservative(planet *the_planet)
+{
+  if (!is_habitable_jovian(the_planet))
+  {
+    return false;
+  }
+  else if (the_planet->getA() < habitable_zone_distance(the_sun_clone, MOIST_GREENHOUSE, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) || the_planet->getA() > habitable_zone_distance(the_sun_clone, MAXIMUM_GREENHOUSE, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES))
+  {
+    return false;
+  }
+  return true;
+}
+
 bool is_habitable_jovian(planet* the_planet)
 {
   sun the_sun = the_planet->getTheSun();
   
-  if (is_gas_planet(the_planet) && the_planet->getEstimatedTerrTemp() >= FREEZING_POINT_OF_WATER && the_planet->getEstimatedTerrTemp() <= (EARTH_AVERAGE_KELVIN + 10.0)/* && the_sun.getAge() > 2.0E9*/)
+  //if (is_gas_planet(the_planet) && the_planet->getEstimatedTerrTemp() >= FREEZING_POINT_OF_WATER && the_planet->getEstimatedTerrTemp() <= (EARTH_AVERAGE_KELVIN + 10.0)/* && the_sun.getAge() > 2.0E9*/)
+  if (!is_gas_planet(the_planet))
   {
-    return true;
+    return false;
   }
-  return false;
+  else if (fabs(the_planet->getHzd()) > 1.0)
+  {
+    return false;
+  }
+  return true;
 }
 
 bool is_terrestrial(planet* the_planet)
@@ -2813,12 +3047,12 @@ long double calcOblateness(planet* the_planet)
 
 long double calcPhlPressure(planet* the_planet)
 {
-  return (100 * 0.87 * pow2(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES)) / (87.0 * pow3(the_planet->getRadius() / KM_EARTH_RADIUS));
+  return (100 * 0.87 * pow2(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES)) / (87.0 * pow3(convert_km_to_eu(the_planet->getRadius())));
 }
 
-bool is_habitable(planet* the_planet)
+bool is_habitable_optimistic(planet* the_planet)
 {
-  if (!is_potentialy_habitable(the_planet))
+  if (!is_potentialy_habitable_optimistic(the_planet))
   {
     return false;
   }
@@ -2832,8 +3066,8 @@ bool is_habitable(planet* the_planet)
 long double calcHzd(planet* the_planet)
 {
   sun the_sun = the_planet->getTheSun();
-  long double inner_edge = habitable_zone_distance(the_sun, RECENT_VENUS);
-  long double outer_edge = habitable_zone_distance(the_sun, EARLY_MARS);
+  long double inner_edge = habitable_zone_distance(the_sun, RECENT_VENUS, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES);
+  long double outer_edge = habitable_zone_distance(the_sun, EARLY_MARS, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES);
   return ((2.0 * the_planet->getA()) - outer_edge - inner_edge) / (outer_edge - inner_edge);
 }
 
@@ -2844,11 +3078,11 @@ long double calcHzcHelper(long double m1, long double r1, long double k1, long d
 
 long double calcHzc(planet* the_planet)
 {
-  long double ro = calcHzcHelper(5.52, 4.43, -0.209396, 0.0807, 0.375, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES);
-  long double ri = calcHzcHelper(5.80, 2.52, -0.209490, 0.0804, 0.394, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES);
-  long double r = the_planet->getRadius() / KM_EARTH_RADIUS;
-  //long double ro = radius_improved(the_planet->getMass(), 1.0, 0, 0, false, the_planet->getOrbitZone()) / KM_EARTH_RADIUS;
-  //long double ri = radius_improved(the_planet->getMass(), 0.0, 0, 0, false, the_planet->getOrbitZone()) / KM_EARTH_RADIUS;
+  //long double ro = calcHzcHelper(5.52, 4.43, -0.209396, 0.0807, 0.375, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES);
+  //long double ri = calcHzcHelper(5.80, 2.52, -0.209490, 0.0804, 0.394, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES);
+  long double r = convert_km_to_eu(the_planet->getRadius());
+  long double ro = convert_km_to_eu(radius_improved(the_planet->getMass(), 1.0, 0, 0, false, the_planet->getOrbitZone(), the_planet));
+  long double ri = convert_km_to_eu(radius_improved(the_planet->getMass(), 0.0, 0, 0, false, the_planet->getOrbitZone(), the_planet));
   return ((2.0 * r) - ro - ri) / (ro - ri);
 }
 
@@ -2871,7 +3105,7 @@ long double calcEsiHelper(long double value, long double ref_value, long double 
 
 long double calcEsi(planet* the_planet)
 {
-  long double esir = calcEsiHelper(the_planet->getRadius() / KM_EARTH_RADIUS, 1.0, 0.57);
+  long double esir = calcEsiHelper(convert_km_to_eu(the_planet->getRadius()), 1.0, 0.57);
   long double esid = calcEsiHelper(the_planet->getDensity() / EARTH_DENSITY, 1.0, 1.07);
   long double esiv = calcEsiHelper((the_planet->getEscVelocity() / CM_PER_KM) / 11.186, 1.0, 0.70);
   long double esit = calcEsiHelper(the_planet->getSurfTemp(), EARTH_AVERAGE_KELVIN, 5.58);
@@ -2898,7 +3132,7 @@ long double calcSph(planet* the_planet)
   return ht * hrh;
 }
 
-bool is_potentialy_habitable_size(planet *the_planet)
+bool is_potentialy_habitable_optimistic_size(planet *the_planet)
 {
   /*if ((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) > 10.0 || (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) < 0.1) // The Plantary Habitablity Laboratory believes habitable planets have to be in the range of 0.1 to 10 earth masses in size.
    *  {
@@ -2908,14 +3142,14 @@ bool is_potentialy_habitable_size(planet *the_planet)
    {
      return false;
    }*/
-  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.1 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 10.0) || ((the_planet->getRadius() / KM_EARTH_RADIUS) >= 0.5 && (the_planet->getRadius() / KM_EARTH_RADIUS) <= 2.5))
+  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.1 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 10.0) || ((convert_km_to_eu(the_planet->getRadius())) >= 0.5 && (convert_km_to_eu(the_planet->getRadius())) <= 2.5))
   {
     return true;
   }
   return false;
 }
 
-bool is_potentialy_habitable(planet* the_planet)
+bool is_potentialy_habitable_optimistic(planet* the_planet)
 {
   sun the_sun = the_planet->getTheSun();
   string spec_type = the_sun.getSpecType();
@@ -2935,7 +3169,7 @@ bool is_potentialy_habitable(planet* the_planet)
     return false;
   }
   //else if ((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) > 10.0 || (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) < 0.1) // The Plantary Habitablity Laboratory believes habitable planets have to be in the range of 0.1 to 10 earth masses in size.
-  else if (!is_potentialy_habitable_size(the_planet))
+  else if (!is_potentialy_habitable_optimistic_size(the_planet))
   {
     return false;
   }
@@ -3116,10 +3350,6 @@ long double calcRadius(planet *the_planet)
   if (the_planet->getGasGiant() || the_planet->getGasMass() > 0.0)
   {
     result = calcGasRadius(the_planet);
-    if (result < the_planet->getCoreRadius())
-    {
-      //result = calcRadius(the_planet);
-    }
   }
   else
   {
@@ -3241,4 +3471,214 @@ long double convert_su_to_eu(long double mass)
 long double convert_au_to_km(long double au)
 {
   return au * KM_PER_AU;
+}
+
+bool is_potentialy_habitable_conservative_size(planet *the_planet)
+{
+  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.1 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 10.0) || ((convert_km_to_eu(the_planet->getRadius())) >= 0.5 && (convert_km_to_eu(the_planet->getRadius())) <= 2.0))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_potentialy_habitable_conservative(planet *the_planet)
+{
+  if (!is_potentialy_habitable_optimistic(the_planet))
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": not potentionally habitable by optimistic" << endl;
+    return false;
+  }
+  else if (!is_potentialy_habitable_conservative_size(the_planet))
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": not conservative size" << endl;
+    return false;
+  }
+  else if (the_planet->getA() < habitable_zone_distance(the_sun_clone, MOIST_GREENHOUSE, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) || the_planet->getA() > habitable_zone_distance(the_sun_clone, MAXIMUM_GREENHOUSE, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES))
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": wrong distance for extended" << endl;
+    return false;
+  }
+  return true;
+}
+
+bool is_habitable_conservative(planet *the_planet)
+{
+  if (!is_potentialy_habitable_conservative(the_planet))
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": not potentionally habitable by conservative" << endl;
+    return false;
+  }
+  else if (breathability(the_planet) != BREATHABLE)
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": Not breathable for conservative" << endl;
+    return false;
+  }
+  return true;
+}
+
+bool is_potentialy_habitable_extended_size(planet *the_planet)
+{
+  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.1 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 10.0) || ((convert_km_to_eu(the_planet->getRadius())) >= 0.5 && (convert_km_to_eu(the_planet->getRadius())) <= 2.5))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_potentialy_habitable_extended(planet *the_planet)
+{
+  sun the_sun = the_planet->getTheSun();
+  string star_type = the_sun.getSpecType();
+  if (!is_potentialy_habitable_extended_size(the_planet))
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": not extended size" << endl;
+    return false;
+  }
+  else if (the_sun.getMass() < 0.3) // the Plantary Habitablity Laboratory feels that stars less that it is very unlikey 0.3 solar masses due to the tidal heating planets would expirence before their orbits stablize.
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": too small a star for extended" << endl;
+    return false;
+  }
+  else if (star_type == "O" || star_type == "B" || star_type == "A") // Types O, B, and A don't live long enough to produce habitable worlds and are two bright for photosysisis to occure.
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": wrong star for extended" << endl;
+    return false;
+  }
+  else if (fabs(the_planet->getHzc()) > 1.0) // The planet can't have too much iron or too much water or gas making up its mass.
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": wrong composition for extended" << endl;
+    return false;
+  }
+  else if (fabs(the_planet->getHza()) > 1.0) // The planet can't have the potential of having a too thick or too thin atmosphere. 
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": potential for too thick or thin an atmosphere for extended" << endl;
+    return false;
+  }
+  else if (the_planet->getA() < habitable_zone_distance(the_sun_clone, RECENT_VENUS, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) || the_planet->getA() > habitable_zone_distance(the_sun_clone, TWO_AU_CLOUD_LIMIT, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES))
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": wrong distance for extended" << endl;
+    return false;
+  }
+  return true;
+}
+
+bool is_habitable_extended(planet *the_planet)
+{
+  if (!is_potentialy_habitable_extended(the_planet))
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": not potentionally extended" << endl;
+    return false;
+  }
+  else if (breathability(the_planet) != BREATHABLE)
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": Not breathable for extended" << endl;
+    return false;
+  }
+  return true;
+}
+
+bool is_potentialy_habitable_earth_like(planet *the_planet)
+{
+  if (!is_potentialy_habitable_conservative(the_planet))
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": not potentionally habitable by conservative" << endl;
+    return false;
+  }
+  else if (!is_earth_like_size(the_planet))
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": not earth-like size" << endl;
+    return false;
+  }
+  else if (the_planet->getEsi() < 0.8)
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": too low esi for earth-like" << endl;
+    return false;
+  }
+  return true;
+}
+
+bool is_habitable_earth_like(planet* the_planet)
+{
+  if (!is_potentialy_habitable_earth_like(the_planet))
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": Not potentialy earth-like" << endl;
+    return false;
+  }
+  else if (breathability(the_planet) != BREATHABLE)
+  {
+    //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": Not breathable for earth-like" << endl;
+    return false;
+  }
+  return true;
+}
+
+bool is_potentialy_habitable(planet *the_planet)
+{
+  if (is_potentialy_habitable_earth_like(the_planet))
+  {
+    return true;
+  }
+  else if (is_potentialy_habitable_conservative(the_planet))
+  {
+    return true;
+  }
+  else if (is_potentialy_habitable_optimistic(the_planet))
+  {
+    return true;
+  }
+  else if (is_potentialy_habitable_extended(the_planet))
+  {
+    return true;
+  }
+  return false;
+}
+
+bool is_habitable(planet *the_planet)
+{
+  if (is_habitable_earth_like(the_planet))
+  {
+    return true;
+  }
+  else if (is_habitable_conservative(the_planet))
+  {
+    return true;
+  }
+  else if (is_habitable_optimistic(the_planet))
+  {
+    return true;
+  }
+  else if (is_habitable_extended(the_planet))
+  {
+    return true;
+  }
+  return false;
+}
+
+long double convert_km_to_eu(long double km)
+{
+  return km / KM_EARTH_RADIUS;
+}
+
+void makeHabitable(sun &the_sun, planet *the_planet, string planet_id, bool is_moon, bool do_gases)
+{
+  //cout << planet_id << " " << the_planet->getA() << endl;
+  if (!is_gas_planet(the_planet) && is_potentialy_habitable(the_planet) && the_planet->getMinTemp() < the_planet->getBoilPoint() && (the_planet->getSurfPressure() < (1.2 * MIN_O2_IPP) || the_planet->getSurfPressure() > MAX_HABITABLE_PRESSURE))
+  {
+    //cout << "test3 " << planet_id << endl;
+    the_planet->setSurfPressure(calcPhlPressure(the_planet) * EARTH_SURF_PRES_IN_MILLIBARS);
+    while (the_planet->getSurfPressure() > 6000)
+    {
+      the_planet->setSurfPressure(the_planet->getSurfPressure() - 1.0);
+    }
+    iterate_surface_temp(the_planet, do_gases);
+    if (do_gases)
+    {
+      the_planet->clearGases();
+      calculate_gases(the_sun, the_planet, planet_id);
+    }
+    //cout << "test4 " << planet_id << endl;
+    assign_type(the_sun, the_planet, planet_id, is_moon, do_gases, true);
+    //cout << "test5 " << planet_id << endl;
+  }
 }

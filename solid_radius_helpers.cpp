@@ -358,7 +358,8 @@ long double water_radius(long double mass, planet *the_planet, map<long double, 
   else
   {
     //radius = ln_trend(3.935260455, 0.1185931516, mass);
-    radius = rangeAdjust(mass, radius1, radius2, 390.1, 435.9);
+    //radius = rangeAdjust(mass, radius1, radius2, 390.1, 435.9);
+    radius = planet_radius_helper2(mass, 435.9, mass_radii[435.9], 486.4, mass_radii[486.4]);
   }
   if (flag_verbose & 0x80000)
   {

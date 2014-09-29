@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "stargen.h"
 
 using namespace std;
 
@@ -45,6 +46,7 @@ long double rangeAdjust(long double, long double, long double, long double, long
 void e_fix(long double, long double, long double, long double, long double &, long double &);
 long double e_trend(long double, long double, long double);
 void quadfix(long double, long double, long double, long double, long double, long double, long double &, long double &, long double &);
+long double quintic_trend(long double, long double, long double, long double, long double, long double, long double);
 
 template <typename T>
 string toString(T val, int decimals = 0);
@@ -74,6 +76,11 @@ string toString(T val, int decimals)
 {
   stringstream ss;
   string output;
+  
+  if (decimals_arg != 0)
+  {
+    decimals = decimals_arg;
+  }
   
   ss.str("");
   

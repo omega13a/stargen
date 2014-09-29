@@ -73,12 +73,22 @@ extern long double compainion_lum_arg;
 extern long double compainion_eff_arg;
 extern string companion_spec_arg;
 extern long double min_age;
+extern long double max_age;
+extern long double max_age_backup;
 extern long double temp_arg;
 extern string type_arg;
+extern int decimals_arg;
 
 										// Various statistics that are kept:
 extern int total_earthlike;
 extern int total_habitable;
+extern int total_habitable_earthlike;
+extern int total_habitable_conservative;
+extern int total_habitable_optimistic;
+extern int total_potentially_habitable;
+extern int total_potentially_habitable_earthlike;
+extern int total_potentially_habitable_conservative;
+extern int total_potentially_habitable_optimistic;
 extern int total_worlds;
 
 extern long double min_breathable_terrestrial_g;
@@ -95,6 +105,22 @@ extern long double min_breathable_p;
 extern long double max_breathable_p;
 extern long double min_breathable_mass;
 extern long double max_breathable_mass;
+
+extern long double min_potential_terrestrial_g;
+extern long double min_potential_g;
+extern long double max_potential_terrestrial_g;
+extern long double max_potential_g;
+extern long double min_potential_terrestrial_l;
+extern long double min_potential_l;
+extern long double max_potential_terrestrial_l;
+extern long double max_potential_l;
+extern long double min_potential_temp;
+extern long double max_potential_temp;
+extern long double min_potential_p;
+extern long double max_potential_p;
+extern long double min_potential_mass;
+extern long double max_potential_mass;
+
 extern string stargen_revision;
 
 extern long flag_seed;
@@ -105,5 +131,5 @@ void generate_planets(sun &, bool, string, int, string, bool, bool);
 void generate_stellar_system(sun &, bool, planet *, string, int, string, long double, long double, long double, long double, bool, bool);
 int stargen(actions, string, string, string, string, string, string, long double, long double, long, int, int, catalog&, int, long double, long double, long double, int, int, int);
 void check_planet(planet *, string, bool);
-void assign_type(planet *, string, bool);
+void assign_type(sun &, planet *, string, bool, bool, bool);
 #endif

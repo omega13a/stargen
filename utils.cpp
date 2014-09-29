@@ -391,3 +391,8 @@ void quadfix(long double x, long double y, long double w, long double z, long do
   b = ((q * (pow2(x) - pow2(w))) + (pow2(w) * y) - (pow2(x) * z) + (pow2(p) * (z -y))) / ((p - w) * (p -x) * (w - x));
   c = ((q * w * x * (w - x)) + (p * ((p * w * y) - (pow2(w) * y) - (p * x * z) + (pow2(x) * z)))) / ((p - w) * (p - x) * (w - x));
 }
+
+long double quintic_trend(long double a, long double b, long double c, long double d, long double e, long double f, long double x)
+{
+  return (a * pow(x, 5.0)) + (b * pow4(x)) + (c * pow3(x)) + (d * pow2(x)) + (e * x) + f;
+}

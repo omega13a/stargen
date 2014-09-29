@@ -1,6 +1,10 @@
 #ifndef CONST_H
 #define CONST_H
+#ifdef __cplusplus
+#include <cmath>
+#else
 #include <math.h>
+#endif
 
 #if 0
 #ifdef LONG_RAND
@@ -86,6 +90,16 @@
 #define ROCKY_ALBEDO			(0.15)
 #define ROCKY_AIRLESS_ALBEDO	(0.07)
 #define WATER_ALBEDO			(0.04)
+#define TEMPERATURE_NEPTUNE (48.1)
+#define TEMPERATURE_URANUS (60.3)
+#define TEMPERATURE_CLASS_I (81.0)
+#define TEMPERATURE_SATURN (85.1)
+#define TEMPERATURE_CLASS_II (150.0)
+#define TEMPERATURE_SULFUR_GIANT (320.0)
+#define TEMPERATURE_CLASS_III (360.0)
+#define TEMPERATURE_CLASS_IV (900.0)
+#define TEMPERATURE_CLASS_V (1400.0)
+#define TEMPERATURE_CARBON_GIANT (2240.0)
 
 #define SECONDS_PER_HOUR		(3600.0)
 #define CM_PER_AU				(1.495978707E13)/* number of cm in an AU	*/
@@ -203,6 +217,9 @@
 #define AVE(x,y)	((x+y)/2.0)
 #define ADD(x,y)	(x+y)
 #define DIVIDE(x,y)	(x/y)
+
+#define JUPITER_CORE_RATIO(x)	(EM((x / JUPITER_MASS) * 10.0))
+#define JUPITER_GAS_RATIO(x)	(EM(x) - JUPITER_CORE_RATIO(x))
 
 #define JUPITER_MASS 317.8 /* mass of Jupiter in Earth Masses */
 #define KM_JUPITER_RADIUS 69911.0 /* average radius of Jupiter in km */

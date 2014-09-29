@@ -9,6 +9,7 @@
 #include "ic3094.h"
 #include "jimb.h"
 #include "omega_galaxy.h"
+#include "Planetary_Habitability_Laboratory.h"
 #include "planets.h"
 #include "radius_tables.h"
 #include "ring_universe.h"
@@ -89,9 +90,31 @@ int main(int argc, char **argv)
       {
 	use_stdout = true;
       }
+      else if (compare_string_char(temp_string, 1, "PHL", 3))
+      {
+	star_catalog = phl;
+	if (temp_string.length() > 2)
+	{
+	  sys_no_arg = atoi(temp_string.substr(4, temp_string.length() - 4).c_str());
+	}
+	else
+	{
+	  sys_no_arg = 0;
+	}
+	
+	flag_char = star_catalog.getArg();
+      }
+      else if (compare_string_char(temp_string, 1, "sn", 2))
+      {
+	decimals_arg = atoi(temp_string.substr(3, temp_string.length() - 3).c_str());
+      }
       else if (compare_string_char(temp_string, 1, "CB", 2))
       {
 	flags_arg |= fIsCircubinaryStar;
+      }
+      else if (compare_string_char(temp_string, 1, "MY", 2))
+      {
+	max_age_backup = max_age = atof(temp_string.substr(3, temp_string.length() - 3).c_str());
       }
       else if (compare_string_char(temp_string, 1, "s"))
       {
@@ -492,6 +515,7 @@ void initData()
   initIC3094();
   initAndromeda();
   initStarTrek();
+  initPlanetaryHabitabilityLaboratory();
 }
 
 void usage(string program)
@@ -516,6 +540,7 @@ void usage(string program)
   cout << "    -m#  Specify stellar mass # [fraction of Sun's mass] (optional if -y is used)" << endl;
   cout << "    -y#  Specify stellar luminosity # [fraction of Sun's luminosity] (optional if -m is used)" << endl;
   cout << "    -Y#  Specify minimum age for star (years) (optional)" << endl;
+  cout << "    -MY# Specify maximum age for star (years) (optional)" << endl;
   cout << "    -b#  The temperature of the star (optional if -B is used)" << endl;
   cout << "    -B   Spectral type of the star (optional if -b is used)" << endl;
   cout << "    -CB  Make this a circumbinary system like Tatoonine in Star Wars (optional)" << endl;
@@ -542,6 +567,8 @@ void usage(string program)
   cout << "    -U#  Use Andromeda Galaxy system #" << endl;
   cout << "    -G   Use the " << star_trek.count() << " predefined stars from Star Trek" << endl;
   cout << "    -G#  Use Star Trek system #" << endl;
+  cout << "    -PHL Use the " << phl.count() << " predefined stars listed at the Planetary Habitability Library" << endl;
+  cout << "    -PHL#Use potentially habitable system #" << endl;
   cout << "    -l   List stars of selected table and exit" << endl;
   cout << "    -L   List stars of selected table as HTML and exit" << endl;
   cout << "Filters:" << endl;
@@ -571,6 +598,7 @@ void usage(string program)
   cout << "    -e   Excel .csv to file" << endl;
   cout << "    -S   Vector graphics (SVG) to file" << endl;
   cout << "    -t   Text to stdout" << endl;
+  cout << "    -sn# Number of decimal places for numbers" << endl;
   cout << "Other:" << endl;
   cout << "    -M   Generate moons (highly experimental and incomplete)" << endl;
   cout << "    -r   Allow planet migration after forming. (highly experimental)" << endl;

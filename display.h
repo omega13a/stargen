@@ -19,7 +19,7 @@ void open_html_file(string, long, string, string, string, string, string, fstrea
 void close_html_file(fstream&);
 void print_description(fstream&, string, planet *, string);
 void list_molecules(fstream&, long double);
-void html_thumbnails(planet *, fstream&, string, string, string, string, string, bool, bool, bool, bool, int);
+void html_thumbnails(planet *, fstream&, string, string, string, string, string, bool, bool, bool, bool, int, bool);
 void html_thumbnail_totals(fstream&);
 void html_decribe_planet(planet *, int, int, bool, string, fstream&);
 void html_describe_system(planet *, bool, bool, string, fstream&);

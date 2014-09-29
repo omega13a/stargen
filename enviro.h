@@ -51,7 +51,7 @@ long double fudged_radius(long double, long double, long double, long double, bo
 long double gas_radius(long double, long double, long double, long double, planet *);
 long double round_threshold(long double);
 long double ultimateStrength(long double);
-long double habitable_zone_distance(sun&, int);
+long double habitable_zone_distance(sun&, int, long double);
 long double calcLambda(long double, long double);
 void gas_giant_temperature_albedo(planet *, long double, bool);
 long double getGasGiantAlbedo(string, string, long double);
@@ -59,18 +59,21 @@ void calculate_gases(sun&, planet *, string);
 void assign_composition(planet *, sun &, bool);
 bool is_gas_planet(planet *);
 bool is_earth_like(planet *);
+bool is_habitable_jovian_conservative(planet *);
 bool is_habitable_jovian(planet *);
 bool is_terrestrial(planet *);
 long double calcOblateness(planet *);
 long double calcPhlPressure(planet *);
-bool is_habitable(planet *);
+bool is_habitable_conservative(planet *);
+bool is_habitable_optimistic(planet *);
 long double calcHzd(planet *);
 long double calcHzc(planet *);
 long double calcHza(planet *);
 long double calcEsi(planet *);
 long double calcSph(planet *);
 long double calcEsiHelper(long double value, long double ref_value, long double weight, long double n = 4);
-bool is_potentialy_habitable(planet *);
+bool is_potentialy_habitable_conservative(planet *);
+bool is_potentialy_habitable_optimistic(planet *);
 long double calcRelHumidity(planet *);
 long double getPlantLifeAlbedo(string, long double);
 long double calcFlux(long double, long double);
@@ -84,6 +87,14 @@ long double planet_radius_helper2(long double, long double, long double, long do
 long double planet_radius_helper3(long double, long double, long double, long double, long double);
 long double convert_su_to_eu(long double);
 long double convert_au_to_km(long double);
+bool is_potentialy_habitable_extended(planet *);
+bool is_habitable_extended(planet *);
+bool is_potentialy_habitable_earth_like(planet *);
+bool is_habitable_earth_like(planet *);
+bool is_potentialy_habitable(planet *);
+bool is_habitable(planet *);
+long double convert_km_to_eu(long double);
+void makeHabitable(sun&, planet *, string, bool, bool);
 
 template <typename Key, typename T>
 void radiusDebug(const string& text, planet *the_planet, long double calculated_radii, map<Key, T>& radii);

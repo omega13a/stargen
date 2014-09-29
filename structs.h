@@ -84,7 +84,7 @@ public:
   long double getAge();
   void setName(string);
   string getName();
-  long double getREcosphere();
+  long double getREcosphere(long double);
   void setIsCircumbinary(bool);
   bool getIsCircumbinary();
   void setSecondaryMass(long double);
@@ -166,6 +166,8 @@ private:
   long double sph;
   long double oblateness;
   bool deleteable;
+  long double knownRadius;
+  void estimateMass();
   //vector<planet *> temp_moon;
 public:
   planet();
@@ -292,6 +294,8 @@ public:
   //void deleteMoon(int);
   void setDeletable(bool);
   bool getDeletable();
+  void setKnownRadius(long double);
+  long double getKnownRadius();
   void sortMoons();
   bool operator<(planet &);
   bool operator==(planet &);

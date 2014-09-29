@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
+#include <boost/iterator/iterator_concepts.hpp>
 #include "const.h"
 #include "elements.h"
 #include "enviro.h"
@@ -32,7 +33,7 @@ void text_describe_system(planet* innermost_planet, bool do_gases, long int seed
     cout << "Luminosity of Primary: " << toString(the_sun.getSecondaryLuminosity()) << endl;
   }
   cout << "Age: " << toString(the_sun.getAge() / 1.0E9) << " billion years	(" << toString((the_sun.getAge() - the_sun.getLife()) / 1.0E9) << " billion left on main sequence)" << endl;
-  cout << "Habitable ecosphere radius: " << toString(AVE(habitable_zone_distance(the_sun, RECENT_VENUS), habitable_zone_distance(the_sun, EARLY_MARS))) << " AU" << endl;
+  cout << "Habitable ecosphere radius: " << toString(AVE(habitable_zone_distance(the_sun, RECENT_VENUS, 1.0), habitable_zone_distance(the_sun, EARLY_MARS, 1.0))) << " AU" << endl;
   cout << endl;
   cout << "Planets present at:" << endl;
   for (the_planet = innermost_planet, counter = 1; the_planet != NULL; the_planet = the_planet->next_planet, counter++)
@@ -101,12 +102,12 @@ void csv_describe_system(fstream& the_file, planet* innermost_planet, bool do_ga
   if (!the_sun.getIsCircumbinary())
   {
     the_file << "'Seed', 'Star Name', 'Luminosity', 'Mass', 'Temperature', 'Spectral Type', 'Total Time on Main Sequence', 'Age', 'Earth-like Distance'\n";
-    the_file << seed << ", '" << the_sun.getName() << "', " << toString(the_sun.getLuminosity()) << ", " << toString(the_sun.getMass()) << ", " << toString(the_sun.getEffTemp()) << ", '" << the_sun.getSpecType() << "', " << toString(the_sun.getLife()) << ", " << toString(the_sun.getAge()) << ", " << toString(the_sun.getREcosphere()) << "\n";
+    the_file << seed << ", '" << the_sun.getName() << "', " << toString(the_sun.getLuminosity()) << ", " << toString(the_sun.getMass()) << ", " << toString(the_sun.getEffTemp()) << ", '" << the_sun.getSpecType() << "', " << toString(the_sun.getLife()) << ", " << toString(the_sun.getAge()) << ", " << toString(the_sun.getREcosphere(1.0)) << "\n";
   }
   else
   {
     the_file << "'Seed', 'Star Name', 'Luminosity of Primary', 'Mass of Primary', 'Temperature of Primary', 'Spectral Type of Primary', 'Luminosity of Secondary', 'Mass of Secondary', 'Temperature of Secondary', 'Spectral Type of Secondary', 'Seperation', 'Eccentricity', 'Combined Temperature', 'Primary's Total Time on Main Sequence', 'Age', 'Earth-like Distance'\n";
-    the_file << seed << ", '" << the_sun.getName() << "', " << toString(the_sun.getLuminosity()) << ", " << toString(the_sun.getMass()) << ", " << toString(the_sun.getEffTemp()) << ", '" << the_sun.getSpecType() << "', " << toString(the_sun.getSecondaryLuminosity()) << ", " << toString(the_sun.getSecondaryMass()) << ", " << toString(the_sun.getSecondaryEffTemp()) << ", '" << the_sun.getSecondarySpecType() << "', " << toString(the_sun.getSeperation()) << ", " << toString(the_sun.getEccentricity()) << ", " << toString(the_sun.getCombinedEffTemp()) << ", " << toString(the_sun.getLife()) << ", " << toString(the_sun.getAge()) << ", " << toString(the_sun.getREcosphere()) << "\n";
+    the_file << seed << ", '" << the_sun.getName() << "', " << toString(the_sun.getLuminosity()) << ", " << toString(the_sun.getMass()) << ", " << toString(the_sun.getEffTemp()) << ", '" << the_sun.getSpecType() << "', " << toString(the_sun.getSecondaryLuminosity()) << ", " << toString(the_sun.getSecondaryMass()) << ", " << toString(the_sun.getSecondaryEffTemp()) << ", '" << the_sun.getSecondarySpecType() << "', " << toString(the_sun.getSeperation()) << ", " << toString(the_sun.getEccentricity()) << ", " << toString(the_sun.getCombinedEffTemp()) << ", " << toString(the_sun.getLife()) << ", " << toString(the_sun.getAge()) << ", " << toString(the_sun.getREcosphere(1.0)) << "\n";
   }
   the_file << "'Planet #', 'Distance', 'Eccentricity', 'Inclination', 'Longitude of the Ascending Node', 'Longitude of the Pericenter', 'Mean Longitude', 'Axial Tilt', 'Ice Mass Fraction', 'Rock Mass Fraction', 'Carbon Mass Fraction', 'Total Mass', 'Is Gas Giant', 'Dust Mass', 'Gas Mass', 'Radius of Core', 'Total Radius', 'Orbit Zone', 'Density', 'Orbit Period', 'Rotation Period', 'Has Spin Orbit Resonance', 'Escape Velocity', 'Surface Acceleration', 'Surface Gravity', 'RMS Velocity', 'Minimum Molecular Weight', 'Volatile Gas Inventory', 'Surface Pressure', 'Greenhouse Effect', 'Boiling Point', 'Albedo', 'Exospheric Temperature', 'Estimated Temperature', 'Estimated Terran Temperature', 'Surface Temperature', 'Greenhouse Rise', 'High Temperature', 'Low Temperature', 'Maximum Temperature', 'Minimum Temperature', 'Hydrosphere', 'Cloud Cover', 'Ice Cover', 'Atmosphere', 'Type', 'Minor Moons'\n";
   for (the_planet = innermost_planet, counter = 1; the_planet != NULL; the_planet = the_planet->next_planet, counter++)
@@ -398,10 +399,10 @@ void create_svg_file(planet* innermost_planet, string path, string file_name, st
     output << "</g>\n\n";
     
     sun the_sun = innermost_planet->getTheSun();
-    long double min_r_ecosphere = habitable_zone_distance(the_sun, RECENT_VENUS);
-    long double max_r_ecosphere = habitable_zone_distance(the_sun, EARLY_MARS);
+    long double min_r_ecosphere = habitable_zone_distance(the_sun, RECENT_VENUS, 1.0);
+    long double max_r_ecosphere = habitable_zone_distance(the_sun, EARLY_MARS, 1.0);
     
-    output << "<line x1='" << ((offset + mult) + (log10(innermost_planet->getTheSun().getREcosphere()) * mult)) << "' y1='" << ((max_y - margin) - 5) << "' x2='" << ((offset + mult) + (log10(innermost_planet->getTheSun().getREcosphere()) * mult)) << "' y2='" << ((max_y - margin) + 5) << "' stroke='blue' stroke-width='1' />\n";
+    output << "<line x1='" << ((offset + mult) + (log10(innermost_planet->getTheSun().getREcosphere(1.0)) * mult)) << "' y1='" << ((max_y - margin) - 5) << "' x2='" << ((offset + mult) + (log10(innermost_planet->getTheSun().getREcosphere(1.0)) * mult)) << "' y2='" << ((max_y - margin) + 5) << "' stroke='blue' stroke-width='1' />\n";
     
     output << "<line x1='" << ((offset + mult) + (log10(min_r_ecosphere) * mult)) << "' y1='" << (max_y - margin) << "' x2='" << ((offset + mult) + (log10(max_r_ecosphere) * mult)) << "' y2='" << (max_y - margin) << "' stroke='#66c' stroke-width='10' stroke-opacity='0.5' />\n";
     
@@ -751,26 +752,72 @@ void print_description(fstream& the_file, string opening, planet* the_planet, st
   the_file << " - ";
   
   sun the_sun = the_planet->getTheSun();
-  long double min_r_ecosphere = habitable_zone_distance(the_sun, RECENT_VENUS);
-  long double max_r_ecosphere = habitable_zone_distance(the_sun, EARLY_MARS);
+  long double min_r_ecosphere = habitable_zone_distance(the_sun, RECENT_VENUS, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES);
+  long double max_r_ecosphere = habitable_zone_distance(the_sun, EARLY_MARS, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES);
   
   if (the_planet->getA() < min_r_ecosphere)
   {
+    if (is_habitable_extended(the_planet))
+    {
+      the_file << "Habitable (Extended Definition) ";
+    }
+    else if (is_potentialy_habitable_extended(the_planet))
+    {
+      the_file << "Potentially Habitable (Extended Definition) ";
+    }
     the_file << "Hot ";
   }
   else if (the_planet->getA() > max_r_ecosphere)
   {
+    if (is_habitable_extended(the_planet))
+    {
+      the_file << "Habitable (Extended Definition) ";
+    }
+    else if (is_potentialy_habitable_extended(the_planet))
+    {
+      the_file << "Potentially Habitable (Extended Definition) ";
+    }
     the_file << "Cold ";
   }
   else
   {
     if (is_habitable(the_planet))
     {
-      the_file << "Habitable ";
+      if (is_habitable_earth_like(the_planet))
+      {
+	the_file << "Habitable (Earth-like Definition) ";
+      }
+      else if (is_habitable_conservative(the_planet))
+      {
+	the_file << "Habitable (Conservative Definition) ";
+      }
+      else if (is_habitable_optimistic(the_planet))
+      {
+	the_file << "Habitable (Optimistic Definition) ";
+      }
+      else if (is_habitable_extended(the_planet))
+      {
+	the_file << "Habitable (Extended Definition) ";
+      }
     }
     else if (is_potentialy_habitable(the_planet))
     {
-      the_file << "Potentially Habitable ";
+      if (is_potentialy_habitable_earth_like(the_planet))
+      {
+	the_file << "Potentially Habitable (Earth-like Definition) ";
+      }
+      else if (is_potentialy_habitable_conservative(the_planet))
+      {
+	the_file << "Potentially Habitable (Conservative Definition) ";
+      }
+      else if (is_potentialy_habitable_optimistic(the_planet))
+      {
+	the_file << "Potentially Habitable (Optimistic Definition) ";
+      }
+      else if (is_potentialy_habitable_extended(the_planet))
+      {
+	the_file << "Potentially Habitable (Extended Definition) ";
+      }
     }
     the_file << "Warm ";
   }
@@ -857,7 +904,7 @@ void html_star_details_helper(fstream& the_file, const string &header, long doub
   the_file << "\t<td>" << toString(age / 1.0E9) << " billion years<br>(" << toString((life - age) / 1.0E9) << " billion left on main sequence)<br></td></tr>";
 }
 
-void html_thumbnails(planet* innermost_planet, fstream& the_file, string system_name, string url_path, string system_url, string svg_url, string file_name, bool details, bool terrestrials, bool int_link, bool do_moons, int graphic_format)
+void html_thumbnails(planet* innermost_planet, fstream& the_file, string system_name, string url_path, string system_url, string svg_url, string file_name, bool details, bool terrestrials, bool int_link, bool do_moons, int graphic_format, bool do_gases)
 {
   planet *the_planet;
   sun the_sun = innermost_planet->getTheSun();
@@ -942,11 +989,11 @@ void html_thumbnails(planet* innermost_planet, fstream& the_file, string system_
   for (the_planet = innermost_planet, counter = 1; the_planet != NULL; the_planet = the_planet->next_planet, counter++)
   {
     ss.str("");
-    int ppixels = ((int)(sqrt(the_planet->getRadius() / KM_EARTH_RADIUS) * 30.0)) + 1;
+    int ppixels = ((int)(sqrt(convert_km_to_eu(the_planet->getRadius())) * 30.0)) + 1;
     string ptype = type_string(the_planet);
     string info;
     
-    if ((the_planet->getSurfPressure() > 0 || the_planet->getGasGiant()) && the_planet->getNumGases() == 0)
+    if ((the_planet->getSurfPressure() > 0 || the_planet->getGasGiant()) && the_planet->getNumGases() == 0 && do_gases)
     {
       ss.str("");
       ss << counter;
@@ -1006,14 +1053,14 @@ void html_thumbnails(planet* innermost_planet, fstream& the_file, string system_
       {
 	ss.str("");
 	string mtype = type_string(moon);
-	int mpixels = ((int)( sqrt(moon->getRadius() / KM_EARTH_RADIUS) * 30.)) + 1;
+	int mpixels = ((int)( sqrt(convert_km_to_eu(moon->getRadius())) * 30.)) + 1;
 	
-	if ((the_planet->getSurfPressure() > 0 || the_planet->getGasGiant()) && the_planet->getNumGases() == 0)
+	if ((the_planet->getSurfPressure() > 0 || the_planet->getGasGiant()) && the_planet->getNumGases() == 0 && do_gases)
 	{
 	  ss.str("");
-	  ss << counter << "." << moons;
+	  ss << counter;
 	  planet_id = ss.str();
-	  calculate_gases(the_sun, moon, planet_id);
+	  calculate_gases(the_sun, the_planet, planet_id);
 	}
 	
 	ss.str("");
@@ -1108,8 +1155,8 @@ void html_thumbnails(planet* innermost_planet, fstream& the_file, string system_
   
   if (details)
   {
-    long double min_r_ecosphere = habitable_zone_distance(the_sun, RECENT_VENUS);
-    long double max_r_ecosphere = habitable_zone_distance(the_sun, EARLY_MARS);
+    long double min_r_ecosphere = habitable_zone_distance(the_sun, RECENT_VENUS, 1.0);
+    long double max_r_ecosphere = habitable_zone_distance(the_sun, EARLY_MARS, 1.0);
     
     if (!the_sun.getIsCircumbinary())
     {
@@ -1142,22 +1189,23 @@ void html_thumbnails(planet* innermost_planet, fstream& the_file, string system_
     the_file << "<tr><td>Recent Venus Distance</td>\n";
     the_file << "\t<td>" << toString(min_r_ecosphere) << " AU</td></tr>\n";
     the_file << "<tr><td>Runaway Greenhouse Distance</td>\n";
-    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, RUNAWAY_GREENHOUSE)) << " AU</td></tr>\n";
+    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, RUNAWAY_GREENHOUSE, 1.0)) << " AU</td></tr>\n";
     the_file << "<tr><td>Moist Greenhouse Distance</td>\n";
-    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, MOIST_GREENHOUSE)) << " AU</td></tr>\n";
+    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, MOIST_GREENHOUSE, 1.0)) << " AU</td></tr>\n";
     the_file << "<tr><td>Earth-like Distance</td>\n";
-    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, EARTH_LIKE)) << " AU</td></tr>\n";
+    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, EARTH_LIKE, 1.0)) << " AU</td></tr>\n";
     the_file << "<tr><td>First CO2 Condensation Limit</td>\n";
-    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, FIRST_CO2_CONDENSATION_LIMIT)) << " AU</td></tr>\n";
+    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, FIRST_CO2_CONDENSATION_LIMIT, 1.0)) << " AU</td></tr>\n";
     the_file << "<tr><td>Maximum Greenhouse Distance</td>\n";
-    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, MAXIMUM_GREENHOUSE)) << " AU</td></tr>\n";
+    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, MAXIMUM_GREENHOUSE, 1.0)) << " AU</td></tr>\n";
     the_file << "<tr><td>Early Mars Distance</td>\n";
     the_file << "\t<td>" << toString(max_r_ecosphere) << " AU</td></tr>\n";
     the_file << "<tr><td>Two AU Cloud Limit</td>\n";
-    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, TWO_AU_CLOUD_LIMIT)) << " AU</td></tr>\n";
+    the_file << "\t<td>" << toString(habitable_zone_distance(the_sun, TWO_AU_CLOUD_LIMIT, 1.0)) << " AU</td></tr>\n";
   }
   
-  the_file << "</table>\n<br clear=all>\n";
+  the_file << "</table>\n<br clear='all'>\n";
+  the_file << "</p>\n";
 }
 
 void html_thumbnail_totals(fstream& the_file)
@@ -1169,21 +1217,45 @@ void html_thumbnail_totals(fstream& the_file)
   the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
   the_file << "\tEarthlike worlds\n</td><td align=center>\n\t" << total_earthlike <<"\n</td></tr>\n";
   the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
-  the_file << "\tBreathable atmospheres\n</td><td align=center>\n\t" << total_habitable << "\n</td></tr>\n";
+  the_file << "\tTotal Habitable worlds (Earth-like Definition)\n</td><td align=center>\n\t" << total_habitable_earthlike << "\n</td></tr>\n";
+  the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tTotal Habitable worlds (Conservative Definition)\n</td><td align=center>\n\t" << total_habitable_conservative << "\n</td></tr>\n";
+  the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tTotal Habitable worlds (Optimistic Definition)\n</td><td align=center>\n\t" << total_habitable_optimistic << "\n</td></tr>\n";
+  the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tTotal Habitable worlds (Extended Definition)\n</td><td align=center>\n\t" << total_habitable << "\n</td></tr>\n";
+   the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tTotal Potentially Habitable worlds (Earth-like Definition)\n</td><td align=center>\n\t" << total_potentially_habitable_earthlike << "\n</td></tr>\n";
+  the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tTotal Potentially Habitable worlds (Conservative Definition)\n</td><td align=center>\n\t" << total_potentially_habitable_conservative << "\n</td></tr>\n";
+  the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tTotal Potentially Habitable worlds (Optimistic Definition)\n</td><td align=center>\n\t" << total_potentially_habitable_optimistic << "\n</td></tr>\n";
+  the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tTotal Potentially Habitable worlds (Extended Definition)\n</td><td align=center>\n\t" << total_potentially_habitable << "\n</td></tr>\n";
   the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
   the_file << "\tTotal worlds\n</td><td align=center>\n\t" << total_worlds << "\n</td></tr>\n";
   the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
-  the_file << "\tBreathable mass range\n</td><td align=center>\n\t" << (min_breathable_mass * SUN_MASS_IN_EARTH_MASSES) << " EM -  " << (max_breathable_mass * SUN_MASS_IN_EARTH_MASSES) << " EM\n</td></tr>\n";
+  the_file << "\tHabitable mass range\n</td><td align=center>\n\t" << (min_breathable_mass * SUN_MASS_IN_EARTH_MASSES) << " EM -  " << (max_breathable_mass * SUN_MASS_IN_EARTH_MASSES) << " EM\n</td></tr>\n";
   the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
-  the_file << "\tBreathable g range\n</td><td align=center>\n\t" << min_breathable_g << " -  " << max_breathable_g << "\n</td></tr>\n";
+  the_file << "\tPotentially Habitable mass range\n</td><td align=center>\n\t" << (min_potential_mass * SUN_MASS_IN_EARTH_MASSES) << " EM -  " << (max_potential_mass * SUN_MASS_IN_EARTH_MASSES) << " EM\n</td></tr>\n";
+  the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tHabitable g range\n</td><td align=center>\n\t" << min_breathable_g << " -  " << max_breathable_g << "\n</td></tr>\n";
+  the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tPotentially Habitable g range\n</td><td align=center>\n\t" << min_potential_g << " -  " << max_potential_g << "\n</td></tr>\n";
   the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
   the_file << "\tTerrestrial g range\n</td><td align=center>\n\t" << min_breathable_terrestrial_g << " -  " << max_breathable_terrestrial_g << "\n</td></tr>\n";
   the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
-  the_file << "\tBreathable pressure range\n</td><td align=center>\n\t" << min_breathable_p << " -  " << max_breathable_p << "\n</td></tr>\n";
+  the_file << "\tHabitable pressure range\n</td><td align=center>\n\t" << min_breathable_p << " -  " << max_breathable_p << "\n</td></tr>\n";
   the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
-  the_file << "\tBreathable temp range\n</td><td align=center>\n\t" << (min_breathable_temp - EARTH_AVERAGE_KELVIN) << " C -  " << (max_breathable_temp - EARTH_AVERAGE_KELVIN) << " C\n</td></tr>\n";
+  the_file << "\tPotentially Habitable pressure range\n</td><td align=center>\n\t" << min_potential_p << " -  " << max_potential_p << "\n</td></tr>\n";
   the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
-  the_file << "\tBreathable illumination range\n</td><td align=center>\n\t" << min_breathable_l << " -  " << max_breathable_l << "\n</td></tr>\n";
+  the_file << "\tHabitable temp range\n</td><td align=center>\n\t" << (min_breathable_temp - EARTH_AVERAGE_KELVIN) << " C -  " << (max_breathable_temp - EARTH_AVERAGE_KELVIN) << " C\n</td></tr>\n";
+  the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tPotentially Habitable temp range\n</td><td align=center>\n\t" << (min_potential_temp - EARTH_AVERAGE_KELVIN) << " C -  " << (max_potential_temp - EARTH_AVERAGE_KELVIN) << " C\n</td></tr>\n";
+  the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tHabitable illumination range\n</td><td align=center>\n\t" << min_breathable_l << " -  " << max_breathable_l << "\n</td></tr>\n";
+  the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
+  the_file << "\tPotentially Habitable illumination range\n</td><td align=center>\n\t" << min_potential_l << " -  " << max_potential_l << "\n</td></tr>\n";
   the_file << "<tr bgcolor='" << BGTABLE << "'><td align=right>\n";
   the_file << "\tTerrestrial illumination range\n</td><td align=center>\n\t" << min_breathable_terrestrial_l << " - " << max_breathable_terrestrial_l << "\n</td></tr>\n";
   the_file << "</table>\n\n";
@@ -1297,10 +1369,11 @@ void html_decribe_planet(planet* the_planet, int counter, int moons, bool do_gas
     the_file << toString(the_planet->getGasMass() * SUN_MASS_IN_EARTH_MASSES) << " Earth masses gas (" << toString((the_planet->getGasMass() * SUN_MASS_IN_EARTH_MASSES) / JUPITER_MASS) << " Jupiter masses)<br />";
   }
   
-  if (!is_gas_planet(the_planet) || (the_planet->getType() == tSubSubGasGiant && (the_planet->getGasMass() / the_planet->getMass()) < 0.2))
+  if (is_gas_planet(the_planet))
   {
-    the_file << toString(the_planet->getImf() * 100.0) << "% ice<br>" << toString(the_planet->getRmf() * 100.0) << "% rock (" << toString(the_planet->getCmf() * 100.0) << "% carbon, " << ((1.0 - the_planet->getCmf()) * 100.0) << "% silicates)<br>" << ((1.0 - (the_planet->getImf() + the_planet->getRmf())) * 100.0) << "% iron";
+    the_file << "Dust mass composition:<br />\n";
   }
+  the_file << toString(the_planet->getImf() * 100.0) << "% ice<br>" << toString(the_planet->getRmf() * 100.0) << "% rock (" << toString(the_planet->getCmf() * 100.0) << "% carbon, " << toString((1.0 - the_planet->getCmf()) * 100.0) << "% silicates)<br>" << toString((1.0 - (the_planet->getImf() + the_planet->getRmf())) * 100.0) << "% iron";
   
   the_file << "</td></tr>\n";
   
@@ -1357,7 +1430,7 @@ void html_decribe_planet(planet* the_planet, int counter, int moons, bool do_gas
     the_file << "<tr><th>Estimated Temperature</th><td>" << toString(the_planet->getEstimatedTemp()) << "&deg; K</td><td>" << toString(the_planet->getEstimatedTemp() - EARTH_AVERAGE_KELVIN) << "&deg; C Earth temperature</td></tr>";
   }
   
-  the_file << "<tr><th>Average radius</th><td>" << toString(the_planet->getRadius()) << " Km</td><td>" << toString(the_planet->getRadius() / KM_EARTH_RADIUS) << " Earth radii";
+  the_file << "<tr><th>Average radius</th><td>" << toString(the_planet->getRadius()) << " Km</td><td>" << toString(convert_km_to_eu(the_planet->getRadius())) << " Earth radii";
   if (is_gas_planet(the_planet))
   {
     the_file << "<br />" << toString(the_planet->getRadius() / KM_JUPITER_RADIUS) << " Jupiter radii";
@@ -1365,9 +1438,9 @@ void html_decribe_planet(planet* the_planet, int counter, int moons, bool do_gas
   the_file << "</td></tr>\n";
   if (the_planet->getGasMass())
   {
-    the_file << "<tr><th>Radius of Core</th><td>" << toString(the_planet->getCoreRadius()) << " km</td><td>" << toString(the_planet->getCoreRadius() / KM_EARTH_RADIUS) << " Earth radii</td></tr>";
+    the_file << "<tr><th>Radius of Core</th><td>" << toString(the_planet->getCoreRadius()) << " km</td><td>" << toString(convert_km_to_eu(the_planet->getCoreRadius())) << " Earth radii</td></tr>";
   }
-  the_file << "<tr><th>Oblateness</th><td>" << toString(the_planet->getOblateness()) << "</td><td><table><tr><th>Equatorial Radius</th><th>Polar Radius</th></tr><tr><td>" << toString(the_planet->getEquatrorialRadius()) << " Km<br />" << toString(the_planet->getEquatrorialRadius() / KM_EARTH_RADIUS) << " Earth radii<br />" << toString(the_planet->getEquatrorialRadius() / KM_JUPITER_RADIUS) << " Jupiter radii</td><td>" << toString(the_planet->getPolarRadius()) << " Km<br />" << toString(the_planet->getPolarRadius() / KM_EARTH_RADIUS) << " Earth radii<br />" << toString(the_planet->getPolarRadius() / KM_JUPITER_RADIUS) << " Jupiter radii</td></tr></table>";
+  the_file << "<tr><th>Oblateness</th><td>" << toString(the_planet->getOblateness()) << "</td><td><table><tr><th>Equatorial Radius</th><th>Polar Radius</th></tr><tr><td>" << toString(the_planet->getEquatrorialRadius()) << " Km<br />" << toString(convert_km_to_eu(the_planet->getEquatrorialRadius())) << " Earth radii<br />" << toString(the_planet->getEquatrorialRadius() / KM_JUPITER_RADIUS) << " Jupiter radii</td><td>" << toString(the_planet->getPolarRadius()) << " Km<br />" << toString(convert_km_to_eu(the_planet->getPolarRadius())) << " Earth radii<br />" << toString(the_planet->getPolarRadius() / KM_JUPITER_RADIUS) << " Jupiter radii</td></tr></table>";
   the_file << "</td></tr>\n";
   
   the_file << "<tr><th>Density</th>";
@@ -1462,7 +1535,7 @@ void html_decribe_planet(planet* the_planet, int counter, int moons, bool do_gas
     the_file << "<td></td></tr>\n";
   }
   
-  long double esir = calcEsiHelper(the_planet->getRadius() / KM_EARTH_RADIUS, 1.0, 0.57);
+  long double esir = calcEsiHelper(convert_km_to_eu(the_planet->getRadius()), 1.0, 0.57);
   long double esid = calcEsiHelper(the_planet->getDensity() / EARTH_DENSITY, 1.0, 1.07);
   long double esiv = calcEsiHelper((the_planet->getEscVelocity() / CM_PER_KM) / 11.186, 1.0, 0.70);
   long double esit = calcEsiHelper(the_planet->getSurfTemp(), EARTH_AVERAGE_KELVIN, 5.58);
@@ -1492,7 +1565,7 @@ void html_describe_system(planet* innermost_planet, bool do_gases, bool do_moons
   {
     typeString = type_string(the_planet);
     
-    the_file << "<tr align=right>\n\t<td><a href='#" << counter << "'>" << counter << "</a></td>\n\t<td align=center><img alt='" << typeString << "' src='" << url_path << "ref/" << image_type_string(the_planet) << ".gif'></td>\n\t<td colspan=2>" << typeString << "</td>\n\t<td>" << toString(the_planet->getA(), 4) << "  AU</td>\n\t<td>" << toString(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES, 4) << " EM</td>\n\t<td>" << toString(the_planet->getRadius() / KM_EARTH_RADIUS, 4) << " ER";
+    the_file << "<tr align=right>\n\t<td><a href='#" << counter << "'>" << counter << "</a></td>\n\t<td align=center><img alt='" << typeString << "' src='" << url_path << "ref/" << image_type_string(the_planet) << ".gif'></td>\n\t<td colspan=2>" << typeString << "</td>\n\t<td>" << toString(the_planet->getA(), 4) << "  AU</td>\n\t<td>" << toString(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES, 4) << " EM</td>\n\t<td>" << toString(convert_km_to_eu(the_planet->getRadius()), 4) << " ER";
     if (is_gas_planet(the_planet))
     {
       the_file << " (" << toString(the_planet->getRadius() / KM_JUPITER_RADIUS, 4) << " JR)";
@@ -1512,7 +1585,7 @@ void html_describe_system(planet* innermost_planet, bool do_gases, bool do_moons
 	the_file << "\t<td>" << typeString << "</td>\n";
 	the_file << "\t<td>" << toString(moon->getMoonA() * KM_PER_AU, 4) << " km</td>\n";
 	the_file << "\t<td>" << toString(moon->getMass() * SUN_MASS_IN_EARTH_MASSES, 4) << " EM</td>\n";
-	the_file << "\t<td>" << toString(moon->getRadius() / KM_EARTH_RADIUS, 4) << " ER";
+	the_file << "\t<td>" << toString(convert_km_to_eu(moon->getRadius()), 4) << " ER";
 	if (is_gas_planet(moon))
 	{
 	  the_file << " (" << toString(moon->getRadius() / KM_JUPITER_RADIUS, 4) << " JR)";
@@ -1543,8 +1616,8 @@ void celestia_describe_system(planet* innermost_planet, string designation, stri
   planet *the_planet, *moon;
   sun the_sun = innermost_planet->getTheSun();
   int counter, moons;
-  long double min_r_ecosphere = habitable_zone_distance(the_sun, RECENT_VENUS);
-  long double max_r_ecosphere = habitable_zone_distance(the_sun, EARLY_MARS);
+  long double min_r_ecosphere = habitable_zone_distance(the_sun, RECENT_VENUS, 1.0);
+  long double max_r_ecosphere = habitable_zone_distance(the_sun, EARLY_MARS, 1.0);
   
   cout << "# Stargen - " << stargen_revision << "; seed=" << seed << endl;
   cout << "#" << endl;
@@ -1572,18 +1645,35 @@ void celestia_describe_system(planet* innermost_planet, string designation, stri
 void celestia_describe_world(planet *the_planet, string designation, string system_name, long int seed, long double inc, long double an, int counter, sun& the_sun, bool is_moon, int planet_num)
 {
   long double tmp, local_inc, mean_long;
-  long double min_r_ecosphere = habitable_zone_distance(the_sun, RECENT_VENUS);
-  long double max_r_ecosphere = habitable_zone_distance(the_sun, EARLY_MARS);
+  long double min_r_ecosphere = habitable_zone_distance(the_sun, RECENT_VENUS, 1.0);
+  long double max_r_ecosphere = habitable_zone_distance(the_sun, EARLY_MARS, 1.0);
   string typeString;
+  stringstream ss;
+  string parent;
+  string name;
   
-  if (!is_moon)
+  if (is_moon)
   {
-    cout << "\"p" << counter << "\" " << "\"" << designation << "\"" << endl;
+    ss << "p" << counter << "-" << planet_num;
   }
   else
   {
-    cout << "\"p" << planet_num << "-" << counter << "\" " << "\"" << designation << "/p" << planet_num << "\"" << endl;
+    ss << "p" << counter;
   }
+  name = ss.str();
+  
+  ss.str("");
+  if (is_moon)
+  {
+    ss << designation << "/p" << planet_num;
+  }
+  else
+  {
+    ss << designation;
+  }
+  parent = ss.str();
+  
+  cout << "\t" << name <<"\" \"" << parent << "\"" << endl;
   cout << "{" << endl;
   if (!is_moon)
   {
@@ -1610,9 +1700,9 @@ void celestia_describe_world(planet *the_planet, string designation, string syst
   
   if (is_gas_planet(the_planet) && the_planet->getType() != tBrownDwarf)
   {
-    long double ts = 85.1 + 1.0;
-    long double tu = 60.3 + 1.0;
-    long double tn = 48.1 + 1.0;
+    long double ts = TEMPERATURE_SATURN + 1.0;
+    long double tu = TEMPERATURE_URANUS + 1.0;
+    long double tn = TEMPERATURE_NEPTUNE + 1.0;
     
     if (the_planet->getEstimatedTemp() < tn) // Neptune est temp = 48.1
     {
@@ -1630,29 +1720,29 @@ void celestia_describe_world(planet *the_planet, string designation, string syst
       cout << "\tTexture \"tgasgiant.*\"" << endl;
       assignTemperatureColors(the_planet, ts, 0.91, 0.87, 0.76, tu, 0.58, 0.69, 0.74);
     }
-    else if (the_planet->getEstimatedTemp() < 150)
+    else if (the_planet->getEstimatedTemp() < TEMPERATURE_CLASS_II)
     {
       cout << "\tTexture \"exo-class1.*\"" << endl;
-      assignTemperatureColors(the_planet, 150, 1, 1, 1, ts, 0.91, 0.87, 0.76);
+      assignTemperatureColors(the_planet, TEMPERATURE_CLASS_II, 1, 1, 1, ts, 0.91, 0.87, 0.76);
     }
-    else if (the_planet->getEstimatedTemp() < 320)
+    else if (the_planet->getEstimatedTemp() < TEMPERATURE_SULFUR_GIANT)
     {
       cout << "\tTexture \"exo-class2.*\"" << endl;
     }
-    else if (the_planet->getEstimatedTemp() < 360)
+    else if (the_planet->getEstimatedTemp() < TEMPERATURE_CLASS_III)
     {
       cout << "\tTexture \"venus.jpg\"" << endl;
     }
-    else if (the_planet->getEstimatedTemp() < 900)
+    else if (the_planet->getEstimatedTemp() < TEMPERATURE_CLASS_IV)
     {
       cout << "\tTexture \"exo-class3.*\"" << endl;
     }
-    else if (the_planet->getEstimatedTemp() < 1400)
+    else if (the_planet->getEstimatedTemp() < TEMPERATURE_CLASS_V)
     {
       cout << "\tTexture \"exo-class4.*\"" << endl;
       cout << "\tNightTexture \"exo-class4night.*\"" << endl;
     }
-    else if (the_planet->getEstimatedTemp() < 2240)
+    else if (the_planet->getEstimatedTemp() < TEMPERATURE_CARBON_GIANT)
     {
       cout << "\tTexture \"exo-class5.*\"" << endl;
       cout << "\tNightTexture \"exo-class5night.*\"" << endl;
@@ -1951,7 +2041,12 @@ void celestia_describe_world(planet *the_planet, string designation, string syst
       cout << "\tHazeDensity 0.3" << endl;
       break;
   }
-  cout << "\tOrbitFrame { EclipticJ2000{} }" << endl;
+  //cout << "\tOrbitFrame { EclipticJ2000{} }" << endl;
+  cout << "\tOrbitFrame { " << endl;
+  cout << "\t\tBodyFixed { " << endl;
+  cout << "\t\t\tCenter \"" << parent << "\"" << endl;
+  cout << "\t\t}" << endl;
+  cout << "\t}" << endl;
   cout << "\tEllipticalOrbit {" << endl;
   if (!is_moon)
   {
@@ -1973,7 +2068,15 @@ void celestia_describe_world(planet *the_planet, string designation, string syst
   cout << "\t}" << endl;
   cout << endl;
   
-  cout << "\tBodyFrame { EclipticJ2000{} }" << endl;
+  //cout << "\tBodyFrame { EclipticJ2000{} }" << endl;
+  cout << "\tBodyFrame { " << endl;
+  cout << "\t\tBodyFixed { " << endl;
+  cout << "\t\t\tCenter \"" << parent << "\"" << endl;
+  cout << "\t\t\tMeanEquator {" << endl;
+  cout << "\t\t\t\t\"" << parent << "\"" << endl;
+  cout << "\t\t\t}" << endl;
+  cout << "\t\t}" << endl;
+  cout << "\t}" << endl;
   cout << "\tUniformRotation {" << endl;
   if (the_planet->getResonantPeriod())
   {
@@ -2316,9 +2419,9 @@ void assignDistanceColors(planet* the_planet, long double r0, long double g0, lo
 {
   long double r, g, b;
   
-  r = r0 + ((1.0 - r0) * (the_planet->getA() / (50.0 * the_sun_clone.getREcosphere())));
-  g = g0 + ((1.0 - g0) * (the_planet->getA() / (50.0 * the_sun_clone.getREcosphere())));
-  b = b0 + ((1.0 - b0) * (the_planet->getA() / (50.0 * the_sun_clone.getREcosphere())));
+  r = r0 + ((1.0 - r0) * (the_planet->getA() / (50.0 * the_sun_clone.getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES))));
+  g = g0 + ((1.0 - g0) * (the_planet->getA() / (50.0 * the_sun_clone.getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES))));
+  b = b0 + ((1.0 - b0) * (the_planet->getA() / (50.0 * the_sun_clone.getREcosphere(the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES))));
   if (r < 0.0)
   {
     r = 0.0;

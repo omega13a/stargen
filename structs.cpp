@@ -1138,9 +1138,9 @@ string sun::getName()
   return name;
 }
 
-long double sun::getREcosphere()
+long double sun::getREcosphere(long double mass)
 {
-  return habitable_zone_distance(*this, EARTH_LIKE);
+  return habitable_zone_distance(*this, EARTH_LIKE, mass);
 }
 
 string sun::getSpecType()
@@ -1594,6 +1594,11 @@ void planet::clearGases()
   }
 }*/
 
+void planet::estimateMass()
+{
+  dustMass = quintic_trend(0.126438418015041, -0.971586985798294, 2.30299559510187, 0.0114340742264797, -0.747842501143578, 0.27996106732024, knownRadius);
+}
+
 long double planet::getA()
 {
   return a;
@@ -1752,6 +1757,11 @@ long double planet::getImf()
 long double planet::getInclination()
 {
   return inclination;
+}
+
+long double planet::getKnownRadius()
+{
+  return knownRadius;
 }
 
 long double planet::getLongitudeOfPericenter()
@@ -2099,6 +2109,22 @@ void planet::setImf(long double i)
 void planet::setInclination(long double in)
 {
   inclination = fix_inclination(in);
+}
+
+void planet::setKnownRadius(long double k)
+{
+  long double water_min, water_max, rock_min, rock_max;
+  water_min = rock_min = 0.0;
+  water_max = rock_max = 1.0;
+  knownRadius = k;
+  estimateMass();
+  if (dustMass > EM(2.0))
+  {
+  }
+  else
+  {
+    
+  }
 }
 
 void planet::setLongitudeOfPericenter(long double lon)
