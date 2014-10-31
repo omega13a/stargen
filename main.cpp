@@ -116,6 +116,10 @@ int main(int argc, char **argv)
       {
 	max_age_backup = max_age = atof(temp_string.substr(3, temp_string.length() - 3).c_str());
       }
+      else if (compare_string_char(temp_string, 1, "md", 2))
+      {
+	max_distance_arg = atof(temp_string.substr(3, temp_string.length() - 3).c_str());
+      }
       else if (compare_string_char(temp_string, 1, "s"))
       {
 	seed_arg = atol(temp_string.substr(2, temp_string.length() - 2).c_str());

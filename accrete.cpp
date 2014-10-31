@@ -657,6 +657,11 @@ planet* dist_planetary_masses(sun &the_sun, long double inner_dust, long double 
     planet_outer_bound = outer_planet_limit;
   }
   
+  if (max_distance_arg < planet_outer_bound && !is_close(max_distance_arg, (long double)0))
+  {
+    planet_outer_bound = max_distance_arg;
+  }
+  
   while (planet_outer_bound <= planet_inner_bound)
   {
       planet_outer_bound = farthest_planet(stell_mass_ratio);

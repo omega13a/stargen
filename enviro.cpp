@@ -2617,15 +2617,20 @@ void calculate_gases(sun &the_sun, planet* the_planet, string planet_id)
 	    {
 	      //the_amount = the_planet->getSurfPressure() * amount[i] / original_total;
 	      the_amount = amount[i];
-	      pressure = the_planet->getSurfPressure() * (amount[i] / original_total);
+	      pressure = the_planet->getSurfPressure() * (amount[i] / totalamount);
 	      ipp = inspired_partial_pressure(the_planet->getSurfPressure(), pressure);
 	      if (ipp > gases[i].getMaxIpp())
 	      {
 		//cout << "test1 too high " << gases[i].getSymbol() << " " << planet_id << endl;
 		//cout << toString(amount[i]) << endl;
-		amount[i] *= 0.99;
-		totalamount -= the_amount;
-		totalamount += amount[i];
+		while (ipp > gases[i].getMaxIpp())
+		{
+		  the_amount = amount[i];
+		  amount[i] *= 0.99;
+		  totalamount -= the_amount;
+		  totalamount += amount[i];
+		  ipp = inspired_partial_pressure(the_planet->getSurfPressure(), the_planet->getSurfPressure() * (amount[i] / totalamount));
+		}
 	      }
 	      else if (ipp < gases[i].getMinIpp())
 	      {
@@ -2639,16 +2644,21 @@ void calculate_gases(sun &the_sun, planet* the_planet, string planet_id)
 		  //exit(EXIT_FAILURE);
 		}
 		//cout << toString(amount[i]) << " " << toString(ipp) << " " << toString(the_planet->getSurfPressure()) << endl;
-		if (amount[i] <= 0.0)
+		while (ipp < gases[i].getMinIpp())
 		{
-		  amount[i] = 1.0E-9;
+		  the_amount = amount[i];
+		  if (amount[i] <= 0.0)
+		  {
+		    amount[i] = 1.0E-9;
+		  }
+		  else
+		  {
+		    amount[i] *= 1.01;
+		    totalamount -= the_amount;
+		  }
+		  totalamount += amount[i];
+		  ipp = inspired_partial_pressure(the_planet->getSurfPressure(), the_planet->getSurfPressure() * (amount[i] / totalamount));
 		}
-		else
-		{
-		  amount[i] *= 1.01;
-		  totalamount -= the_amount;
-		}
-		totalamount += amount[i];
 	      }
 	    }
 	  }

@@ -43,6 +43,8 @@ int decimals_arg = 0;
 long double temp_arg = 0;
 string type_arg = "";
 
+long double max_distance_arg = 0;
+
 int earthlike = 0;
 int total_earthlike = 0;
 int habitable = 0;

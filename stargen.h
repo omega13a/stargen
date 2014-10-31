@@ -78,6 +78,7 @@ extern long double max_age_backup;
 extern long double temp_arg;
 extern string type_arg;
 extern int decimals_arg;
+extern long double max_distance_arg;
 
 										// Various statistics that are kept:
 extern int total_earthlike;
