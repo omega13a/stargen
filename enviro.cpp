@@ -1523,6 +1523,14 @@ void calculate_surface_temp(planet *the_planet, bool first, long double last_wat
   clouds_raw = cloud_fraction(the_planet->getSurfTemp(), the_planet->getMolecWeight(), the_fudged_radius, the_planet->getHydrosphere());
   the_planet->setCloudCover(clouds_raw);
   the_planet->setIceCover(ice_fraction(the_planet->getHydrosphere(), the_planet->getSurfTemp()));
+  if (the_planet->getImf() > 0.1 && the_planet->getRadius() >= round_threshold(the_planet->getDensity()) && the_planet->getA() >= habitable_zone_distance(the_sun, MAXIMUM_GREENHOUSE, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES))
+  {
+    the_planet->setIceCover(1.0);
+  }
+  else if (the_planet->getImf() && the_planet->getRadius() < round_threshold(the_planet->getDensity()) && the_planet->getA() >= habitable_zone_distance(the_sun, MAXIMUM_GREENHOUSE, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES))
+  {
+    the_planet->setIceCover(the_planet->getIceCover() + the_planet->getImf());
+  }
   
   if (the_planet->getGreenhouseEffect() && the_planet->getSurfPressure() > 0.0)
   {
@@ -1661,7 +1669,9 @@ long double inspired_partial_pressure(long double surf_pressure, long double gas
 
 unsigned int breathability(planet *the_planet)
 {
+  bool nitrogen_ok = false;
   bool oxygen_ok = false;
+  bool co2_ok = false;
   
   if (the_planet->getNumGases() == 0)
   {
@@ -1687,13 +1697,21 @@ unsigned int breathability(planet *the_planet)
       return POISONOUS;
     }
     
-    if (the_planet->getGas(i).getNum() == AN_O)
+    if (the_planet->getGas(i).getNum() == AN_N)
+    {
+      nitrogen_ok = ipp >= gases[gas_no].getMinIpp() && ipp <= gases[gas_no].getMaxIpp();
+    }
+    else if (the_planet->getGas(i).getNum() == AN_O)
     {
       oxygen_ok = ipp >= gases[gas_no].getMinIpp() && ipp <= gases[gas_no].getMaxIpp();
     }
+    else if (the_planet->getGas(i).getNum() == AN_CO2)
+    {
+      co2_ok = ipp >= gases[gas_no].getMinIpp() && ipp <= gases[gas_no].getMaxIpp();
+    }
   }
   
-  if (oxygen_ok)
+  if (nitrogen_ok && oxygen_ok && co2_ok)
   {
     return BREATHABLE;
   }
@@ -2886,7 +2904,7 @@ bool is_gas_planet(planet* the_planet)
 
 bool is_earth_like_size(planet* the_planet)
 {
-  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.1 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 5.0) || ((convert_km_to_eu(the_planet->getRadius())) >= 0.8 && (convert_km_to_eu(the_planet->getRadius())) <= 1.25))
+  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.5 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 2.0) || ((convert_km_to_eu(the_planet->getRadius())) >= 0.8 && (convert_km_to_eu(the_planet->getRadius())) <= 1.25))
   {
     return true;
   }
@@ -3485,7 +3503,7 @@ long double convert_au_to_km(long double au)
 
 bool is_potentialy_habitable_conservative_size(planet *the_planet)
 {
-  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.1 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 10.0) || ((convert_km_to_eu(the_planet->getRadius())) >= 0.5 && (convert_km_to_eu(the_planet->getRadius())) <= 2.0))
+  if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 0.5 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) <= 5.0) || ((convert_km_to_eu(the_planet->getRadius())) >= 0.8 && (convert_km_to_eu(the_planet->getRadius())) <= 1.5))
   {
     return true;
   }

@@ -2098,11 +2098,19 @@ void planet::setHzd(long double h)
 
 void planet::setIceCover(long double i)
 {
+  if (i > 1.0)
+  {
+    i = 0.0;
+  }
   iceCover = i;
 }
 
 void planet::setImf(long double i)
 {
+  if (i > 1.0)
+  {
+    i = 0.0;
+  }
   imf = i;
 }
 

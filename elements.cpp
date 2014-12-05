@@ -16,7 +16,7 @@ void initGases()
   Chemicle be(		4,		"Be",		"Be",								"Beryllium",		9.0122,		1551.20,			2773.00,				1.848,		0.0,		0.0,		0.0,	2.51189e-06,	7.29458e-07,    0,	0.0,		0.0);
   Chemicle b(		5,		"B",		"B",								"Boron",		10.8100,	2352.20,			3923.20,				2.34,		0.0,		0.0,		0.0,	1e-05,		2.11836e-05,    0,	0.0,		0.0);
   Chemicle c(		6,		"C",		"C",								"Carbon",		12.0110,	3823.20,			5103.00,				2.62,		2250,		0.00350,	0.514,	0.000199526,	10.0925,	0,	0.0,		0.0);
-  Chemicle n(		AN_N,		"N",		"N<SUB><SMALL>2</SMALL></SUB>",					"Nitrogen",		14.0067,	63.34,				77.40,					0.0012506,	0.0,		0.0,		0.0,	1.99526e-05,	3.13329,	0,	MAX_N2_IPP,	0.0);
+  Chemicle n(		AN_N,		"N",		"N<SUB><SMALL>2</SMALL></SUB>",					"Nitrogen",		14.0067,	63.34,				77.40,					0.0012506,	0.0,		0.0,		0.0,	1.99526e-05,	3.13329,	0,	MAX_N2_IPP,	MIN_N2_IPP);
   Chemicle o(		AN_O,		"O",		"O<SUB><SMALL>2</SMALL></SUB>",					"Oxygen",		15.9994,	54.80,				90.20,					0.001429,	0.0,		0.0,		0.0,	0.501187,	23.8232,	10,	MAX_O2_IPP,	MIN_O2_IPP);
   Chemicle f(		9,		"F",		"F",								"Fluorine",		18.9984,	53.58,				85.10,					0.001696,	0.0,		0.0,		0.0,	0.000630957,	0.000843335,	40,	MAX_F_IPP,	0.0);
   Chemicle ne(		AN_NE,		"Ne",		"Ne",								"Neon",			20.1700,	24.53,				27.10,					0.0009,		0.0,		0.0,		0.0,	5.01187e-09,	3.4435e-5,	0,	MAX_NE_IPP,	0.0);
@@ -130,7 +130,7 @@ void initGases()
   Chemicle uuo(		118,		"Uuo",		"Uuo",								"Ununoctium",		294,		0,				350,					13.65,		0,		0,		0,	0,		0,		0,	0,		0);
   Chemicle nh3(		AN_NH3,		"NH3",		"NH<sub><small>3</small></sub>",				"Ammonia",		17,		195.46,				239.66,					0.00073,	0,		0,		0,	0.002,		0.001,		1,	MAX_NH3_IPP,	0);
   Chemicle h2o(		AN_H2O,		"H2O",		"H<sub><small>2</small></sub>",					"Water",		18,		FREEZING_POINT_OF_WATER,	(FREEZING_POINT_OF_WATER + 100.0),	1,		4100,		0.00161,	0.541,	0.03,		0.001,		0.0,	0,		0);
-  Chemicle co2(		AN_CO2,		"CO2",		"CO<sub><small>2</small></sub>",				"Carbon Dioxide",	44,		194.66,				194.66,					0.001977,	0,		0,		0,	0.01,		0.0005,		0,	MAX_CO2_IPP,	0);
+  Chemicle co2(		AN_CO2,		"CO2",		"CO<sub><small>2</small></sub>",				"Carbon Dioxide",	44,		194.66,				194.66,					0.001977,	0,		0,		0,	0.01,		0.0005,		0,	MAX_CO2_IPP,	MIN_CO2_IPP);
   Chemicle o3(		AN_O3,		"O3",		"O<sub><small>3</small></sub>",					"Ozone",		48,		80.16,				161.16,					0.002144,	0,		0,		0,	0.001,		0.000001,	2,	MAX_O3_IPP,	0);
   Chemicle ch4(		AN_CH4,		"CH4",		"CH<sub><small>4</small></sub>",				"Methane",		16,		90.16,				109.16,					0.000656,	0,		0,		0,	0.005,		0.0001,		1,	MAX_CH4_IPP,	0);
   Chemicle ch3ch2oh(	905,		"CH3CH2OH",	"CH<sub><small>3</small></sub>CH<sub><small>2</small></sub>OH",	"Ethanol",		46,		159.06,				351.66,					0.895,		0,		0,		0,	0.001,		0.001,		0,	0,		0);

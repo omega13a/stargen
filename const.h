@@ -42,17 +42,20 @@
 #define MMHG_TO_MILLIBARS (EARTH_SURF_PRES_IN_MILLIBARS / EARTH_SURF_PRES_IN_MMHG)
 #define PSI_TO_MILLIBARS (EARTH_SURF_PRES_IN_MILLIBARS / EARTH_SURF_PRES_IN_PSI)
 #define H20_ASSUMED_PRESSURE	(47. * MMHG_TO_MILLIBARS) /* Dole p. 15      */
-#define MIN_O2_IPP	(72. * MMHG_TO_MILLIBARS)	/* Dole, p. 15				*/
+//#define MIN_O2_IPP	(72. * MMHG_TO_MILLIBARS)	/* Dole, p. 15				*/
+#define MIN_O2_IPP	(53. * MMHG_TO_MILLIBARS)	/* Dole, p. 15				*/
 #define MAX_O2_IPP	(400. * MMHG_TO_MILLIBARS)	/* Dole, p. 15				*/
-#define MAX_HE_IPP	(61000. * MMHG_TO_MILLIBARS)	/* Dole, p. 16			*/
+#define MAX_HE_IPP	(61000. * MMHG_TO_MILLIBARS)	/* Dole, p. 16				*/
 #define MAX_NE_IPP	(3900. * MMHG_TO_MILLIBARS)	/* Dole, p. 16				*/
+#define MIN_N2_IPP	(10. * MMHG_TO_MILLIBARS)	/* Dole, p. 16				*/
 #define MAX_N2_IPP	(2330. * MMHG_TO_MILLIBARS)	/* Dole, p. 16				*/
 #define MAX_AR_IPP	(1220. * MMHG_TO_MILLIBARS)	/* Dole, p. 16				*/
 #define MAX_KR_IPP	(350. * MMHG_TO_MILLIBARS)	/* Dole, p. 16				*/
 #define MAX_XE_IPP	(160. * MMHG_TO_MILLIBARS)	/* Dole, p. 16				*/
-//#define MAX_CO2_IPP (7. * MMHG_TO_MILLIBARS)	/* Dole, p. 16				*/
-#define MAX_CO2_IPP (14. * MMHG_TO_MILLIBARS)	/* Dole, p. 16				*/ // SEB: FOR PELL
-#define MAX_HABITABLE_PRESSURE (118 * PSI_TO_MILLIBARS)	/* Dole, p. 16		*/
+#define MIN_CO2_IPP	(0.05 * MMHG_TO_MILLIBARS)	/* Dole, p. 16				*/
+//#define MAX_CO2_IPP (7. * MMHG_TO_MILLIBARS)	/* Dole, p. 16					*/
+#define MAX_CO2_IPP (14. * MMHG_TO_MILLIBARS)	/* Dole, p. 16					*/ // SEB: FOR PELL
+#define MAX_HABITABLE_PRESSURE (118 * PSI_TO_MILLIBARS)	/* Dole, p. 16				*/
 // The next gases are listed as poisonous in parts per million by volume at 1 atm:
 #define PPM_PRSSURE (EARTH_SURF_PRES_IN_MILLIBARS / 1000000.)
 #define MAX_F_IPP	(0.1 * PPM_PRSSURE)			/* Dole, p. 18				*/

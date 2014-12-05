@@ -2122,7 +2122,7 @@ void assign_type(sun &the_sun, planet *the_planet, string planet_id, bool is_moo
     }
     else
     {
-      if (the_planet->getImf() > 0.5)
+      if (the_planet->getImf() > 0.5 || the_planet->getIceCover() >= 0.5)
       {
 	the_planet->setType(tIce);
       }
@@ -2157,11 +2157,11 @@ void assign_type(sun &the_sun, planet *the_planet, string planet_id, bool is_moo
     else if (the_planet->getImf() >= 0.05 && the_planet->getHydrosphere() == 0.0)
     {
       the_planet->setType(tIce);
-      the_planet->setIceCover(the_planet->getIceCover() + the_planet->getHydrosphere());
+      /*the_planet->setIceCover(the_planet->getIceCover() + the_planet->getHydrosphere());
       if (the_planet->getIceCover() > 1.0)
       {
 	the_planet->setIceCover(1.0);
-      }
+      }*/
       the_planet->setHydrosphere(0.0);
       if (!second_time)
       {
