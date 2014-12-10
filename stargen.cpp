@@ -1731,7 +1731,7 @@ void check_planet(planet* the_planet, string planet_id, bool is_moon)
       total_habitable_optimistic++;
     }
     
-    if ((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 2.0)
+    if (((the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) >= 5.0 && (the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) < 10.0) || (convert_km_to_eu(the_planet->getRadius()) >= 1.5 && convert_km_to_eu(the_planet->getRadius()) <= 2.5))
     {
       habitable_superterrans++;
     }
