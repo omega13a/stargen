@@ -539,6 +539,7 @@ void print_description(fstream& the_file, string opening, planet* the_planet, st
 {
   bool first = true;
   long double earth_masses = the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES;
+  long double earth_radii = convert_km_to_eu(the_planet->getRadius());
   stringstream ss;
   
   the_file << opening;
@@ -822,27 +823,27 @@ void print_description(fstream& the_file, string opening, planet* the_planet, st
     the_file << "Warm ";
   }
   
-  if (earth_masses <= 0.00001)
+  if (earth_masses <= 0.00001 || earth_radii <= 0.03)
   {
     the_file << "Asteroidan";
   }
-  else if (earth_masses <= 0.1)
+  else if (earth_masses <= 0.1 || earth_radii <= 0.4)
   {
     the_file << "Mercurian";
   }
-  else if (earth_masses <= 0.5)
+  else if (earth_masses <= 0.5 || earth_radii <= 0.8)
   {
     the_file << "Subterran";
   }
-  else if (earth_masses <= 2.0)
+  else if (earth_masses <= 5.0 || earth_radii <= 1.5)
   {
     the_file << "Terran";
   }
-  else if (earth_masses <= 10.0)
+  else if (earth_masses <= 10.0 || earth_radii <= 2.5)
   {
     the_file << "Superterran";
   }
-  else if (earth_masses <= 50.0)
+  else if (earth_masses <= 50.0 || earth_radii <= 6.0)
   {
     the_file << "Neptunian";
   }
