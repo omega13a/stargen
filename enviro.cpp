@@ -3522,7 +3522,7 @@ bool is_potentialy_habitable_conservative(planet *the_planet)
     //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": not conservative size" << endl;
     return false;
   }
-  else if (the_planet->getA() < habitable_zone_distance(the_sun_clone, MOIST_GREENHOUSE, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) || the_planet->getA() > habitable_zone_distance(the_sun_clone, MAXIMUM_GREENHOUSE, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES))
+  else if (the_planet->getA() < habitable_zone_distance(the_sun_clone, RUNAWAY_GREENHOUSE, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES) || the_planet->getA() > habitable_zone_distance(the_sun_clone, MAXIMUM_GREENHOUSE, the_planet->getMass() * SUN_MASS_IN_EARTH_MASSES))
   {
     //cout << flag_seed << "-" << the_planet->getPlanetNo() << ": wrong distance for extended" << endl;
     return false;
